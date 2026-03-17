@@ -1,0 +1,64 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# vercel
+.vercel/
+
+# env files
+.env
+.env.*
+!.env.example
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+logs/
+
+# build / tooling
+.turbo/
+.swc/
+coverage/
+*.tsbuildinfo
+
+# runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# misc
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*.tmp
+
+# local assets / generated artifacts
+tmp/
+
+# nested sample workspace
+redis sample repo/node_modules/
+redis sample repo/**/.next/
+redis sample repo/**/.vercel/
+redis sample repo/**/out/
+redis sample repo/**/dist/
+redis sample repo/**/build/
+redis sample repo/**/coverage/
+redis sample repo/**/.turbo/
+redis sample repo/**/.swc/
+redis sample repo/**/.env
+redis sample repo/**/.env.*
+redis sample repo/**/npm-debug.log*
+redis sample repo/**/yarn-debug.log*
+redis sample repo/**/yarn-error.log*
+redis sample repo/**/pnpm-debug.log*
