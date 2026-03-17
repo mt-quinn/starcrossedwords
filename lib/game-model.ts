@@ -1,10 +1,14 @@
 import type { ParsedPuzzle, PuzzleEntry } from "@/lib/puz";
 import type {
+  AnswerEvent,
   ClueEvent,
   GameView,
   PlayerId,
+  ReviewPrompt,
+  SharedAnswerEvent,
   SharedClueEvent,
   SharedGameState,
+  SharedReviewPrompt,
   SharedTurnSummary,
   TurnSummary,
 } from "@/lib/game-types";
@@ -66,7 +70,11 @@ export function canPlayerClueEntry(
   playerId: PlayerId,
   entryId: string,
 ): boolean {
-  return state.knownEntryIdsByPlayer[playerId].includes(entryId);
+  return (
+    state.currentTurnPlayerId === playerId &&
+    (state.phase === "opening_clue" || state.phase === "clue") &&
+    state.knownEntryIdsByPlayer[playerId].includes(entryId)
+  );
 }
 
 export function canPlayerFillEntry(
@@ -74,23 +82,26 @@ export function canPlayerFillEntry(
   playerId: PlayerId,
   entryId: string,
 ): boolean {
-  if (state.knownEntryIdsByPlayer[playerId].includes(entryId)) {
-    return false;
-  }
-
-  const history = state.clueHistory[entryId] ?? [];
-  return history.some((event) => event.author === otherPlayer(playerId));
+  return (
+    state.currentTurnPlayerId === playerId &&
+    state.phase === "answer" &&
+    state.pendingAnswerEntryId === entryId
+  );
 }
 
 function getAllowedCellIndices(
   state: SharedGameState,
   playerId: PlayerId,
 ): Set<number> {
-  const fillableEntries = state.puzzle.entries.filter((entry) =>
-    canPlayerFillEntry(state, playerId, entry.id),
-  );
+  const fillableEntry = state.pendingAnswerEntryId
+    ? state.puzzle.entries.find((entry) => entry.id === state.pendingAnswerEntryId)
+    : null;
 
-  return new Set(fillableEntries.flatMap((entry) => entry.cellIndices));
+  if (!fillableEntry || !canPlayerFillEntry(state, playerId, fillableEntry.id)) {
+    return new Set();
+  }
+
+  return new Set(fillableEntry.cellIndices);
 }
 
 function normalizeBoard(nextBoard: string[], expectedLength: number): string[] {
@@ -145,6 +156,21 @@ function mapClueHistoryForViewer(
   );
 }
 
+function mapAnswerHistoryForViewer(
+  answerHistory: Record<string, SharedAnswerEvent[]>,
+  viewer: PlayerId,
+): Record<string, AnswerEvent[]> {
+  return Object.fromEntries(
+    Object.entries(answerHistory).map(([entryId, history]) => [
+      entryId,
+      history.map((event) => ({
+        ...event,
+        author: event.author === viewer ? "you" : "partner",
+      })),
+    ]),
+  );
+}
+
 function mapRecentTurnsForViewer(
   turns: SharedTurnSummary[],
   viewer: PlayerId,
@@ -163,6 +189,80 @@ function withMetadata(state: SharedGameState): SharedGameState {
   };
 }
 
+function fillForEntry(entry: PuzzleEntry, board: string[]): string {
+  return entry.cellIndices.map((cellIndex) => board[cellIndex] || "").join("");
+}
+
+function findLatestReviewPrompt(
+  state: SharedGameState,
+  playerId: PlayerId,
+): SharedReviewPrompt | null {
+  const latestPlayerClue = Object.values(state.clueHistory)
+    .flatMap((history) => history)
+    .filter((event) => event.author === playerId)
+    .sort((left, right) => right.turn - left.turn)[0];
+
+  if (!latestPlayerClue) {
+    return null;
+  }
+
+  const answerEvent = (state.answerHistory[latestPlayerClue.entryId] ?? [])
+    .filter(
+      (event) =>
+        event.author === otherPlayer(playerId) &&
+        event.turn > latestPlayerClue.turn,
+    )
+    .sort((left, right) => right.turn - left.turn)[0];
+
+  if (!answerEvent) {
+    return null;
+  }
+
+  return {
+    playerId,
+    entryId: latestPlayerClue.entryId,
+    answerTurn: answerEvent.turn,
+  };
+}
+
+function buildReviewPromptForViewer(
+  state: SharedGameState,
+  viewer: PlayerId,
+): ReviewPrompt | null {
+  if (
+    state.currentTurnPlayerId !== viewer ||
+    state.phase !== "review" ||
+    !state.pendingReview ||
+    state.pendingReview.playerId !== viewer
+  ) {
+    return null;
+  }
+
+  const answerEvent = (state.answerHistory[state.pendingReview.entryId] ?? []).find(
+    (event) => event.turn === state.pendingReview?.answerTurn,
+  );
+  const clueEvent = [...(state.clueHistory[state.pendingReview.entryId] ?? [])]
+    .reverse()
+    .find(
+      (event) =>
+        event.author === viewer &&
+        answerEvent &&
+        event.turn < answerEvent.turn,
+    );
+
+  if (!answerEvent || !clueEvent) {
+    return null;
+  }
+
+  return {
+    entryId: state.pendingReview.entryId,
+    submittedFill: answerEvent.fill,
+    clue: clueEvent.clue,
+    turn: answerEvent.turn,
+    timestamp: answerEvent.timestamp,
+  };
+}
+
 export function buildGameViewForPlayer(
   state: SharedGameState,
   viewer: PlayerId,
@@ -177,11 +277,16 @@ export function buildGameViewForPlayer(
     currentEntryId: state.currentEntryIdByPlayer[viewer],
     knownEntryIds,
     clueHistory: mapClueHistoryForViewer(state.clueHistory, viewer),
+    answerHistory: mapAnswerHistoryForViewer(state.answerHistory, viewer),
     recentTurns: mapRecentTurnsForViewer(state.recentTurns, viewer),
     partnerName: playerLabel(otherPlayer(viewer)),
     playerName: playerLabel(viewer),
     turnNumber: state.turnNumber,
     matchLabel: state.roomCode ?? state.puzzleId.replace(/\.puz$/i, ""),
+    phase: state.currentTurnPlayerId === viewer ? state.phase : "clue",
+    incomingEntryId:
+      state.currentTurnPlayerId === viewer ? state.pendingAnswerEntryId : null,
+    reviewPrompt: buildReviewPromptForViewer(state, viewer),
   };
 }
 
@@ -190,12 +295,12 @@ export function applyBoardChange(
   playerId: PlayerId,
   nextBoardInput: string[],
 ): SharedGameState {
-  if (state.currentTurnPlayerId !== playerId) {
-    throw new Error("It is not that player's turn.");
-  }
-
   const nextBoard = normalizeBoard(nextBoardInput, state.board.length);
   const allowedIndices = getAllowedCellIndices(state, playerId);
+
+  if (!allowedIndices.size) {
+    throw new Error("That player cannot edit the board right now.");
+  }
 
   for (let index = 0; index < state.board.length; index += 1) {
     if (state.board[index] !== nextBoard[index] && !allowedIndices.has(index)) {
@@ -209,16 +314,90 @@ export function applyBoardChange(
   });
 }
 
+export function submitAnswer(
+  state: SharedGameState,
+  playerId: PlayerId,
+): SharedGameState {
+  if (state.currentTurnPlayerId !== playerId) {
+    throw new Error("It is not that player's turn.");
+  }
+
+  if (state.phase !== "answer" || !state.pendingAnswerEntryId) {
+    throw new Error("There is no answer to submit right now.");
+  }
+
+  const entry = state.puzzle.entries.find(
+    (candidate) => candidate.id === state.pendingAnswerEntryId,
+  );
+
+  if (!entry) {
+    throw new Error("Could not find the incoming entry.");
+  }
+
+  const submittedFill = fillForEntry(entry, state.board);
+  const isComplete = entry.cellIndices.every((cellIndex) => Boolean(state.board[cellIndex]));
+
+  if (!isComplete || submittedFill.length !== entry.length) {
+    throw new Error("All cells in the incoming answer must be filled before submitting.");
+  }
+
+  const answerTurn = state.turnNumber + 1;
+  const timestamp = new Date().toISOString();
+  const nextState = withMetadata({
+    ...state,
+    answerHistory: {
+      ...state.answerHistory,
+      [entry.id]: [
+        ...(state.answerHistory[entry.id] ?? []),
+        {
+          entryId: entry.id,
+          author: playerId,
+          fill: submittedFill,
+          turn: answerTurn,
+          timestamp,
+        },
+      ],
+    },
+  });
+  const pendingReview = findLatestReviewPrompt(nextState, playerId);
+
+  return {
+    ...nextState,
+    phase: pendingReview ? "review" : "clue",
+    pendingAnswerEntryId: null,
+    pendingReview,
+    currentEntryIdByPlayer: {
+      ...nextState.currentEntryIdByPlayer,
+      [playerId]: pendingReview?.entryId ?? entry.id,
+    },
+  };
+}
+
+export function dismissReview(
+  state: SharedGameState,
+  playerId: PlayerId,
+): SharedGameState {
+  if (state.currentTurnPlayerId !== playerId) {
+    throw new Error("It is not that player's turn.");
+  }
+
+  if (state.phase !== "review") {
+    throw new Error("There is no review prompt to dismiss.");
+  }
+
+  return withMetadata({
+    ...state,
+    phase: "clue",
+    pendingReview: null,
+  });
+}
+
 export function applyClueSubmission(
   state: SharedGameState,
   playerId: PlayerId,
   entryId: string,
   clueText: string,
 ): SharedGameState {
-  if (state.currentTurnPlayerId !== playerId) {
-    throw new Error("It is not that player's turn.");
-  }
-
   if (!canPlayerClueEntry(state, playerId, entryId)) {
     throw new Error("That player cannot clue this entry.");
   }
@@ -265,6 +444,9 @@ export function applyClueSubmission(
     ].slice(0, 12),
     turnNumber: nextTurn,
     currentTurnPlayerId: nextPlayerId,
+    phase: "answer",
+    pendingAnswerEntryId: entryId,
+    pendingReview: null,
     currentEntryIdByPlayer: {
       ...state.currentEntryIdByPlayer,
       [playerId]: entryId,

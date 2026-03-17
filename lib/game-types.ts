@@ -1,10 +1,27 @@
 import type { ParsedPuzzle } from "@/lib/puz";
 
 export type PlayerId = "player1" | "player2";
+export type TurnPhase = "opening_clue" | "answer" | "review" | "clue";
 
 export interface ClueEvent {
   entryId: string;
   author: "you" | "partner";
+  clue: string;
+  turn: number;
+  timestamp: string;
+}
+
+export interface AnswerEvent {
+  entryId: string;
+  author: "you" | "partner";
+  fill: string;
+  turn: number;
+  timestamp: string;
+}
+
+export interface ReviewPrompt {
+  entryId: string;
+  submittedFill: string;
   clue: string;
   turn: number;
   timestamp: string;
@@ -17,11 +34,15 @@ export interface GameView {
   currentEntryId: string;
   knownEntryIds: string[];
   clueHistory: Record<string, ClueEvent[]>;
+  answerHistory: Record<string, AnswerEvent[]>;
   recentTurns: TurnSummary[];
   partnerName: string;
   playerName: string;
   turnNumber: number;
   matchLabel: string;
+  phase: TurnPhase;
+  incomingEntryId: string | null;
+  reviewPrompt: ReviewPrompt | null;
 }
 
 export interface TurnSummary {
@@ -40,6 +61,20 @@ export interface SharedClueEvent {
   timestamp: string;
 }
 
+export interface SharedAnswerEvent {
+  entryId: string;
+  author: PlayerId;
+  fill: string;
+  turn: number;
+  timestamp: string;
+}
+
+export interface SharedReviewPrompt {
+  playerId: PlayerId;
+  entryId: string;
+  answerTurn: number;
+}
+
 export interface SharedTurnSummary {
   turn: number;
   actor: PlayerId;
@@ -55,9 +90,13 @@ export interface SharedGameState {
   currentEntryIdByPlayer: Record<PlayerId, string>;
   knownEntryIdsByPlayer: Record<PlayerId, string[]>;
   clueHistory: Record<string, SharedClueEvent[]>;
+  answerHistory: Record<string, SharedAnswerEvent[]>;
   recentTurns: SharedTurnSummary[];
   turnNumber: number;
   currentTurnPlayerId: PlayerId;
+  phase: TurnPhase;
+  pendingAnswerEntryId: string | null;
+  pendingReview: SharedReviewPrompt | null;
   roomCode?: string;
   createdAt: string;
   updatedAt: string;

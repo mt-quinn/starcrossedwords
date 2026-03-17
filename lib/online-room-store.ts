@@ -1,4 +1,11 @@
-import { applyBoardChange, applyClueSubmission, chooseOpeningEntry, createEmptyBoard } from "@/lib/game-model";
+import {
+  applyBoardChange,
+  applyClueSubmission,
+  chooseOpeningEntry,
+  createEmptyBoard,
+  dismissReview as dismissReviewPhase,
+  submitAnswer as submitAnswerPhase,
+} from "@/lib/game-model";
 import type {
   OnlineRoomRecord,
   PlayerId,
@@ -194,6 +201,79 @@ export async function submitOnlineRoomClue(
   return updatedRecord;
 }
 
+export async function submitAnswer(
+  roomCode: string,
+  playerId: PlayerId,
+  expectedRevision: number,
+  options?: {
+    requestId?: string;
+  },
+): Promise<OnlineRoomRecord> {
+  const roomRecord = await getOnlineRoom(roomCode);
+
+  if (!roomRecord) {
+    throw new Error("Room not found.");
+  }
+
+  if (roomRecord.state.revision !== expectedRevision) {
+    throw new Error("Revision mismatch.");
+  }
+
+  const nextState = submitAnswerPhase(roomRecord.state, playerId);
+  const updatedRecord: OnlineRoomRecord = {
+    ...roomRecord,
+    state: nextState,
+    events: appendEvent(roomRecord.events, "submit-answer", "Submitted answer.", {
+      playerId,
+      requestId: options?.requestId,
+      context: {
+        nextRevision: nextState.revision,
+        phase: nextState.phase,
+      },
+    }),
+    updatedAt: new Date().toISOString(),
+  };
+
+  await kvSet(getRoomKey(roomCode), updatedRecord);
+  return updatedRecord;
+}
+
+export async function dismissReview(
+  roomCode: string,
+  playerId: PlayerId,
+  expectedRevision: number,
+  options?: {
+    requestId?: string;
+  },
+): Promise<OnlineRoomRecord> {
+  const roomRecord = await getOnlineRoom(roomCode);
+
+  if (!roomRecord) {
+    throw new Error("Room not found.");
+  }
+
+  if (roomRecord.state.revision !== expectedRevision) {
+    throw new Error("Revision mismatch.");
+  }
+
+  const nextState = dismissReviewPhase(roomRecord.state, playerId);
+  const updatedRecord: OnlineRoomRecord = {
+    ...roomRecord,
+    state: nextState,
+    events: appendEvent(roomRecord.events, "dismiss-review", "Dismissed review prompt.", {
+      playerId,
+      requestId: options?.requestId,
+      context: {
+        nextRevision: nextState.revision,
+      },
+    }),
+    updatedAt: new Date().toISOString(),
+  };
+
+  await kvSet(getRoomKey(roomCode), updatedRecord);
+  return updatedRecord;
+}
+
 export function toRoomSnapshotPayload(roomRecord: OnlineRoomRecord): RoomSnapshotPayload {
   return {
     state: roomRecord.state,
@@ -243,9 +323,13 @@ export async function resetOnlineRoom(
       ),
     },
     clueHistory: {},
+    answerHistory: {},
     recentTurns: [],
     turnNumber: 0,
     currentTurnPlayerId: "player1",
+    phase: "opening_clue",
+    pendingAnswerEntryId: null,
+    pendingReview: null,
     updatedAt: new Date().toISOString(),
     revision: roomRecord.state.revision + 1,
   };

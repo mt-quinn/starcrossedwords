@@ -115,7 +115,7 @@ export function OnlineRoomClient({
   }, [loadSnapshot]);
 
   async function mutateRoom(payload: {
-    action: "update-board" | "submit-clue";
+    action: "update-board" | "submit-clue" | "submit-answer" | "dismiss-review";
     board?: string[];
     entryId?: string;
     clue?: string;
@@ -273,6 +273,16 @@ export function OnlineRoomClient({
           void mutateRoom({
             action: "update-board",
             board,
+          });
+        }}
+        onSubmitAnswer={() => {
+          void mutateRoom({
+            action: "submit-answer",
+          });
+        }}
+        onDismissReview={() => {
+          void mutateRoom({
+            action: "dismiss-review",
           });
         }}
         onSendClue={(entryId, clue) => {

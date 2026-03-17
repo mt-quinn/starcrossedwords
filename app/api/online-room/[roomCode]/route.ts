@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 
 import {
+  dismissReview,
   getOnlineRoom,
   markPlayerJoined,
+  submitAnswer,
   submitOnlineRoomClue,
   toRoomSnapshotPayload,
   updateOnlineRoomBoard,
@@ -21,6 +23,16 @@ type PatchBody =
       action: "update-board";
       playerId: PlayerId;
       board: string[];
+      expectedRevision: number;
+    }
+  | {
+      action: "submit-answer";
+      playerId: PlayerId;
+      expectedRevision: number;
+    }
+  | {
+      action: "dismiss-review";
+      playerId: PlayerId;
       expectedRevision: number;
     }
   | {
@@ -76,6 +88,26 @@ export async function PATCH(
         body.expectedRevision,
         { requestId },
       );
+      return NextResponse.json({
+        requestId,
+        ...toRoomSnapshotPayload(roomRecord),
+      });
+    }
+
+    if (body.action === "submit-answer") {
+      const roomRecord = await submitAnswer(roomCode, body.playerId, body.expectedRevision, {
+        requestId,
+      });
+      return NextResponse.json({
+        requestId,
+        ...toRoomSnapshotPayload(roomRecord),
+      });
+    }
+
+    if (body.action === "dismiss-review") {
+      const roomRecord = await dismissReview(roomCode, body.playerId, body.expectedRevision, {
+        requestId,
+      });
       return NextResponse.json({
         requestId,
         ...toRoomSnapshotPayload(roomRecord),

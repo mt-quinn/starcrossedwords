@@ -243,6 +243,45 @@ button {
   pointer-events: none;
 }
 
+.entry-capture.is-grid-typing-mode {
+  position: fixed;
+  top: 74px;
+  left: 16px;
+  width: calc(100vw - 32px);
+  height: 40px;
+  opacity: 0.01;
+  z-index: 5;
+}
+
+.mobile-clue-banner {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.96), rgb(255 255 255 / 0.88)),
+    var(--panel);
+  box-shadow: 0 16px 30px rgb(46 28 15 / 0.12);
+}
+
+.mobile-clue-banner-copy {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.mobile-clue-banner .clue-line {
+  margin: 0;
+}
+
 .slot-pill {
   display: inline-flex;
   align-items: center;

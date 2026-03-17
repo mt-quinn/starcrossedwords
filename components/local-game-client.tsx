@@ -7,7 +7,9 @@ import {
   applyBoardChange,
   applyClueSubmission,
   buildGameViewForPlayer,
+  dismissReview,
   playerLabel,
+  submitAnswer,
 } from "@/lib/game-model";
 import type { SharedGameState } from "@/lib/game-types";
 
@@ -23,6 +25,12 @@ export function LocalGameClient({ initialState }: { initialState: SharedGameStat
         key={viewer}
         onBoardChange={(board) => {
           setState((currentState) => applyBoardChange(currentState, viewer, board));
+        }}
+        onSubmitAnswer={() => {
+          setState((currentState) => submitAnswer(currentState, viewer));
+        }}
+        onDismissReview={() => {
+          setState((currentState) => dismissReview(currentState, viewer));
         }}
         onSendClue={(entryId, clue) => {
           setState((currentState) => applyClueSubmission(currentState, viewer, entryId, clue));

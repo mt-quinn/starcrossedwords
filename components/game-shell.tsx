@@ -54,11 +54,15 @@ export function GameShell({
   game,
   interactionLocked = false,
   onBoardChange,
+  onSubmitAnswer,
+  onDismissReview,
   onSendClue,
 }: {
   game: GameView;
   interactionLocked?: boolean;
   onBoardChange?: (board: string[]) => void;
+  onSubmitAnswer?: () => void;
+  onDismissReview?: () => void;
   onSendClue?: (entryId: string, clue: string) => void;
 }) {
   const captureRef = useRef<HTMLInputElement>(null);
@@ -85,6 +89,7 @@ export function GameShell({
   const [clueHistory, setClueHistory] = useState(game.clueHistory);
   const [reclueEntryId, setReclueEntryId] = useState<string | null>(null);
   const [activeSheet, setActiveSheet] = useState<Sheet>(null);
+  const [isGridTypingMode, setIsGridTypingMode] = useState(false);
   const [isZoomPreviewActive, setIsZoomPreviewActive] = useState(false);
   const [isPanning, setIsPanning] = useState(false);
   const [flipMessage, setFlipMessage] = useState<string | null>(null);
@@ -107,22 +112,45 @@ export function GameShell({
   const bankEntries = bankDirection === "across" ? knownAcross : knownDown;
   const selectedEntry = entryMap[selectedEntryId];
   const selectedHistory = clueHistory[selectedEntry.id] ?? [];
+  const selectedAnswers = game.answerHistory[selectedEntry.id] ?? [];
   const latestSelectedClue = latestClue(selectedHistory);
   const latestOwnClue = [...selectedHistory].reverse().find((item) => item.author === "you");
+  const latestPartnerAnswer = [...selectedAnswers].reverse().find((item) => item.author === "partner");
   const uncluedKnownCount = knownEntries.filter(
     (entry) => !authoredByYou(clueHistory[entry.id]),
   ).length;
   const isOwnEntry = knownEntryIdSet.has(selectedEntry.id);
   const hasIncoming = hasPartnerClue(selectedHistory);
-  const canFillSelectedEntry = hasIncoming && !isOwnEntry && !interactionLocked;
-  const canClueSelectedEntry = isOwnEntry && !interactionLocked;
+  const isOpeningCluePhase = game.phase === "opening_clue";
+  const isAnswerPhase = game.phase === "answer";
+  const isReviewPhase = game.phase === "review";
+  const isCluePhase = game.phase === "clue" || isOpeningCluePhase;
+  const incomingEntryId = game.incomingEntryId;
+  const canFillSelectedEntry =
+    isAnswerPhase &&
+    selectedEntry.id === incomingEntryId &&
+    hasIncoming &&
+    !isOwnEntry &&
+    !interactionLocked;
+  const canClueSelectedEntry = isCluePhase && isOwnEntry && !interactionLocked;
+  const canSubmitAnswer =
+    isAnswerPhase &&
+    selectedEntry.id === incomingEntryId &&
+    selectedEntry.cellIndices.every((cellIndex) => Boolean(board[cellIndex])) &&
+    !interactionLocked;
   const isReclueMode = reclueEntryId === selectedEntry.id;
-  const actionableAcross = puzzleAcross.filter(
-    (entry) => knownEntryIdSet.has(entry.id) || hasPartnerClue(clueHistory[entry.id]),
-  );
-  const actionableDown = puzzleDown.filter(
-    (entry) => knownEntryIdSet.has(entry.id) || hasPartnerClue(clueHistory[entry.id]),
-  );
+  const answerEntry = incomingEntryId ? entryMap[incomingEntryId] : null;
+  const clueableEntries = knownEntries;
+  const actionableAcross = isAnswerPhase
+    ? answerEntry?.direction === "across"
+      ? [answerEntry]
+      : []
+    : clueableEntries.filter((entry) => entry.direction === "across");
+  const actionableDown = isAnswerPhase
+    ? answerEntry?.direction === "down"
+      ? [answerEntry]
+      : []
+    : clueableEntries.filter((entry) => entry.direction === "down");
   const actionableEntries = [...actionableAcross, ...actionableDown];
   const boardCameraScale = 1.392;
   const boardCanvasPadding = 0.4;
@@ -353,11 +381,17 @@ export function GameShell({
   }, []);
 
   function isActionableEntry(entry: PuzzleEntry | undefined): entry is PuzzleEntry {
-    return Boolean(entry && (knownEntryIdSet.has(entry.id) || hasPartnerClue(clueHistory[entry.id])));
+    return Boolean(entry && actionableEntries.some((candidate) => candidate.id === entry.id));
   }
 
   function isFillableEntry(entry: PuzzleEntry | undefined): entry is PuzzleEntry {
-    return Boolean(entry && hasPartnerClue(clueHistory[entry.id]) && !knownEntryIdSet.has(entry.id));
+    return Boolean(
+      entry &&
+        isAnswerPhase &&
+        entry.id === incomingEntryId &&
+        hasPartnerClue(clueHistory[entry.id]) &&
+        !knownEntryIdSet.has(entry.id),
+    );
   }
 
   function getCellTone(cell: PuzzleCell): "you" | "partner" | "clued" | "filled" | "default" {
@@ -403,12 +437,32 @@ export function GameShell({
     captureRef.current?.focus();
   }
 
-  function focusEntryOnBoard(entry: PuzzleEntry) {
+  function focusEntryOnBoard(entry: PuzzleEntry, cellIndexOverride?: number) {
     setSelectedEntryId(entry.id);
-    setSelectedCellIndex(entry.cellIndices[0]);
+    setSelectedCellIndex(cellIndexOverride ?? entry.cellIndices[0]);
     setDirection(entry.direction);
     setReclueEntryId(null);
     setDraftClue("");
+    setIsGridTypingMode(false);
+  }
+
+  function prefersCoarsePointer(): boolean {
+    return typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
+  }
+
+  function enterGridTypingMode(entryOverride?: PuzzleEntry) {
+    const targetEntry = entryOverride ?? selectedEntry;
+
+    if (!isFillableEntry(targetEntry)) {
+      return;
+    }
+
+    setActiveSheet(null);
+    setIsGridTypingMode(true);
+
+    window.setTimeout(() => {
+      captureRef.current?.focus();
+    }, 0);
   }
 
   function getDirectionalActionables(entryDirection: EntryDirection): PuzzleEntry[] {
@@ -641,17 +695,32 @@ export function GameShell({
       return;
     }
 
+    const coarsePointer = prefersCoarsePointer();
     const shouldFlip =
-      selectedCellIndex === cell.index && Boolean(cell.acrossEntryId && cell.downEntryId);
+      !coarsePointer &&
+      selectedCellIndex === cell.index &&
+      Boolean(cell.acrossEntryId && cell.downEntryId);
     const preferredDirection = shouldFlip ? flipDirection(direction) : direction;
     const nextEntry = resolveActionableEntry(cell, preferredDirection);
+    const isTappingFocusedEntry = nextEntry
+      ? nextEntry.id === selectedEntry.id && selectedEntry.cellIndices.includes(cell.index)
+      : false;
 
     setActiveSheet(null);
-    setSelectedCellIndex(cell.index);
 
     if (nextEntry) {
-      focusEntryOnBoard(nextEntry);
+      const targetCellIndex = nextEntry.cellIndices.includes(cell.index)
+        ? cell.index
+        : nextEntry.cellIndices[0];
+      focusEntryOnBoard(nextEntry, targetCellIndex);
       syncBankDirection(nextEntry);
+    } else {
+      setSelectedCellIndex(cell.index);
+    }
+
+    if (coarsePointer && isTappingFocusedEntry) {
+      enterGridTypingMode(nextEntry ?? undefined);
+      return;
     }
 
     focusCapture(nextEntry ?? undefined);
@@ -690,6 +759,39 @@ export function GameShell({
   function cancelReclue() {
     setReclueEntryId(null);
     setDraftClue("");
+  }
+
+  function submitAnswerTurn() {
+    if (!canSubmitAnswer) {
+      return;
+    }
+
+    captureRef.current?.blur();
+    setIsGridTypingMode(false);
+    onSubmitAnswer?.();
+  }
+
+  function dismissReviewPrompt(startEditing = false) {
+    if (!game.reviewPrompt) {
+      return;
+    }
+
+    const reviewEntry = entryMap[game.reviewPrompt.entryId];
+
+    if (reviewEntry) {
+      focusEntryOnBoard(reviewEntry);
+      syncBankDirection(reviewEntry);
+
+      if (startEditing) {
+        setReclueEntryId(reviewEntry.id);
+        const latestReviewClue = [...(clueHistory[reviewEntry.id] ?? [])]
+          .reverse()
+          .find((item) => item.author === "you");
+        setDraftClue(latestReviewClue?.clue ?? "");
+      }
+    }
+
+    onDismissReview?.();
   }
 
   function sendTurn() {
@@ -883,7 +985,9 @@ export function GameShell({
             </div>
             <input
               ref={captureRef}
-              className="entry-capture"
+              className={["entry-capture", isGridTypingMode ? "is-grid-typing-mode" : ""]
+                .filter(Boolean)
+                .join(" ")}
               type="text"
               inputMode="text"
               autoCapitalize="characters"
@@ -892,15 +996,42 @@ export function GameShell({
               readOnly={!canFillSelectedEntry}
               onChange={handleCaptureChange}
               onKeyDown={handleCaptureKeyDown}
+              onBlur={() => setIsGridTypingMode(false)}
+              onFocus={() => {
+                if (prefersCoarsePointer() && canFillSelectedEntry) {
+                  setIsGridTypingMode(true);
+                }
+              }}
               aria-label="Crossword input capture"
             />
           </div>
         </section>
 
+        {isGridTypingMode && isAnswerPhase ? (
+          <section className="mobile-clue-banner">
+            <div className="mobile-clue-banner-copy">
+              <span className="direction-chip">{entryTitle(selectedEntry)}</span>
+              <p className="clue-line">{latestSelectedClue?.clue ?? "No clue yet."}</p>
+            </div>
+            <button
+              className="ghost-button compact-button"
+              onClick={() => {
+                captureRef.current?.blur();
+                setIsGridTypingMode(false);
+              }}
+              type="button"
+            >
+              Done
+            </button>
+          </section>
+        ) : null}
+
+        {!isGridTypingMode ? (
         <section className="guided-panel" ref={guidedPanelRef}>
           <button
             aria-label="Previous actionable clue"
             className="nav-arrow"
+            disabled={isAnswerPhase || isReviewPhase || actionableEntries.length <= 1}
             onClick={() => navigateActionable(-1)}
             type="button"
           >
@@ -914,7 +1045,12 @@ export function GameShell({
               </div>
 
               <div className="dock-tools">
-                <button className="ghost-button compact-button" onClick={handleFlipDirection} type="button">
+                <button
+                  className="ghost-button compact-button"
+                  onClick={handleFlipDirection}
+                  type="button"
+                  disabled={isAnswerPhase || isReviewPhase}
+                >
                   {flipMessage ?? "Flip"}
                 </button>
                 <button
@@ -935,7 +1071,30 @@ export function GameShell({
               </div>
             ) : null}
 
-            {isOwnEntry ? (
+            {isAnswerPhase ? (
+              <div className="guided-content">
+                <div className="guided-card">
+                  <p className="sheet-label">Incoming clue</p>
+                  <p className="clue-line">{latestSelectedClue?.clue ?? "No clue yet."}</p>
+                </div>
+                <p className="clue-note">
+                  Fill every cell in this answer, then submit it to move into your clue-writing step.
+                </p>
+                <div className="guided-actions">
+                  <button className="ghost-button" onClick={() => openBankSheet()} type="button">
+                    Bank
+                  </button>
+                  <button
+                    className="primary-button"
+                    onClick={submitAnswerTurn}
+                    type="button"
+                    disabled={!canSubmitAnswer}
+                  >
+                    Submit answer
+                  </button>
+                </div>
+              </div>
+            ) : isOwnEntry ? (
               <div className="guided-content">
                 <div className="guided-answer">
                   <p className="sheet-label">Your answer</p>
@@ -995,26 +1154,13 @@ export function GameShell({
                   </>
                 )}
               </div>
-            ) : hasIncoming ? (
-              <div className="guided-content">
-                <div className="guided-card">
-                  <p className="sheet-label">Incoming clue</p>
-                  <p className="clue-line">{latestSelectedClue?.clue ?? "No clue yet."}</p>
-                </div>
-                <p className="clue-note">
-                  {interactionLocked
-                    ? "Waiting for the other player to finish their turn."
-                    : "Type directly into the grid, or use the arrows to move to the next actionable clue."}
-                </p>
-                <div className="guided-actions">
-                  <button className="ghost-button" onClick={() => openBankSheet()} type="button">
-                    Bank
-                  </button>
-                </div>
-              </div>
             ) : (
               <div className="guided-content">
-                <p className="clue-note">This slot is not actionable right now.</p>
+                <p className="clue-note">
+                  {isReviewPhase
+                    ? "Review the other player's submitted fill before giving your next clue."
+                    : "Choose one of your answers to write the next clue."}
+                </p>
               </div>
             )}
           </div>
@@ -1022,12 +1168,41 @@ export function GameShell({
           <button
             aria-label="Next actionable clue"
             className="nav-arrow"
+            disabled={isAnswerPhase || isReviewPhase || actionableEntries.length <= 1}
             onClick={() => navigateActionable(1)}
             type="button"
           >
             ›
           </button>
         </section>
+        ) : null}
+
+        {game.reviewPrompt ? (
+          <div className="sheet-layer" role="presentation">
+            <div className="sheet-scrim" />
+            <section aria-label="Review submitted answer" className="sheet-panel review-panel" role="dialog">
+              <div className="sheet-row">
+                <p className="sheet-label">They answered {entryTitle(entryMap[game.reviewPrompt.entryId])}</p>
+              </div>
+              <div className="guided-card">
+                <p className="sheet-label">Your clue</p>
+                <p className="clue-line">{game.reviewPrompt.clue}</p>
+              </div>
+              <div className="guided-answer">
+                <p className="sheet-label">Their submitted fill</p>
+                <p className="guided-answer-value">{game.reviewPrompt.submittedFill || "Blank"}</p>
+              </div>
+              <div className="guided-actions">
+                <button className="ghost-button" onClick={() => dismissReviewPrompt(false)} type="button">
+                  Dismiss
+                </button>
+                <button className="primary-button" onClick={() => dismissReviewPrompt(true)} type="button">
+                  Edit clue
+                </button>
+              </div>
+            </section>
+          </div>
+        ) : null}
 
         {activeSheet === "bank" ? (
           <div className="sheet-layer" role="presentation">
