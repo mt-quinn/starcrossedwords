@@ -233,6 +233,7 @@ export function GameShell({
     width: `${boardWidthFraction * 100}%`,
     height: `${boardHeightFraction * 100}%`,
     gridTemplateColumns: `repeat(${game.puzzle.width}, minmax(0, 1fr))`,
+    gridTemplateRows: `repeat(${game.puzzle.height}, minmax(0, 1fr))`,
   };
 
   useEffect(() => {
@@ -271,6 +272,19 @@ export function GameShell({
     setReclueEntryId(null);
     setActiveSheet(null);
   }, [game.currentEntryId]);
+
+  useEffect(() => {
+    if (!canFillSelectedEntry || prefersCoarsePointer() || isGridTypingMode) {
+      return;
+    }
+
+    const activeElement = document.activeElement;
+    const isComposerFocused = activeElement instanceof HTMLTextAreaElement;
+
+    if (!isComposerFocused) {
+      captureRef.current?.focus({ preventScroll: true });
+    }
+  }, [canFillSelectedEntry, isGridTypingMode, selectedCellIndex, selectedEntryId]);
 
   useEffect(() => {
     const boardFrame = boardFrameRef.current;
@@ -1201,6 +1215,10 @@ export function GameShell({
               <div className="guided-card">
                 <p className="sheet-label">Your clue</p>
                 <p className="clue-line">{game.reviewPrompt.clue}</p>
+              </div>
+              <div className="guided-answer">
+                <p className="sheet-label">Your bank answer</p>
+                <p className="guided-answer-value">{entryMap[game.reviewPrompt.entryId].answer}</p>
               </div>
               <div className="guided-answer">
                 <p className="sheet-label">Their submitted fill</p>

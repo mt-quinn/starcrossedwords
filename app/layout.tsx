@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Star Crossed Words",
+  title: "Star-crossed Words",
   description: "A portrait-first asynchronous crossword clueing prototype.",
 };
 

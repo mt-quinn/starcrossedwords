@@ -18,6 +18,10 @@ import { kvDelete, kvGet, kvSet } from "@/lib/redis";
 const ROOM_KEY_PREFIX = "room:";
 const MAX_EVENT_COUNT = 60;
 
+function createSeatToken(): string {
+  return crypto.randomUUID();
+}
+
 function getRoomKey(roomCode: string) {
   return `${ROOM_KEY_PREFIX}${roomCode}`;
 }
@@ -68,6 +72,9 @@ export async function createOnlineRoom(
   const timestamp = new Date().toISOString();
   const roomRecord: OnlineRoomRecord = {
     roomCode,
+    seatTokens: {
+      player1: createSeatToken(),
+    },
     state: {
       ...state,
       roomCode,
@@ -89,6 +96,77 @@ export async function createOnlineRoom(
 
   await kvSet(getRoomKey(roomCode), roomRecord);
   return roomRecord;
+}
+
+export async function identifySeat(
+  roomCode: string,
+  options: {
+    desiredPlayerId?: PlayerId;
+    seatToken?: string;
+    requestId?: string;
+  },
+): Promise<{
+  room: OnlineRoomRecord;
+  playerId: PlayerId;
+  seatToken: string;
+}> {
+  const roomRecord = await getOnlineRoom(roomCode);
+
+  if (!roomRecord) {
+    throw new Error("Room not found.");
+  }
+
+  if (options.seatToken) {
+    const matchingSeat = (["player1", "player2"] as const).find(
+      (playerId) => roomRecord.seatTokens[playerId] === options.seatToken,
+    );
+
+    if (!matchingSeat) {
+      throw new Error("Seat token is invalid for this room.");
+    }
+
+    const joinedRoom = await markPlayerJoined(roomCode, matchingSeat, {
+      requestId: options.requestId,
+    });
+
+    return {
+      room: joinedRoom,
+      playerId: matchingSeat,
+      seatToken: options.seatToken,
+    };
+  }
+
+  const desiredPlayerId = options.desiredPlayerId;
+
+  if (!desiredPlayerId) {
+    throw new Error("No seat information was provided.");
+  }
+
+  const existingSeatToken = roomRecord.seatTokens[desiredPlayerId];
+
+  if (existingSeatToken) {
+    throw new Error("That seat is already claimed.");
+  }
+
+  const updatedRoom: OnlineRoomRecord = {
+    ...roomRecord,
+    seatTokens: {
+      ...roomRecord.seatTokens,
+      [desiredPlayerId]: createSeatToken(),
+    },
+    updatedAt: new Date().toISOString(),
+  };
+
+  await kvSet(getRoomKey(roomCode), updatedRoom);
+  const joinedRoom = await markPlayerJoined(roomCode, desiredPlayerId, {
+    requestId: options.requestId,
+  });
+
+  return {
+    room: joinedRoom,
+    playerId: desiredPlayerId,
+    seatToken: updatedRoom.seatTokens[desiredPlayerId] as string,
+  };
 }
 
 export async function markPlayerJoined(

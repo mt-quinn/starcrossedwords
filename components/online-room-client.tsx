@@ -1,19 +1,26 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { GameShell } from "@/components/game-shell";
 import { buildGameViewForPlayer, playerLabel } from "@/lib/game-model";
 import type { PlayerId, RoomSnapshotPayload } from "@/lib/game-types";
+import { findRecentRoomSeat, writeRecentRoomSeat } from "@/lib/rejoin-storage";
 
 export function OnlineRoomClient({
+  fallbackPlayerId,
   roomCode,
-  playerId,
+  seatToken,
 }: {
+  fallbackPlayerId: PlayerId;
   roomCode: string;
-  playerId: PlayerId;
+  seatToken: string | null;
 }) {
+  const router = useRouter();
   const [snapshot, setSnapshot] = useState<RoomSnapshotPayload | null>(null);
+  const [playerId, setPlayerId] = useState<PlayerId | null>(null);
+  const [resolvedSeatToken, setResolvedSeatToken] = useState<string | null>(seatToken);
   const [connectionState, setConnectionState] = useState("loading");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isDebugOpen, setIsDebugOpen] = useState(false);
@@ -42,24 +49,82 @@ export function OnlineRoomClient({
     }
   }
 
+  const identifySeat = useCallback(async () => {
+    const rememberedSeat = resolvedSeatToken ? null : findRecentRoomSeat(roomCode);
+    const nextSeatToken = resolvedSeatToken ?? rememberedSeat?.seatToken ?? null;
+
+    setConnectionState("loading");
+
+    try {
+      const response = await fetch(roomApiPath, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "identify-seat",
+          desiredPlayerId: nextSeatToken ? undefined : fallbackPlayerId,
+          seatToken: nextSeatToken,
+        }),
+        cache: "no-store",
+      });
+
+      const payload = (await response.json().catch(() => ({}))) as {
+        requestId?: string;
+        error?: string;
+        playerId?: PlayerId;
+        seatToken?: string;
+        state?: RoomSnapshotPayload["state"];
+        joinedPlayerIds?: PlayerId[];
+        events?: RoomSnapshotPayload["events"];
+      };
+
+      if (
+        !response.ok ||
+        !payload.playerId ||
+        !payload.seatToken ||
+        !("state" in payload) ||
+        !payload.state
+      ) {
+        setConnectionState("error");
+        setErrorMessage(payload.error ?? "Could not claim a seat in that room.");
+        return;
+      }
+
+      setPlayerId(payload.playerId);
+      setResolvedSeatToken(payload.seatToken);
+      writeRecentRoomSeat({
+        roomCode,
+        playerId: payload.playerId,
+        seatToken: payload.seatToken,
+        lastUsedAt: new Date().toISOString(),
+      });
+      router.replace(`/online/${roomCode}?seatToken=${encodeURIComponent(payload.seatToken)}`);
+      setSnapshot({
+        state: payload.state,
+        joinedPlayerIds: payload.joinedPlayerIds ?? [],
+        events: payload.events ?? [],
+      });
+      setLastSyncedAt(new Date().toISOString());
+      setConnectionState("idle");
+      setErrorMessage(null);
+    } catch {
+      setConnectionState("error");
+      setErrorMessage("Could not claim a seat in that room.");
+    }
+  }, [fallbackPlayerId, resolvedSeatToken, roomApiPath, roomCode, router]);
+
   const loadSnapshot = useCallback(
-    async (joinRoom = false) => {
+    async () => {
+      if (!playerId) {
+        return;
+      }
+
       setConnectionState((currentValue) => (currentValue === "saving" ? currentValue : "loading"));
 
       try {
         const response = await fetch(roomApiPath, {
-          method: joinRoom ? "PATCH" : "GET",
-          headers: joinRoom
-            ? {
-                "Content-Type": "application/json",
-              }
-            : undefined,
-          body: joinRoom
-            ? JSON.stringify({
-                action: "join",
-                playerId,
-              })
-            : undefined,
+          method: "GET",
           cache: "no-store",
         });
 
@@ -101,10 +166,14 @@ export function OnlineRoomClient({
   );
 
   useEffect(() => {
-    void loadSnapshot(true);
-  }, [loadSnapshot]);
+    void identifySeat();
+  }, [identifySeat]);
 
   useEffect(() => {
+    if (!playerId) {
+      return;
+    }
+
     const intervalId = window.setInterval(() => {
       void loadSnapshot();
     }, 3000);
@@ -233,7 +302,7 @@ export function OnlineRoomClient({
     }
   }
 
-  const game = snapshot ? buildGameViewForPlayer(snapshot.state, playerId) : null;
+  const game = snapshot && playerId ? buildGameViewForPlayer(snapshot.state, playerId) : null;
   const isTurnActive = snapshot?.state.currentTurnPlayerId === playerId;
 
   if (!game) {
@@ -249,10 +318,12 @@ export function OnlineRoomClient({
   }
 
   const activeSnapshot = snapshot as RoomSnapshotPayload;
+  const activePlayerId = playerId as PlayerId;
   const fullDiagnostics = JSON.stringify(
     {
       roomCode,
-      playerId,
+      playerId: activePlayerId,
+      seatToken: resolvedSeatToken,
       connectionState,
       lastSyncedAt,
       latestError: errorMessage,
@@ -296,7 +367,7 @@ export function OnlineRoomClient({
 
       <div className="floating-status-chip">
         <strong>{roomCode}</strong>
-        <span>{playerLabel(playerId)}</span>
+        <span>{playerLabel(activePlayerId)}</span>
         <span>{isTurnActive ? "Your turn" : "Waiting"}</span>
       </div>
 
@@ -332,7 +403,7 @@ export function OnlineRoomClient({
             <p className="network-debug-line">
               Active player: {playerLabel(activeSnapshot.state.currentTurnPlayerId)}
             </p>
-            <p className="network-debug-line">Current player view: {playerLabel(playerId)}</p>
+            <p className="network-debug-line">Current player view: {playerLabel(activePlayerId)}</p>
           </div>
 
           <div className="network-debug-block">
@@ -363,6 +434,7 @@ export function OnlineRoomClient({
                       `${window.location.origin}/api/online-room/${roomCode}`,
                       `${window.location.origin}/api/debug/room/${roomCode}`,
                       `${window.location.origin}/api/debug/storage?room=${roomCode}`,
+                      `${window.location.origin}/online/${roomCode}?seatToken=${encodeURIComponent(resolvedSeatToken ?? "")}`,
                     ].join("\n"),
                   )
                 }
@@ -415,7 +487,10 @@ export function OnlineRoomClient({
                 disabled={Boolean(debugActionState)}
                 onClick={() =>
                   void runDebugAction(
-                    { action: "force-turn", playerId: playerId === "player1" ? "player2" : "player1" },
+                    {
+                      action: "force-turn",
+                      playerId: activePlayerId === "player1" ? "player2" : "player1",
+                    },
                     "force-turn",
                   )
                 }

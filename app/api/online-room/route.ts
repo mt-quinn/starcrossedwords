@@ -18,12 +18,13 @@ export async function POST(request: Request) {
     const initialState = await createSharedGame(body.puzzleId);
 
     try {
-      await createOnlineRoom(roomCode, initialState, { requestId });
+      const room = await createOnlineRoom(roomCode, initialState, { requestId });
 
       return NextResponse.json({
         requestId,
         roomCode,
         playerId: "player1",
+        seatToken: room.seatTokens.player1,
       });
     } catch (error) {
       if (error instanceof Error && error.message === "Room already exists.") {

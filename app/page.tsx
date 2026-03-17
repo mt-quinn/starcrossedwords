@@ -4,7 +4,7 @@ export default function HomePage() {
   return (
     <main className="menu-shell">
       <section className="menu-card">
-        <p className="menu-eyebrow">Star Crossed Words</p>
+        <p className="menu-eyebrow">Star-crossed Words</p>
         <h1>Choose how you want to play.</h1>
         <p className="menu-copy">
           Start an online room with a shareable code, or run a local turn-based simulation to test both sides of the game.

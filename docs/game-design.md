@@ -1,8 +1,8 @@
-# Star Crossed Words: Game Design v0
+# Star-crossed Words: Game Design v0
 
 ## Premise
 
-`Star Crossed Words` is a two-player asynchronous cooperative crossword game built on full solved crossword boards.
+`Star-crossed Words` is a two-player asynchronous cooperative crossword game built on full solved crossword boards.
 
 The shared object is a normal crossword grid. The twist is that the built-in clue list is removed. Instead, each player privately knows a subset of the answers and can only move the game forward by writing clues for the other person.
 

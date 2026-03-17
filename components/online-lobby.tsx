@@ -2,15 +2,36 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import type { PlayerId } from "@/lib/game-types";
 import { normalizeRoomCode } from "@/lib/room-code";
+import {
+  readRecentRoomSeats,
+  writeRecentRoomSeat,
+  type RecentRoomSeat,
+} from "@/lib/rejoin-storage";
 
 export function OnlineLobby() {
   const router = useRouter();
   const [roomCode, setRoomCode] = useState("");
   const [isCreating, setIsCreating] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [recentSeats, setRecentSeats] = useState<RecentRoomSeat[]>([]);
+
+  useEffect(() => {
+    setRecentSeats(readRecentRoomSeats());
+  }, []);
+
+  function rememberSeat(roomCode: string, playerId: PlayerId, seatToken: string) {
+    writeRecentRoomSeat({
+      roomCode,
+      playerId,
+      seatToken,
+      lastUsedAt: new Date().toISOString(),
+    });
+    setRecentSeats(readRecentRoomSeats());
+  }
 
   async function handleCreateRoom() {
     setIsCreating(true);
@@ -24,14 +45,17 @@ export function OnlineLobby() {
       const payload = (await response.json()) as {
         error?: string;
         roomCode?: string;
+        playerId?: PlayerId;
+        seatToken?: string;
       };
 
-      if (!response.ok || !payload.roomCode) {
+      if (!response.ok || !payload.roomCode || !payload.playerId || !payload.seatToken) {
         setErrorMessage(payload.error ?? "Could not create a room.");
         return;
       }
 
-      router.push(`/online/${payload.roomCode}?player=player1`);
+      rememberSeat(payload.roomCode, payload.playerId, payload.seatToken);
+      router.push(`/online/${payload.roomCode}?seatToken=${encodeURIComponent(payload.seatToken)}`);
     } catch {
       setErrorMessage("Could not create a room.");
     } finally {
@@ -39,7 +63,7 @@ export function OnlineLobby() {
     }
   }
 
-  function handleJoinRoom() {
+  async function handleJoinRoom() {
     const normalizedCode = normalizeRoomCode(roomCode);
 
     if (!normalizedCode) {
@@ -48,7 +72,34 @@ export function OnlineLobby() {
     }
 
     setErrorMessage(null);
-    router.push(`/online/${normalizedCode}?player=player2`);
+
+    try {
+      const response = await fetch(`/api/online-room/${normalizedCode}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "identify-seat",
+          desiredPlayerId: "player2",
+        }),
+      });
+      const payload = (await response.json()) as {
+        error?: string;
+        playerId?: PlayerId;
+        seatToken?: string;
+      };
+
+      if (!response.ok || !payload.playerId || !payload.seatToken) {
+        setErrorMessage(payload.error ?? "Could not join that room.");
+        return;
+      }
+
+      rememberSeat(normalizedCode, payload.playerId, payload.seatToken);
+      router.push(`/online/${normalizedCode}?seatToken=${encodeURIComponent(payload.seatToken)}`);
+    } catch {
+      setErrorMessage("Could not join that room.");
+    }
   }
 
   return (
@@ -84,6 +135,26 @@ export function OnlineLobby() {
             Join Room
           </button>
         </div>
+
+        {recentSeats.length ? (
+          <div className="menu-actions">
+            <p className="menu-eyebrow">Rejoin Recent Room</p>
+            {recentSeats.map((seat) => (
+              <button
+                className="ghost-button menu-button"
+                key={`${seat.roomCode}-${seat.playerId}`}
+                onClick={() =>
+                  router.push(
+                    `/online/${seat.roomCode}?seatToken=${encodeURIComponent(seat.seatToken)}`,
+                  )
+                }
+                type="button"
+              >
+                {seat.roomCode} · {seat.playerId === "player1" ? "Player 1" : "Player 2"}
+              </button>
+            ))}
+          </div>
+        ) : null}
 
         {errorMessage ? <p className="menu-error">{errorMessage}</p> : null}
       </section>

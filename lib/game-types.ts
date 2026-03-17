@@ -121,6 +121,7 @@ export interface RoomSnapshotPayload {
 
 export interface OnlineRoomRecord extends RoomSnapshotPayload {
   roomCode: string;
+  seatTokens: Partial<Record<PlayerId, string>>;
   createdAt: string;
   updatedAt: string;
 }

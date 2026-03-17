@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import {
   dismissReview,
   getOnlineRoom,
+  identifySeat,
   markPlayerJoined,
   submitAnswer,
   submitOnlineRoomClue,
@@ -18,6 +19,11 @@ type PatchBody =
   | {
       action: "join";
       playerId: PlayerId;
+    }
+  | {
+      action: "identify-seat";
+      desiredPlayerId?: PlayerId;
+      seatToken?: string;
     }
   | {
       action: "update-board";
@@ -77,6 +83,20 @@ export async function PATCH(
       return NextResponse.json({
         requestId,
         ...toRoomSnapshotPayload(roomRecord),
+      });
+    }
+
+    if (body.action === "identify-seat") {
+      const result = await identifySeat(roomCode, {
+        desiredPlayerId: body.desiredPlayerId,
+        seatToken: body.seatToken,
+        requestId,
+      });
+      return NextResponse.json({
+        requestId,
+        playerId: result.playerId,
+        seatToken: result.seatToken,
+        ...toRoomSnapshotPayload(result.room),
       });
     }
 
