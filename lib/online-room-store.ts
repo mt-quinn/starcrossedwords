@@ -4,6 +4,7 @@ import {
   chooseOpeningEntry,
   createEmptyBoard,
   dismissReview as dismissReviewPhase,
+  splitKnownEntryIds,
   submitAnswer as submitAnswerPhase,
 } from "@/lib/game-model";
 import type {
@@ -17,6 +18,7 @@ import { kvDelete, kvGet, kvSet } from "@/lib/redis";
 
 const ROOM_KEY_PREFIX = "room:";
 const MAX_EVENT_COUNT = 60;
+const VALID_PHASES = new Set(["opening_clue", "answer", "review", "clue"]);
 
 function createSeatToken(): string {
   return crypto.randomUUID();
@@ -24,6 +26,195 @@ function createSeatToken(): string {
 
 function getRoomKey(roomCode: string) {
   return `${ROOM_KEY_PREFIX}${roomCode}`;
+}
+
+function isPlayerId(value: unknown): value is PlayerId {
+  return value === "player1" || value === "player2";
+}
+
+function normalizeSeatTokens(input: unknown): {
+  seatTokens: Partial<Record<PlayerId, string>>;
+  changed: boolean;
+} {
+  if (!input || typeof input !== "object") {
+    return { seatTokens: {}, changed: true };
+  }
+
+  const source = input as Record<string, unknown>;
+  const seatTokens: Partial<Record<PlayerId, string>> = {};
+
+  if (typeof source.player1 === "string" && source.player1) {
+    seatTokens.player1 = source.player1;
+  }
+
+  if (typeof source.player2 === "string" && source.player2) {
+    seatTokens.player2 = source.player2;
+  }
+
+  const changed =
+    seatTokens.player1 !== source.player1 ||
+    seatTokens.player2 !== source.player2 ||
+    Object.keys(source).some((key) => key !== "player1" && key !== "player2");
+
+  return { seatTokens, changed };
+}
+
+function normalizeJoinedPlayerIds(input: unknown): {
+  joinedPlayerIds: PlayerId[];
+  changed: boolean;
+} {
+  if (!Array.isArray(input)) {
+    return { joinedPlayerIds: [], changed: true };
+  }
+
+  const joinedPlayerIds = Array.from(new Set(input.filter(isPlayerId)));
+  return { joinedPlayerIds, changed: joinedPlayerIds.length !== input.length };
+}
+
+function normalizeState(
+  input: unknown,
+  roomCode: string,
+  fallbackCreatedAt: string,
+  fallbackUpdatedAt: string,
+): {
+  state: SharedGameState;
+  changed: boolean;
+} {
+  if (!input || typeof input !== "object") {
+    throw new Error("Room data is invalid.");
+  }
+
+  const source = input as Partial<SharedGameState> & Record<string, unknown>;
+  const puzzle = source.puzzle;
+
+  if (
+    !puzzle ||
+    typeof puzzle !== "object" ||
+    !Array.isArray((puzzle as SharedGameState["puzzle"]).cells) ||
+    !Array.isArray((puzzle as SharedGameState["puzzle"]).entries)
+  ) {
+    throw new Error("Room data is invalid.");
+  }
+
+  const typedPuzzle = puzzle as SharedGameState["puzzle"];
+  const defaultBoard = createEmptyBoard(typedPuzzle);
+  const knownEntryIdsByPlayer =
+    source.knownEntryIdsByPlayer?.player1 && source.knownEntryIdsByPlayer?.player2
+      ? source.knownEntryIdsByPlayer
+      : splitKnownEntryIds(typedPuzzle);
+  const currentEntryIdByPlayer = {
+    player1:
+      source.currentEntryIdByPlayer?.player1 ??
+      chooseOpeningEntry(knownEntryIdsByPlayer.player1, typedPuzzle.entries),
+    player2:
+      source.currentEntryIdByPlayer?.player2 ??
+      chooseOpeningEntry(knownEntryIdsByPlayer.player2, typedPuzzle.entries),
+  };
+  const board =
+    Array.isArray(source.board) && source.board.length === typedPuzzle.cells.length
+      ? source.board.map((value) => (typeof value === "string" ? value : ""))
+      : defaultBoard;
+  const clueHistory =
+    source.clueHistory && typeof source.clueHistory === "object" ? source.clueHistory : {};
+  const answerHistory =
+    source.answerHistory && typeof source.answerHistory === "object" ? source.answerHistory : {};
+  const recentTurns = Array.isArray(source.recentTurns) ? source.recentTurns : [];
+  const currentTurnPlayerId = isPlayerId(source.currentTurnPlayerId)
+    ? source.currentTurnPlayerId
+    : "player1";
+  const phase =
+    typeof source.phase === "string" && VALID_PHASES.has(source.phase)
+      ? source.phase
+      : "opening_clue";
+  const pendingReviewSource = source.pendingReview as unknown as Record<string, unknown> | null;
+  const pendingReview =
+    pendingReviewSource &&
+    typeof pendingReviewSource === "object" &&
+    isPlayerId(pendingReviewSource.playerId) &&
+    typeof pendingReviewSource.entryId === "string" &&
+    typeof pendingReviewSource.answerTurn === "number"
+      ? (source.pendingReview as SharedGameState["pendingReview"])
+      : null;
+  const state: SharedGameState = {
+    puzzleId: typeof source.puzzleId === "string" ? source.puzzleId : `${roomCode}.puz`,
+    puzzle: typedPuzzle,
+    board,
+    currentEntryIdByPlayer,
+    knownEntryIdsByPlayer,
+    clueHistory,
+    answerHistory,
+    recentTurns,
+    turnNumber: typeof source.turnNumber === "number" ? source.turnNumber : 0,
+    currentTurnPlayerId,
+    phase,
+    pendingAnswerEntryId:
+      typeof source.pendingAnswerEntryId === "string" ? source.pendingAnswerEntryId : null,
+    pendingReview,
+    roomCode,
+    createdAt: typeof source.createdAt === "string" ? source.createdAt : fallbackCreatedAt,
+    updatedAt: typeof source.updatedAt === "string" ? source.updatedAt : fallbackUpdatedAt,
+    revision: typeof source.revision === "number" ? source.revision : 0,
+  };
+
+  const changed =
+    source.roomCode !== roomCode ||
+    source.currentEntryIdByPlayer?.player1 !== currentEntryIdByPlayer.player1 ||
+    source.currentEntryIdByPlayer?.player2 !== currentEntryIdByPlayer.player2 ||
+    source.knownEntryIdsByPlayer?.player1 !== knownEntryIdsByPlayer.player1 ||
+    source.knownEntryIdsByPlayer?.player2 !== knownEntryIdsByPlayer.player2 ||
+    source.board !== board ||
+    source.clueHistory !== clueHistory ||
+    source.answerHistory !== answerHistory ||
+    source.recentTurns !== recentTurns ||
+    source.currentTurnPlayerId !== currentTurnPlayerId ||
+    source.phase !== phase ||
+    source.pendingAnswerEntryId !== state.pendingAnswerEntryId ||
+    source.pendingReview !== pendingReview ||
+    source.createdAt !== state.createdAt ||
+    source.updatedAt !== state.updatedAt ||
+    source.revision !== state.revision;
+
+  return { state, changed };
+}
+
+function normalizeRoomRecord(
+  roomCode: string,
+  input: unknown,
+): {
+  roomRecord: OnlineRoomRecord;
+  changed: boolean;
+} {
+  if (!input || typeof input !== "object") {
+    throw new Error("Room data is invalid.");
+  }
+
+  const source = input as Partial<OnlineRoomRecord> & Record<string, unknown>;
+  const createdAt = typeof source.createdAt === "string" ? source.createdAt : new Date().toISOString();
+  const updatedAt = typeof source.updatedAt === "string" ? source.updatedAt : createdAt;
+  const { seatTokens, changed: seatTokensChanged } = normalizeSeatTokens(source.seatTokens);
+  const { joinedPlayerIds, changed: joinedChanged } = normalizeJoinedPlayerIds(source.joinedPlayerIds);
+  const { state, changed: stateChanged } = normalizeState(source.state, roomCode, createdAt, updatedAt);
+  const events = Array.isArray(source.events) ? source.events : [];
+
+  return {
+    roomRecord: {
+      roomCode,
+      seatTokens,
+      joinedPlayerIds,
+      state,
+      events,
+      createdAt,
+      updatedAt,
+    },
+    changed:
+      source.roomCode !== roomCode ||
+      source.createdAt !== createdAt ||
+      source.updatedAt !== updatedAt ||
+      source.events !== events ||
+      seatTokensChanged ||
+      joinedChanged ||
+      stateChanged,
+  };
 }
 
 function appendEvent(
@@ -53,7 +244,19 @@ function appendEvent(
 }
 
 export async function getOnlineRoom(roomCode: string): Promise<OnlineRoomRecord | null> {
-  return await kvGet<OnlineRoomRecord>(getRoomKey(roomCode));
+  const storedRoom = await kvGet<unknown>(getRoomKey(roomCode));
+
+  if (!storedRoom) {
+    return null;
+  }
+
+  const { roomRecord, changed } = normalizeRoomRecord(roomCode, storedRoom);
+
+  if (changed) {
+    await kvSet(getRoomKey(roomCode), roomRecord);
+  }
+
+  return roomRecord;
 }
 
 export async function createOnlineRoom(
