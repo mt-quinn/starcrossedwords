@@ -459,10 +459,24 @@ export function GameShell({
 
     setActiveSheet(null);
     setIsGridTypingMode(true);
+    const capture = captureRef.current;
 
-    window.setTimeout(() => {
-      captureRef.current?.focus();
-    }, 0);
+    if (capture) {
+      capture.focus({ preventScroll: true });
+      capture.click();
+
+      if ("virtualKeyboard" in navigator) {
+        (
+          navigator as Navigator & {
+            virtualKeyboard?: { show?: () => void };
+          }
+        ).virtualKeyboard?.show?.();
+      }
+    }
+
+    window.requestAnimationFrame(() => {
+      captureRef.current?.focus({ preventScroll: true });
+    });
   }
 
   function getDirectionalActionables(entryDirection: EntryDirection): PuzzleEntry[] {
