@@ -242,7 +242,7 @@ export function GameShell({
     setDraftClue("");
     setReclueEntryId(null);
     setActiveSheet(null);
-  }, [entryMap, game.currentEntryId]);
+  }, [game.currentEntryId]);
 
   useEffect(() => {
     const boardFrame = boardFrameRef.current;
