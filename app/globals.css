@@ -158,8 +158,8 @@ button {
 .board-grid {
   position: absolute;
   display: grid;
-  gap: 1px;
-  background: var(--board-gap);
+  gap: 0;
+  background: transparent;
   border-radius: 0;
   overflow: hidden;
   box-shadow:
@@ -177,6 +177,9 @@ button {
   border: 0;
   background: var(--cell);
   color: var(--ink);
+  outline: 1px solid var(--board-gap);
+  outline-offset: -1px;
+  overflow: hidden;
 }
 
 .board-cell.is-block {
@@ -217,17 +220,18 @@ button {
 
 .cell-number {
   position: absolute;
-  top: 2px;
-  left: 3px;
-  font-size: 0.44rem;
+  top: 3px;
+  left: 4px;
+  font-size: 0.34rem;
   font-weight: 700;
   line-height: 1;
   z-index: 1;
 }
 
 .cell-letter {
-  font-size: 1rem;
+  font-size: 0.92rem;
   font-weight: 700;
+  line-height: 1;
   text-transform: uppercase;
   z-index: 1;
 }
@@ -771,6 +775,78 @@ button {
   color: var(--muted-strong);
 }
 
+.floating-status-chip.is-turn-active {
+  border-color: color-mix(in srgb, var(--entry-stroke) 34%, var(--line));
+  box-shadow:
+    0 18px 36px rgb(46 28 15 / 0.12),
+    0 0 0 1px rgb(160 87 47 / 0.08);
+}
+
+.floating-status-chip.is-waiting {
+  border-color: color-mix(in srgb, var(--cell-focus) 26%, var(--line));
+  background:
+    linear-gradient(180deg, rgb(247 248 251 / 0.97), rgb(241 243 247 / 0.92)),
+    var(--panel);
+  box-shadow:
+    0 18px 36px rgb(32 45 74 / 0.14),
+    0 0 0 1px rgb(75 104 149 / 0.08);
+}
+
+.turn-state-banner {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  z-index: 4;
+  width: min(420px, calc(100vw - 32px));
+  padding: 12px 16px 14px;
+  border: 1px solid color-mix(in srgb, var(--cell-focus) 28%, var(--line));
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgb(247 248 251 / 0.98), rgb(240 244 250 / 0.95)),
+    var(--panel);
+  box-shadow:
+    0 24px 44px rgb(32 45 74 / 0.15),
+    0 0 0 1px rgb(75 104 149 / 0.08);
+  transform: translateX(-50%);
+}
+
+.turn-state-banner::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--cell-focus);
+  box-shadow: 0 0 0 6px rgb(103 128 168 / 0.12);
+}
+
+.turn-state-label {
+  margin: 0 0 4px;
+  padding-left: 18px;
+  color: var(--muted-strong);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.turn-state-banner h2 {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.turn-state-banner p:last-child {
+  margin: 6px 0 0;
+  color: var(--muted-strong);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
 .floating-debug-toggle {
   top: 16px;
   right: 16px;
@@ -863,5 +939,17 @@ button {
   .composer textarea,
   .sheet-panel {
     padding: 9px 10px;
+  }
+
+  .turn-state-banner {
+    top: 68px;
+  }
+}
+
+@media (max-width: 720px) {
+  .turn-state-banner {
+    top: 82px;
+    width: calc(100vw - 24px);
+    padding: 11px 14px 13px;
   }
 }

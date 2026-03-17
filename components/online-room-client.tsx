@@ -5,8 +5,34 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { GameShell } from "@/components/game-shell";
 import { buildGameViewForPlayer, playerLabel } from "@/lib/game-model";
-import type { PlayerId, RoomSnapshotPayload } from "@/lib/game-types";
+import type { PlayerId, RoomSnapshotPayload, TurnPhase } from "@/lib/game-types";
 import { findRecentRoomSeat, writeRecentRoomSeat } from "@/lib/rejoin-storage";
+
+function waitingHeadline(activePlayerId: PlayerId, phase: TurnPhase): string {
+  const activePlayer = playerLabel(activePlayerId);
+
+  if (phase === "answer") {
+    return `${activePlayer} is answering your clue`;
+  }
+
+  if (phase === "review") {
+    return `${activePlayer} is reviewing the submitted fill`;
+  }
+
+  return `${activePlayer} is writing a clue`;
+}
+
+function waitingBody(phase: TurnPhase): string {
+  if (phase === "answer") {
+    return "You can still inspect the board while they fill their entry.";
+  }
+
+  if (phase === "review") {
+    return "You can still inspect the board and your bank while they decide whether to reclue.";
+  }
+
+  return "You can still inspect the board and your bank while they prepare the next clue.";
+}
 
 export function OnlineRoomClient({
   fallbackPlayerId,
@@ -365,11 +391,19 @@ export function OnlineRoomClient({
         }}
       />
 
-      <div className="floating-status-chip">
+      <div className={["floating-status-chip", isTurnActive ? "is-turn-active" : "is-waiting"].join(" ")}>
         <strong>{roomCode}</strong>
         <span>{playerLabel(activePlayerId)}</span>
         <span>{isTurnActive ? "Your turn" : "Waiting"}</span>
       </div>
+
+      {!isTurnActive ? (
+        <section className="turn-state-banner" aria-live="polite">
+          <p className="turn-state-label">Not your turn</p>
+          <h2>{waitingHeadline(activeSnapshot.state.currentTurnPlayerId, activeSnapshot.state.phase)}</h2>
+          <p>{waitingBody(activeSnapshot.state.phase)}</p>
+        </section>
+      ) : null}
 
       <button
         aria-expanded={isDebugOpen}
