@@ -68,12 +68,14 @@ export function GameShell({
   onSendClue?: (entryId: string, clue: string) => void;
 }) {
   const captureRef = useRef<HTMLInputElement>(null);
+  const composerRef = useRef<HTMLTextAreaElement>(null);
   const boardFrameRef = useRef<HTMLDivElement>(null);
   const boardHeadingRef = useRef<HTMLDivElement>(null);
   const guidedPanelRef = useRef<HTMLElement>(null);
   const panPointerIdRef = useRef<number | null>(null);
   const panStartRef = useRef({ x: 0, y: 0, panX: 0, panY: 0, dragged: false });
   const suppressTapRef = useRef(false);
+  const lastSyncedEntryIdRef = useRef<string | null>(null);
   const entryMap = useMemo(
     () => Object.fromEntries(game.puzzle.entries.map((entry) => [entry.id, entry])),
     [game.puzzle.entries],
@@ -290,10 +292,11 @@ export function GameShell({
   useEffect(() => {
     const currentEntry = entryMap[game.currentEntryId];
 
-    if (!currentEntry) {
+    if (!currentEntry || lastSyncedEntryIdRef.current === game.currentEntryId) {
       return;
     }
 
+    lastSyncedEntryIdRef.current = game.currentEntryId;
     setSelectedEntryId(game.currentEntryId);
     setSelectedCellIndex(currentEntry.cellIndices[0]);
     setDirection(currentEntry.direction);
@@ -301,10 +304,12 @@ export function GameShell({
     setDraftClueUpdatedAt(game.clueDrafts[currentEntry.id]?.updatedAt ?? 0);
     setReclueEntryId(null);
     setActiveSheet(null);
-  }, [entryMap, game.clueDrafts, game.currentEntryId]);
+  }, [game.currentEntryId, game.puzzleId]);
 
   useEffect(() => {
-    if (selectedDraft.updatedAt > draftClueUpdatedAt) {
+    const isComposerFocused = document.activeElement === composerRef.current;
+
+    if (selectedDraft.updatedAt > draftClueUpdatedAt && !isComposerFocused) {
       setDraftClue(selectedDraft.clue);
       setDraftClueUpdatedAt(selectedDraft.updatedAt);
     }
@@ -1202,6 +1207,7 @@ export function GameShell({
                 <label className="composer">
                   <span>{latestOwnClue ? "Draft next clue" : "Draft clue"}</span>
                   <textarea
+                    ref={composerRef}
                     rows={1}
                     placeholder="Write the clue here..."
                     value={draftClue}
