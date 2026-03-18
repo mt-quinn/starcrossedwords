@@ -21,6 +21,10 @@ export async function createSharedGame(puzzleId?: string): Promise<SharedGameSta
       player2: chooseOpeningEntry(knownEntryIdsByPlayer.player2, puzzle.entries),
     },
     knownEntryIdsByPlayer,
+    clueDraftsByPlayer: {
+      player1: {},
+      player2: {},
+    },
     clueHistory: {},
     answerHistory: {},
     recentTurns: [],

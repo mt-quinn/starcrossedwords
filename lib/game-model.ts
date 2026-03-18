@@ -1,11 +1,13 @@
 import type { ParsedPuzzle, PuzzleEntry } from "@/lib/puz";
 import type {
   AnswerEvent,
+  ClueDraft,
   ClueEvent,
   GameView,
   PlayerId,
   ReviewPrompt,
   SharedAnswerEvent,
+  SharedClueDraft,
   SharedClueEvent,
   SharedGameState,
   SharedReviewPrompt,
@@ -171,6 +173,20 @@ function mapAnswerHistoryForViewer(
   );
 }
 
+function mapClueDraftsForViewer(
+  clueDrafts: Record<string, SharedClueDraft>,
+): Record<string, ClueDraft> {
+  return Object.fromEntries(
+    Object.entries(clueDrafts).map(([entryId, draft]) => [
+      entryId,
+      {
+        clue: draft.clue,
+        updatedAt: draft.updatedAt,
+      },
+    ]),
+  );
+}
+
 function mapRecentTurnsForViewer(
   turns: SharedTurnSummary[],
   viewer: PlayerId,
@@ -191,6 +207,10 @@ function withMetadata(state: SharedGameState): SharedGameState {
 
 function fillForEntry(entry: PuzzleEntry, board: string[]): string {
   return entry.cellIndices.map((cellIndex) => board[cellIndex] || "").join("");
+}
+
+function isSolvedFill(entry: PuzzleEntry, fill: string): boolean {
+  return fill.trim().toUpperCase() === entry.answer.trim().toUpperCase();
 }
 
 function findLatestReviewPrompt(
@@ -215,6 +235,12 @@ function findLatestReviewPrompt(
     .sort((left, right) => right.turn - left.turn)[0];
 
   if (!answerEvent) {
+    return null;
+  }
+
+  const entry = state.puzzle.entries.find((candidate) => candidate.id === latestPlayerClue.entryId);
+
+  if (entry && isSolvedFill(entry, answerEvent.fill)) {
     return null;
   }
 
@@ -276,6 +302,7 @@ export function buildGameViewForPlayer(
     board: state.board,
     currentEntryId: state.currentEntryIdByPlayer[viewer],
     knownEntryIds,
+    clueDrafts: mapClueDraftsForViewer(state.clueDraftsByPlayer[viewer] ?? {}),
     clueHistory: mapClueHistoryForViewer(state.clueHistory, viewer),
     answerHistory: mapAnswerHistoryForViewer(state.answerHistory, viewer),
     recentTurns: mapRecentTurnsForViewer(state.recentTurns, viewer),
@@ -392,6 +419,47 @@ export function dismissReview(
   });
 }
 
+export function saveClueDraft(
+  state: SharedGameState,
+  playerId: PlayerId,
+  entryId: string,
+  clue: string,
+  updatedAt: number,
+): SharedGameState {
+  if (!state.knownEntryIdsByPlayer[playerId].includes(entryId)) {
+    throw new Error("That player cannot draft a clue for this entry.");
+  }
+
+  if (!Number.isFinite(updatedAt)) {
+    throw new Error("Clue draft timestamp was invalid.");
+  }
+
+  const playerDrafts = state.clueDraftsByPlayer[playerId] ?? {};
+  const existingDraft = playerDrafts[entryId];
+
+  if (
+    existingDraft &&
+    (existingDraft.updatedAt > updatedAt ||
+      (existingDraft.updatedAt === updatedAt && existingDraft.clue === clue))
+  ) {
+    return state;
+  }
+
+  return withMetadata({
+    ...state,
+    clueDraftsByPlayer: {
+      ...state.clueDraftsByPlayer,
+      [playerId]: {
+        ...playerDrafts,
+        [entryId]: {
+          clue,
+          updatedAt,
+        },
+      },
+    },
+  });
+}
+
 export function applyClueSubmission(
   state: SharedGameState,
   playerId: PlayerId,
@@ -417,8 +485,20 @@ export function applyClueSubmission(
     throw new Error("Could not find the requested entry.");
   }
 
+  const clueDraftUpdatedAt = Date.now();
+
   return withMetadata({
     ...state,
+    clueDraftsByPlayer: {
+      ...state.clueDraftsByPlayer,
+      [playerId]: {
+        ...(state.clueDraftsByPlayer[playerId] ?? {}),
+        [entryId]: {
+          clue: "",
+          updatedAt: clueDraftUpdatedAt,
+        },
+      },
+    },
     clueHistory: {
       ...state.clueHistory,
       [entryId]: [

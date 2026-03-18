@@ -5,6 +5,7 @@ import {
   getOnlineRoom,
   identifySeat,
   markPlayerJoined,
+  saveClueDraft,
   submitAnswer,
   submitOnlineRoomClue,
   toRoomSnapshotPayload,
@@ -30,6 +31,13 @@ type PatchBody =
       playerId: PlayerId;
       board: string[];
       expectedRevision: number;
+    }
+  | {
+      action: "save-clue-draft";
+      playerId: PlayerId;
+      entryId: string;
+      clue: string;
+      updatedAt: number;
     }
   | {
       action: "submit-answer";
@@ -107,6 +115,20 @@ export async function PATCH(
         body.board,
         body.expectedRevision,
         { requestId },
+      );
+      return NextResponse.json({
+        requestId,
+        ...toRoomSnapshotPayload(roomRecord),
+      });
+    }
+
+    if (body.action === "save-clue-draft") {
+      const roomRecord = await saveClueDraft(
+        roomCode,
+        body.playerId,
+        body.entryId,
+        body.clue,
+        body.updatedAt,
       );
       return NextResponse.json({
         requestId,

@@ -1,12 +1,19 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { GameShell } from "@/components/game-shell";
 import { buildGameViewForPlayer, playerLabel } from "@/lib/game-model";
 import type { PlayerId, RoomSnapshotPayload, TurnPhase } from "@/lib/game-types";
 import { findRecentRoomSeat, writeRecentRoomSeat } from "@/lib/rejoin-storage";
+
+const DRAFT_SAVE_DELAY_MS = 450;
+
+type PendingClueDraft = {
+  clue: string;
+  updatedAt: number;
+};
 
 function waitingHeadline(activePlayerId: PlayerId, phase: TurnPhase): string {
   const activePlayer = playerLabel(activePlayerId);
@@ -55,9 +62,167 @@ export function OnlineRoomClient({
   const [debugDump, setDebugDump] = useState<string>("");
   const [smokeReport, setSmokeReport] = useState<string>("");
   const [debugActionState, setDebugActionState] = useState<string | null>(null);
+  const pendingClueDraftsRef = useRef<Record<string, PendingClueDraft>>({});
+  const draftSaveTimeoutsRef = useRef<Record<string, number>>({});
 
   const roomApiPath = useMemo(() => `/api/online-room/${roomCode}`, [roomCode]);
   const debugRoomPath = useMemo(() => `/api/debug/room/${roomCode}`, [roomCode]);
+
+  const mergePendingDraftsIntoSnapshot = useCallback(
+    (baseSnapshot: RoomSnapshotPayload, activePlayerId: PlayerId): RoomSnapshotPayload => {
+      const pendingDrafts = pendingClueDraftsRef.current;
+
+      if (!Object.keys(pendingDrafts).length) {
+        return baseSnapshot;
+      }
+
+      const nextPlayerDrafts = {
+        ...(baseSnapshot.state.clueDraftsByPlayer[activePlayerId] ?? {}),
+      };
+      let changed = false;
+
+      for (const [entryId, pendingDraft] of Object.entries(pendingDrafts)) {
+        const existingDraft = nextPlayerDrafts[entryId];
+
+        if (!existingDraft || pendingDraft.updatedAt > existingDraft.updatedAt) {
+          nextPlayerDrafts[entryId] = pendingDraft;
+          changed = true;
+        }
+      }
+
+      if (!changed) {
+        return baseSnapshot;
+      }
+
+      return {
+        ...baseSnapshot,
+        state: {
+          ...baseSnapshot.state,
+          clueDraftsByPlayer: {
+            ...baseSnapshot.state.clueDraftsByPlayer,
+            [activePlayerId]: nextPlayerDrafts,
+          },
+        },
+      };
+    },
+    [],
+  );
+
+  function clearDraftSaveTimeout(entryId: string) {
+    const timeoutId = draftSaveTimeoutsRef.current[entryId];
+
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+      delete draftSaveTimeoutsRef.current[entryId];
+    }
+  }
+
+  function applyOptimisticClueDraft(entryId: string, clue: string, updatedAt: number, activePlayerId: PlayerId) {
+    setSnapshot((currentSnapshot) => {
+      if (!currentSnapshot) {
+        return currentSnapshot;
+      }
+
+      return {
+        ...currentSnapshot,
+        state: {
+          ...currentSnapshot.state,
+          clueDraftsByPlayer: {
+            ...currentSnapshot.state.clueDraftsByPlayer,
+            [activePlayerId]: {
+              ...(currentSnapshot.state.clueDraftsByPlayer[activePlayerId] ?? {}),
+              [entryId]: {
+                clue,
+                updatedAt,
+              },
+            },
+          },
+        },
+      };
+    });
+  }
+
+  const persistClueDraft = useCallback(
+    async (
+      entryId: string,
+      draft: PendingClueDraft,
+      options?: { keepalive?: boolean },
+    ) => {
+      if (!playerId) {
+        return;
+      }
+
+      try {
+        const response = await fetch(roomApiPath, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            action: "save-clue-draft",
+            playerId,
+            entryId,
+            clue: draft.clue,
+            updatedAt: draft.updatedAt,
+          }),
+          cache: "no-store",
+          keepalive: options?.keepalive,
+        });
+        const result = (await response.json().catch(() => ({}))) as {
+          error?: string;
+          snapshot?: RoomSnapshotPayload | null;
+          state?: RoomSnapshotPayload["state"];
+          joinedPlayerIds?: PlayerId[];
+          events?: RoomSnapshotPayload["events"];
+        };
+        const nextSnapshot = "state" in result ? (result as RoomSnapshotPayload) : result.snapshot;
+
+        if (nextSnapshot) {
+          setSnapshot(mergePendingDraftsIntoSnapshot(nextSnapshot, playerId));
+          setLastSyncedAt(new Date().toISOString());
+        }
+
+        if (!response.ok) {
+          setErrorMessage(result.error ?? "Draft save failed.");
+          return;
+        }
+
+        const pendingDraft = pendingClueDraftsRef.current[entryId];
+
+        if (
+          pendingDraft &&
+          pendingDraft.updatedAt === draft.updatedAt &&
+          pendingDraft.clue === draft.clue
+        ) {
+          delete pendingClueDraftsRef.current[entryId];
+        }
+
+        setErrorMessage(null);
+      } catch {
+        setErrorMessage("Draft save failed.");
+      }
+    },
+    [mergePendingDraftsIntoSnapshot, playerId, roomApiPath],
+  );
+
+  const scheduleClueDraftSave = useCallback(
+    (entryId: string, clue: string, updatedAt: number, activePlayerId: PlayerId) => {
+      pendingClueDraftsRef.current[entryId] = { clue, updatedAt };
+      applyOptimisticClueDraft(entryId, clue, updatedAt, activePlayerId);
+      clearDraftSaveTimeout(entryId);
+      draftSaveTimeoutsRef.current[entryId] = window.setTimeout(() => {
+        delete draftSaveTimeoutsRef.current[entryId];
+        const pendingDraft = pendingClueDraftsRef.current[entryId];
+
+        if (!pendingDraft) {
+          return;
+        }
+
+        void persistClueDraft(entryId, pendingDraft);
+      }, DRAFT_SAVE_DELAY_MS);
+    },
+    [applyOptimisticClueDraft, persistClueDraft],
+  );
 
   function scheduleCopyStatus(message: string) {
     setCopyStatus(message);
@@ -126,11 +291,16 @@ export function OnlineRoomClient({
         lastUsedAt: new Date().toISOString(),
       });
       router.replace(`/online/${roomCode}?seatToken=${encodeURIComponent(payload.seatToken)}`);
-      setSnapshot({
-        state: payload.state,
-        joinedPlayerIds: payload.joinedPlayerIds ?? [],
-        events: payload.events ?? [],
-      });
+      setSnapshot(
+        mergePendingDraftsIntoSnapshot(
+          {
+            state: payload.state,
+            joinedPlayerIds: payload.joinedPlayerIds ?? [],
+            events: payload.events ?? [],
+          },
+          payload.playerId,
+        ),
+      );
       setLastSyncedAt(new Date().toISOString());
       setConnectionState("idle");
       setErrorMessage(null);
@@ -165,7 +335,7 @@ export function OnlineRoomClient({
 
         if (!response.ok) {
           if (payload.snapshot) {
-            setSnapshot(payload.snapshot);
+            setSnapshot(mergePendingDraftsIntoSnapshot(payload.snapshot, playerId));
           }
           setConnectionState("error");
           setErrorMessage(payload.error ?? "Could not load that room.");
@@ -177,7 +347,7 @@ export function OnlineRoomClient({
           : payload.snapshot;
 
         if (nextSnapshot) {
-          setSnapshot(nextSnapshot);
+          setSnapshot(mergePendingDraftsIntoSnapshot(nextSnapshot, playerId));
           setLastSyncedAt(new Date().toISOString());
         }
 
@@ -188,7 +358,7 @@ export function OnlineRoomClient({
         setErrorMessage("Could not load that room.");
       }
     },
-    [playerId, roomApiPath],
+    [mergePendingDraftsIntoSnapshot, playerId, roomApiPath],
   );
 
   useEffect(() => {
@@ -209,17 +379,42 @@ export function OnlineRoomClient({
     };
   }, [loadSnapshot]);
 
+  useEffect(() => {
+    if (!playerId) {
+      return;
+    }
+
+    function flushPendingDraftsOnPageHide() {
+      for (const [entryId, draft] of Object.entries(pendingClueDraftsRef.current)) {
+        clearDraftSaveTimeout(entryId);
+        void persistClueDraft(entryId, draft, { keepalive: true });
+      }
+    }
+
+    window.addEventListener("pagehide", flushPendingDraftsOnPageHide);
+
+    return () => {
+      window.removeEventListener("pagehide", flushPendingDraftsOnPageHide);
+      for (const entryId of Object.keys(draftSaveTimeoutsRef.current)) {
+        clearDraftSaveTimeout(entryId);
+      }
+    };
+  }, [persistClueDraft, playerId]);
+
   async function mutateRoom(payload: {
-    action: "update-board" | "submit-clue" | "submit-answer" | "dismiss-review";
+    action: "update-board" | "save-clue-draft" | "submit-clue" | "submit-answer" | "dismiss-review";
     board?: string[];
     entryId?: string;
     clue?: string;
+    updatedAt?: number;
   }) {
     if (!snapshot) {
       return;
     }
 
-    setConnectionState("saving");
+    if (payload.action !== "save-clue-draft") {
+      setConnectionState("saving");
+    }
 
     try {
       const response = await fetch(roomApiPath, {
@@ -230,7 +425,7 @@ export function OnlineRoomClient({
         body: JSON.stringify({
           ...payload,
           playerId,
-          expectedRevision: snapshot.state.revision,
+          expectedRevision: payload.action === "save-clue-draft" ? undefined : snapshot.state.revision,
         }),
       });
 
@@ -248,21 +443,31 @@ export function OnlineRoomClient({
         : result.snapshot;
 
       if (nextSnapshot) {
-        setSnapshot(nextSnapshot);
+        setSnapshot(playerId ? mergePendingDraftsIntoSnapshot(nextSnapshot, playerId) : nextSnapshot);
         setLastSyncedAt(new Date().toISOString());
       }
 
       if (!response.ok) {
-        setConnectionState("error");
-        setErrorMessage(result.error ?? "Room update failed.");
+        if (payload.action === "save-clue-draft") {
+          setErrorMessage(result.error ?? "Draft save failed.");
+        } else {
+          setConnectionState("error");
+          setErrorMessage(result.error ?? "Room update failed.");
+        }
         return;
       }
 
-      setConnectionState("idle");
+      if (payload.action !== "save-clue-draft") {
+        setConnectionState("idle");
+      }
       setErrorMessage(null);
     } catch {
-      setConnectionState("error");
-      setErrorMessage("Room update failed.");
+      if (payload.action === "save-clue-draft") {
+        setErrorMessage("Draft save failed.");
+      } else {
+        setConnectionState("error");
+        setErrorMessage("Room update failed.");
+      }
     }
   }
 
@@ -383,11 +588,20 @@ export function OnlineRoomClient({
           });
         }}
         onSendClue={(entryId, clue) => {
+          clearDraftSaveTimeout(entryId);
+          delete pendingClueDraftsRef.current[entryId];
           void mutateRoom({
             action: "submit-clue",
             entryId,
             clue,
           });
+        }}
+        onClueDraftChange={(entryId, clue, updatedAt) => {
+          if (!activePlayerId) {
+            return;
+          }
+
+          scheduleClueDraftSave(entryId, clue, updatedAt, activePlayerId);
         }}
       />
 

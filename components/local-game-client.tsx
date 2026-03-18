@@ -9,6 +9,7 @@ import {
   buildGameViewForPlayer,
   dismissReview,
   playerLabel,
+  saveClueDraft,
   submitAnswer,
 } from "@/lib/game-model";
 import type { SharedGameState } from "@/lib/game-types";
@@ -34,6 +35,9 @@ export function LocalGameClient({ initialState }: { initialState: SharedGameStat
         }}
         onSendClue={(entryId, clue) => {
           setState((currentState) => applyClueSubmission(currentState, viewer, entryId, clue));
+        }}
+        onClueDraftChange={(entryId, clue, updatedAt) => {
+          setState((currentState) => saveClueDraft(currentState, viewer, entryId, clue, updatedAt));
         }}
       />
       <div className="floating-status-chip">

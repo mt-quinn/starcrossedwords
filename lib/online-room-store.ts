@@ -4,6 +4,7 @@ import {
   chooseOpeningEntry,
   createEmptyBoard,
   dismissReview as dismissReviewPhase,
+  saveClueDraft as saveClueDraftState,
   splitKnownEntryIds,
   submitAnswer as submitAnswerPhase,
 } from "@/lib/game-model";
@@ -114,6 +115,33 @@ function normalizeState(
     Array.isArray(source.board) && source.board.length === typedPuzzle.cells.length
       ? source.board.map((value) => (typeof value === "string" ? value : ""))
       : defaultBoard;
+  const normalizePlayerDrafts = (playerId: PlayerId) => {
+    const sourceDrafts = source.clueDraftsByPlayer?.[playerId];
+
+    if (!sourceDrafts || typeof sourceDrafts !== "object") {
+      return {};
+    }
+
+    return Object.fromEntries(
+      Object.entries(sourceDrafts).flatMap(([entryId, draftValue]) => {
+        if (!draftValue || typeof draftValue !== "object") {
+          return [];
+        }
+
+        const draft = draftValue as unknown as Record<string, unknown>;
+
+        if (typeof draft.clue !== "string" || typeof draft.updatedAt !== "number") {
+          return [];
+        }
+
+        return [[entryId, { clue: draft.clue, updatedAt: draft.updatedAt }]];
+      }),
+    );
+  };
+  const clueDraftsByPlayer = {
+    player1: normalizePlayerDrafts("player1"),
+    player2: normalizePlayerDrafts("player2"),
+  };
   const clueHistory =
     source.clueHistory && typeof source.clueHistory === "object" ? source.clueHistory : {};
   const answerHistory =
@@ -141,6 +169,7 @@ function normalizeState(
     board,
     currentEntryIdByPlayer,
     knownEntryIdsByPlayer,
+    clueDraftsByPlayer,
     clueHistory,
     answerHistory,
     recentTurns,
@@ -162,6 +191,8 @@ function normalizeState(
     source.currentEntryIdByPlayer?.player2 !== currentEntryIdByPlayer.player2 ||
     source.knownEntryIdsByPlayer?.player1 !== knownEntryIdsByPlayer.player1 ||
     source.knownEntryIdsByPlayer?.player2 !== knownEntryIdsByPlayer.player2 ||
+    source.clueDraftsByPlayer?.player1 !== clueDraftsByPlayer.player1 ||
+    source.clueDraftsByPlayer?.player2 !== clueDraftsByPlayer.player2 ||
     source.board !== board ||
     source.clueHistory !== clueHistory ||
     source.answerHistory !== answerHistory ||
@@ -442,6 +473,35 @@ export async function updateOnlineRoomBoard(
   return updatedRecord;
 }
 
+export async function saveClueDraft(
+  roomCode: string,
+  playerId: PlayerId,
+  entryId: string,
+  clue: string,
+  updatedAt: number,
+): Promise<OnlineRoomRecord> {
+  const roomRecord = await getOnlineRoom(roomCode);
+
+  if (!roomRecord) {
+    throw new Error("Room not found.");
+  }
+
+  const nextState = saveClueDraftState(roomRecord.state, playerId, entryId, clue, updatedAt);
+
+  if (nextState === roomRecord.state) {
+    return roomRecord;
+  }
+
+  const updatedRecord: OnlineRoomRecord = {
+    ...roomRecord,
+    state: nextState,
+    updatedAt: new Date().toISOString(),
+  };
+
+  await kvSet(getRoomKey(roomCode), updatedRecord);
+  return updatedRecord;
+}
+
 export async function submitOnlineRoomClue(
   roomCode: string,
   playerId: PlayerId,
@@ -602,6 +662,10 @@ export async function resetOnlineRoom(
         roomRecord.state.knownEntryIdsByPlayer.player2,
         roomRecord.state.puzzle.entries,
       ),
+    },
+    clueDraftsByPlayer: {
+      player1: {},
+      player2: {},
     },
     clueHistory: {},
     answerHistory: {},

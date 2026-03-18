@@ -27,12 +27,18 @@ export interface ReviewPrompt {
   timestamp: string;
 }
 
+export interface ClueDraft {
+  clue: string;
+  updatedAt: number;
+}
+
 export interface GameView {
   puzzleId: string;
   puzzle: ParsedPuzzle;
   board: string[];
   currentEntryId: string;
   knownEntryIds: string[];
+  clueDrafts: Record<string, ClueDraft>;
   clueHistory: Record<string, ClueEvent[]>;
   answerHistory: Record<string, AnswerEvent[]>;
   recentTurns: TurnSummary[];
@@ -75,6 +81,11 @@ export interface SharedReviewPrompt {
   answerTurn: number;
 }
 
+export interface SharedClueDraft {
+  clue: string;
+  updatedAt: number;
+}
+
 export interface SharedTurnSummary {
   turn: number;
   actor: PlayerId;
@@ -89,6 +100,7 @@ export interface SharedGameState {
   board: string[];
   currentEntryIdByPlayer: Record<PlayerId, string>;
   knownEntryIdsByPlayer: Record<PlayerId, string[]>;
+  clueDraftsByPlayer: Record<PlayerId, Record<string, SharedClueDraft>>;
   clueHistory: Record<string, SharedClueEvent[]>;
   answerHistory: Record<string, SharedAnswerEvent[]>;
   recentTurns: SharedTurnSummary[];
