@@ -16,18 +16,18 @@ export async function POST(request: Request) {
   const configuredPassword = getSitePassword();
 
   if (!configuredPassword) {
-    return NextResponse.redirect(new URL(nextPath, request.url));
+    return NextResponse.redirect(new URL(nextPath, request.url), { status: 303 });
   }
 
   if (password !== configuredPassword) {
     const failedUrl = new URL("/unlock", request.url);
     failedUrl.searchParams.set("error", "1");
     failedUrl.searchParams.set("next", nextPath);
-    return NextResponse.redirect(failedUrl);
+    return NextResponse.redirect(failedUrl, { status: 303 });
   }
 
   const token = await getSiteLockToken();
-  const response = NextResponse.redirect(new URL(nextPath, request.url));
+  const response = NextResponse.redirect(new URL(nextPath, request.url), { status: 303 });
 
   if (token) {
     response.cookies.set({
