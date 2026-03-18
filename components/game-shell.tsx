@@ -105,6 +105,8 @@ export function GameShell({
     visibleWidth: 1,
     visibleHeight: 1,
     frameAspectRatio: 1,
+    frameWidth: 1,
+    frameHeight: 1,
   });
 
   const puzzleAcross = game.puzzle.entries.filter((entry) => entry.direction === "across");
@@ -165,19 +167,17 @@ export function GameShell({
   const boardAspectRatio = game.puzzle.width / game.puzzle.height;
   const boardBaseFraction = 1 / boardWorldUnits;
   const viewportAspectRatio = boardViewportMetrics.frameAspectRatio || 1;
-  const boardWidthFraction =
+  const targetBoardWidthFraction =
     boardAspectRatio >= viewportAspectRatio
       ? boardBaseFraction
       : boardBaseFraction * (boardAspectRatio / viewportAspectRatio);
-  const boardHeightFraction =
+  const targetBoardHeightFraction =
     boardAspectRatio >= viewportAspectRatio
       ? boardBaseFraction * (viewportAspectRatio / boardAspectRatio)
       : boardBaseFraction;
-  const boardLeftFraction = (1 - boardWidthFraction) / 2;
-  const boardTopFraction = (1 - boardHeightFraction) / 2;
   const previewBoardScale = Math.min(
-    boardViewportMetrics.visibleWidth / boardWidthFraction,
-    boardViewportMetrics.visibleHeight / boardHeightFraction,
+    boardViewportMetrics.visibleWidth / targetBoardWidthFraction,
+    boardViewportMetrics.visibleHeight / targetBoardHeightFraction,
   );
   const defaultBoardScale = boardCameraScale;
   const selectedEntryRows = selectedEntry.cellIndices.map((cellIndex) => game.puzzle.cells[cellIndex].row);
@@ -186,8 +186,8 @@ export function GameShell({
   const maxRow = Math.max(...selectedEntryRows) + 1;
   const minCol = Math.min(...selectedEntryCols);
   const maxCol = Math.max(...selectedEntryCols) + 1;
-  const entryWidthFraction = ((maxCol - minCol) / game.puzzle.width) * boardWidthFraction;
-  const entryHeightFraction = ((maxRow - minRow) / game.puzzle.height) * boardHeightFraction;
+  const entryWidthFraction = ((maxCol - minCol) / game.puzzle.width) * targetBoardWidthFraction;
+  const entryHeightFraction = ((maxRow - minRow) / game.puzzle.height) * targetBoardHeightFraction;
   const fitEntryScale = Math.min(
     entryWidthFraction > 0
       ? (boardViewportMetrics.visibleWidth * 0.96) / entryWidthFraction
@@ -199,6 +199,20 @@ export function GameShell({
   const boardWorldScale = isZoomPreviewActive
     ? previewBoardScale
     : Math.min(defaultBoardScale, fitEntryScale);
+  const boardCameraWidth = boardViewportMetrics.frameWidth * boardWorldScale;
+  const boardCameraHeight = boardViewportMetrics.frameHeight * boardWorldScale;
+  const approximateBoardWidth = boardCameraWidth * targetBoardWidthFraction;
+  const approximateBoardHeight = boardCameraHeight * targetBoardHeightFraction;
+  const boardCellSize = Math.min(
+    approximateBoardWidth / game.puzzle.width,
+    approximateBoardHeight / game.puzzle.height,
+  );
+  const boardPixelWidth = boardCellSize * game.puzzle.width;
+  const boardPixelHeight = boardCellSize * game.puzzle.height;
+  const boardWidthFraction = boardPixelWidth / boardCameraWidth;
+  const boardHeightFraction = boardPixelHeight / boardCameraHeight;
+  const boardLeftFraction = (1 - boardWidthFraction) / 2;
+  const boardTopFraction = (1 - boardHeightFraction) / 2;
   const centerX = (minCol + maxCol) / (2 * game.puzzle.width);
   const centerY = (minRow + maxRow) / (2 * game.puzzle.height);
   const worldCenterX = boardLeftFraction + centerX * boardWidthFraction;
@@ -243,10 +257,10 @@ export function GameShell({
     top: `${boardCameraTop * 100}%`,
   };
   const boardGridStyle = {
-    left: `${boardLeftFraction * 100}%`,
-    top: `${boardTopFraction * 100}%`,
-    width: `${boardWidthFraction * 100}%`,
-    height: `${boardHeightFraction * 100}%`,
+    left: `${(boardCameraWidth - boardPixelWidth) / 2}px`,
+    top: `${(boardCameraHeight - boardPixelHeight) / 2}px`,
+    width: `${boardPixelWidth}px`,
+    height: `${boardPixelHeight}px`,
     gridTemplateColumns: `repeat(${game.puzzle.width}, minmax(0, 1fr))`,
     gridTemplateRows: `repeat(${game.puzzle.height}, minmax(0, 1fr))`,
   };
@@ -374,6 +388,8 @@ export function GameShell({
         visibleWidth: (visibleRight - visibleLeft) / boardFrameRect.width,
         visibleHeight: (visibleBottom - visibleTop) / boardFrameRect.height,
         frameAspectRatio: boardFrameRect.width / boardFrameRect.height,
+        frameWidth: boardFrameRect.width,
+        frameHeight: boardFrameRect.height,
       };
 
       setBoardViewportMetrics((currentCenter) => {
@@ -384,7 +400,9 @@ export function GameShell({
           Math.abs(currentCenter.centerY - nextCenter.centerY) < 0.001 &&
           Math.abs(currentCenter.visibleWidth - nextCenter.visibleWidth) < 0.001 &&
           Math.abs(currentCenter.visibleHeight - nextCenter.visibleHeight) < 0.001 &&
-          Math.abs(currentCenter.frameAspectRatio - nextCenter.frameAspectRatio) < 0.001
+          Math.abs(currentCenter.frameAspectRatio - nextCenter.frameAspectRatio) < 0.001 &&
+          Math.abs(currentCenter.frameWidth - nextCenter.frameWidth) < 0.5 &&
+          Math.abs(currentCenter.frameHeight - nextCenter.frameHeight) < 0.5
         ) {
           return currentCenter;
         }
