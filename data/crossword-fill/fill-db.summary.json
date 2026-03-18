@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-18T17:39:52.867Z",
+  "sourcePath": "Scored Answer Database/crossword-wordlist/crossword_wordlist.txt",
+  "normalization": {
+    "minLength": 3,
+    "maxLength": 15,
+    "normalizedFormat": "A-Z only",
+    "tierThresholds": [
+      {
+        "name": "preferred",
+        "minScore": 50,
+        "maxScore": null
+      },
+      {
+        "name": "strong",
+        "minScore": 40,
+        "maxScore": 49
+      },
+      {
+        "name": "acceptable",
+        "minScore": 25,
+        "maxScore": 39
+      },
+      {
+        "name": "fallback",
+        "minScore": 10,
+        "maxScore": 24
+      },
+      {
+        "name": "emergency",
+        "minScore": null,
+        "maxScore": 9
+      }
+    ]
+  },
+  "stats": {
+    "sourceEntries": 175873,
+    "malformedLines": 0,
+    "emptyNormalizedAnswers": 0,
+    "outOfRangeLength": 2236,
+    "duplicateVariantsCollapsed": 830,
+    "duplicateNormalizedForms": 2067,
+    "normalizedEntries": 171570
+  },
+  "byLength": {
+    "3": {
+      "total": 3572,
+      "preferred": 1770,
+      "strong": 346,
+      "acceptable": 789,
+      "fallback": 667,
+      "emergency": 0
+    },
+    "4": {
+      "total": 9220,
+      "preferred": 4499,
+      "strong": 915,
+      "acceptable": 1673,
+      "fallback": 1943,
+      "emergency": 190
+    },
+    "5": {
+      "total": 15377,
+      "preferred": 5952,
+      "strong": 2139,
+      "acceptable": 3832,
+      "fallback": 3194,
+      "emergency": 260
+    },
+    "6": {
+      "total": 20197,
+      "preferred": 3775,
+      "strong": 3690,
+      "acceptable": 8253,
+      "fallback": 4179,
+      "emergency": 300
+    },
+    "7": {
+      "total": 23964,
+      "preferred": 1807,
+      "strong": 4494,
+      "acceptable": 13050,
+      "fallback": 4544,
+      "emergency": 69
+    },
+    "8": {
+      "total": 23950,
+      "preferred": 1061,
+      "strong": 3545,
+      "acceptable": 15347,
+      "fallback": 3947,
+      "emergency": 50
+    },
+    "9": {
+      "total": 20431,
+      "preferred": 879,
+      "strong": 2384,
+      "acceptable": 13914,
+      "fallback": 3253,
+      "emergency": 1
+    },
+    "10": {
+      "total": 18263,
+      "preferred": 791,
+      "strong": 2145,
+      "acceptable": 12701,
+      "fallback": 2626,
+      "emergency": 0
+    },
+    "11": {
+      "total": 13529,
+      "preferred": 636,
+      "strong": 1744,
+      "acceptable": 9425,
+      "fallback": 1724,
+      "emergency": 0
+    },
+    "12": {
+      "total": 7900,
+      "preferred": 617,
+      "strong": 871,
+      "acceptable": 5320,
+      "fallback": 1092,
+      "emergency": 0
+    },
+    "13": {
+      "total": 5793,
+      "preferred": 452,
+      "strong": 1008,
+      "acceptable": 3830,
+      "fallback": 503,
+      "emergency": 0
+    },
+    "14": {
+      "total": 3566,
+      "preferred": 366,
+      "strong": 753,
+      "acceptable": 2237,
+      "fallback": 210,
+      "emergency": 0
+    },
+    "15": {
+      "total": 5808,
+      "preferred": 368,
+      "strong": 1924,
+      "acceptable": 3452,
+      "fallback": 64,
+      "emergency": 0
+    }
+  }
+}

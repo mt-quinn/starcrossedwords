@@ -734,6 +734,11 @@ button {
   text-transform: uppercase;
 }
 
+.menu-field input[type="password"] {
+  letter-spacing: normal;
+  text-transform: none;
+}
+
 .menu-error {
   color: var(--accent-strong);
   font-size: 0.84rem;
