@@ -17,6 +17,9 @@ export default function HomePage() {
           <Link className="ghost-button menu-button" href="/local">
             Test Local
           </Link>
+          <Link className="ghost-button menu-button" href="/generator">
+            Generator Lab
+          </Link>
         </div>
       </section>
     </main>

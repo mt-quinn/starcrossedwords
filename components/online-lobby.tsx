@@ -12,9 +12,10 @@ import {
   type RecentRoomSeat,
 } from "@/lib/rejoin-storage";
 
-export function OnlineLobby() {
+export function OnlineLobby({ curatedPuzzleNumbers }: { curatedPuzzleNumbers: number[] }) {
   const router = useRouter();
   const [roomCode, setRoomCode] = useState("");
+  const [puzzleSelection, setPuzzleSelection] = useState("random");
   const [isCreating, setIsCreating] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [recentSeats, setRecentSeats] = useState<RecentRoomSeat[]>([]);
@@ -40,6 +41,12 @@ export function OnlineLobby() {
     try {
       const response = await fetch("/api/online-room", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          puzzleSelection,
+        }),
       });
 
       const payload = (await response.json()) as {
@@ -119,6 +126,19 @@ export function OnlineLobby() {
             {isCreating ? "Creating..." : "Create Room"}
           </button>
         </div>
+
+        <label className="menu-field">
+          <span>Online Puzzle</span>
+          <select onChange={(event) => setPuzzleSelection(event.target.value)} value={puzzleSelection}>
+            <option value="random">Random puzzle (1-5)</option>
+            {curatedPuzzleNumbers.map((number) => (
+              <option key={number} value={String(number)}>
+                Puzzle {number}
+              </option>
+            ))}
+            <option value="legacy">Legacy</option>
+          </select>
+        </label>
 
         <label className="menu-field">
           <span>Join Room</span>

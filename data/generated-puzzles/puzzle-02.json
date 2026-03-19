@@ -1,0 +1,3577 @@
+{
+  "id": "2fa30b17-ba22-4648-9bf8-06e4970b58bd",
+  "fileName": "puzzle-02.json",
+  "templateId": "generated-online-02",
+  "generatedAt": "2026-03-19T01:06:25.581Z",
+  "puzzle": {
+    "title": "Generated Online Template 2 Generated Fill",
+    "author": "Star-crossed Words Generator",
+    "copyright": "Template derived from NY Times - 20100107.puz",
+    "width": 15,
+    "height": 15,
+    "cells": [
+      {
+        "index": 0,
+        "row": 0,
+        "col": 0,
+        "isBlock": false,
+        "solution": "O",
+        "value": "",
+        "number": 1,
+        "acrossEntryId": "1A",
+        "downEntryId": "1D"
+      },
+      {
+        "index": 1,
+        "row": 0,
+        "col": 1,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "acrossEntryId": "1A",
+        "number": 2,
+        "downEntryId": "2D"
+      },
+      {
+        "index": 2,
+        "row": 0,
+        "col": 2,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "acrossEntryId": "1A",
+        "number": 3,
+        "downEntryId": "3D"
+      },
+      {
+        "index": 3,
+        "row": 0,
+        "col": 3,
+        "isBlock": false,
+        "solution": "T",
+        "value": "",
+        "acrossEntryId": "1A",
+        "number": 4,
+        "downEntryId": "4D"
+      },
+      {
+        "index": 4,
+        "row": 0,
+        "col": 4,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "acrossEntryId": "1A",
+        "number": 5,
+        "downEntryId": "5D"
+      },
+      {
+        "index": 5,
+        "row": 0,
+        "col": 5,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "acrossEntryId": "1A",
+        "number": 6,
+        "downEntryId": "6D"
+      },
+      {
+        "index": 6,
+        "row": 0,
+        "col": 6,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "acrossEntryId": "1A",
+        "number": 7,
+        "downEntryId": "7D"
+      },
+      {
+        "index": 7,
+        "row": 0,
+        "col": 7,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 8,
+        "row": 0,
+        "col": 8,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 9,
+        "row": 0,
+        "col": 9,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "number": 8,
+        "acrossEntryId": "8A",
+        "downEntryId": "8D"
+      },
+      {
+        "index": 10,
+        "row": 0,
+        "col": 10,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "acrossEntryId": "8A",
+        "number": 9,
+        "downEntryId": "9D"
+      },
+      {
+        "index": 11,
+        "row": 0,
+        "col": 11,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "acrossEntryId": "8A",
+        "number": 10,
+        "downEntryId": "10D"
+      },
+      {
+        "index": 12,
+        "row": 0,
+        "col": 12,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "acrossEntryId": "8A",
+        "number": 11,
+        "downEntryId": "11D"
+      },
+      {
+        "index": 13,
+        "row": 0,
+        "col": 13,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "acrossEntryId": "8A",
+        "number": 12,
+        "downEntryId": "12D"
+      },
+      {
+        "index": 14,
+        "row": 0,
+        "col": 14,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "acrossEntryId": "8A",
+        "number": 13,
+        "downEntryId": "13D"
+      },
+      {
+        "index": 15,
+        "row": 1,
+        "col": 0,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "1D",
+        "number": 14,
+        "acrossEntryId": "14A"
+      },
+      {
+        "index": 16,
+        "row": 1,
+        "col": 1,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "downEntryId": "2D",
+        "acrossEntryId": "14A"
+      },
+      {
+        "index": 17,
+        "row": 1,
+        "col": 2,
+        "isBlock": false,
+        "solution": "F",
+        "value": "",
+        "downEntryId": "3D",
+        "acrossEntryId": "14A"
+      },
+      {
+        "index": 18,
+        "row": 1,
+        "col": 3,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "4D",
+        "acrossEntryId": "14A"
+      },
+      {
+        "index": 19,
+        "row": 1,
+        "col": 4,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "downEntryId": "5D",
+        "acrossEntryId": "14A"
+      },
+      {
+        "index": 20,
+        "row": 1,
+        "col": 5,
+        "isBlock": false,
+        "solution": "F",
+        "value": "",
+        "downEntryId": "6D",
+        "acrossEntryId": "14A"
+      },
+      {
+        "index": 21,
+        "row": 1,
+        "col": 6,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "7D",
+        "acrossEntryId": "14A"
+      },
+      {
+        "index": 22,
+        "row": 1,
+        "col": 7,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 23,
+        "row": 1,
+        "col": 8,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "number": 15,
+        "acrossEntryId": "15A",
+        "downEntryId": "15D"
+      },
+      {
+        "index": 24,
+        "row": 1,
+        "col": 9,
+        "isBlock": false,
+        "solution": "C",
+        "value": "",
+        "downEntryId": "8D",
+        "acrossEntryId": "15A"
+      },
+      {
+        "index": 25,
+        "row": 1,
+        "col": 10,
+        "isBlock": false,
+        "solution": "C",
+        "value": "",
+        "downEntryId": "9D",
+        "acrossEntryId": "15A"
+      },
+      {
+        "index": 26,
+        "row": 1,
+        "col": 11,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "10D",
+        "acrossEntryId": "15A"
+      },
+      {
+        "index": 27,
+        "row": 1,
+        "col": 12,
+        "isBlock": false,
+        "solution": "D",
+        "value": "",
+        "downEntryId": "11D",
+        "acrossEntryId": "15A"
+      },
+      {
+        "index": 28,
+        "row": 1,
+        "col": 13,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "12D",
+        "acrossEntryId": "15A"
+      },
+      {
+        "index": 29,
+        "row": 1,
+        "col": 14,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "13D",
+        "acrossEntryId": "15A"
+      },
+      {
+        "index": 30,
+        "row": 2,
+        "col": 0,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "1D",
+        "number": 16,
+        "acrossEntryId": "16A"
+      },
+      {
+        "index": 31,
+        "row": 2,
+        "col": 1,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "2D",
+        "acrossEntryId": "16A"
+      },
+      {
+        "index": 32,
+        "row": 2,
+        "col": 2,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "3D",
+        "acrossEntryId": "16A"
+      },
+      {
+        "index": 33,
+        "row": 2,
+        "col": 3,
+        "isBlock": false,
+        "solution": "P",
+        "value": "",
+        "downEntryId": "4D",
+        "acrossEntryId": "16A"
+      },
+      {
+        "index": 34,
+        "row": 2,
+        "col": 4,
+        "isBlock": false,
+        "solution": "O",
+        "value": "",
+        "downEntryId": "5D",
+        "acrossEntryId": "16A"
+      },
+      {
+        "index": 35,
+        "row": 2,
+        "col": 5,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "downEntryId": "6D",
+        "acrossEntryId": "16A"
+      },
+      {
+        "index": 36,
+        "row": 2,
+        "col": 6,
+        "isBlock": false,
+        "solution": "T",
+        "value": "",
+        "downEntryId": "7D",
+        "acrossEntryId": "16A"
+      },
+      {
+        "index": 37,
+        "row": 2,
+        "col": 7,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 38,
+        "row": 2,
+        "col": 8,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "15D",
+        "number": 17,
+        "acrossEntryId": "17A"
+      },
+      {
+        "index": 39,
+        "row": 2,
+        "col": 9,
+        "isBlock": false,
+        "solution": "D",
+        "value": "",
+        "downEntryId": "8D",
+        "acrossEntryId": "17A"
+      },
+      {
+        "index": 40,
+        "row": 2,
+        "col": 10,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "9D",
+        "acrossEntryId": "17A"
+      },
+      {
+        "index": 41,
+        "row": 2,
+        "col": 11,
+        "isBlock": false,
+        "solution": "G",
+        "value": "",
+        "downEntryId": "10D",
+        "acrossEntryId": "17A"
+      },
+      {
+        "index": 42,
+        "row": 2,
+        "col": 12,
+        "isBlock": false,
+        "solution": "I",
+        "value": "",
+        "downEntryId": "11D",
+        "acrossEntryId": "17A"
+      },
+      {
+        "index": 43,
+        "row": 2,
+        "col": 13,
+        "isBlock": false,
+        "solution": "O",
+        "value": "",
+        "downEntryId": "12D",
+        "acrossEntryId": "17A"
+      },
+      {
+        "index": 44,
+        "row": 2,
+        "col": 14,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "13D",
+        "acrossEntryId": "17A"
+      },
+      {
+        "index": 45,
+        "row": 3,
+        "col": 0,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "1D",
+        "number": 18,
+        "acrossEntryId": "18A"
+      },
+      {
+        "index": 46,
+        "row": 3,
+        "col": 1,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "downEntryId": "2D",
+        "acrossEntryId": "18A"
+      },
+      {
+        "index": 47,
+        "row": 3,
+        "col": 2,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "downEntryId": "3D",
+        "acrossEntryId": "18A"
+      },
+      {
+        "index": 48,
+        "row": 3,
+        "col": 3,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "4D",
+        "acrossEntryId": "18A"
+      },
+      {
+        "index": 49,
+        "row": 3,
+        "col": 4,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 50,
+        "row": 3,
+        "col": 5,
+        "isBlock": false,
+        "solution": "I",
+        "value": "",
+        "downEntryId": "6D",
+        "number": 19,
+        "acrossEntryId": "19A"
+      },
+      {
+        "index": 51,
+        "row": 3,
+        "col": 6,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "7D",
+        "acrossEntryId": "19A"
+      },
+      {
+        "index": 52,
+        "row": 3,
+        "col": 7,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "acrossEntryId": "19A",
+        "number": 20,
+        "downEntryId": "20D"
+      },
+      {
+        "index": 53,
+        "row": 3,
+        "col": 8,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "15D",
+        "acrossEntryId": "19A"
+      },
+      {
+        "index": 54,
+        "row": 3,
+        "col": 9,
+        "isBlock": false,
+        "solution": "C",
+        "value": "",
+        "downEntryId": "8D",
+        "acrossEntryId": "19A"
+      },
+      {
+        "index": 55,
+        "row": 3,
+        "col": 10,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 56,
+        "row": 3,
+        "col": 11,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "10D",
+        "number": 21,
+        "acrossEntryId": "21A"
+      },
+      {
+        "index": 57,
+        "row": 3,
+        "col": 12,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "downEntryId": "11D",
+        "acrossEntryId": "21A"
+      },
+      {
+        "index": 58,
+        "row": 3,
+        "col": 13,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "downEntryId": "12D",
+        "acrossEntryId": "21A"
+      },
+      {
+        "index": 59,
+        "row": 3,
+        "col": 14,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "13D",
+        "acrossEntryId": "21A"
+      },
+      {
+        "index": 60,
+        "row": 4,
+        "col": 0,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "1D",
+        "number": 22,
+        "acrossEntryId": "22A"
+      },
+      {
+        "index": 61,
+        "row": 4,
+        "col": 1,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "2D",
+        "acrossEntryId": "22A"
+      },
+      {
+        "index": 62,
+        "row": 4,
+        "col": 2,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "3D",
+        "acrossEntryId": "22A"
+      },
+      {
+        "index": 63,
+        "row": 4,
+        "col": 3,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 64,
+        "row": 4,
+        "col": 4,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "number": 23,
+        "acrossEntryId": "23A",
+        "downEntryId": "23D"
+      },
+      {
+        "index": 65,
+        "row": 4,
+        "col": 5,
+        "isBlock": false,
+        "solution": "C",
+        "value": "",
+        "downEntryId": "6D",
+        "acrossEntryId": "23A"
+      },
+      {
+        "index": 66,
+        "row": 4,
+        "col": 6,
+        "isBlock": false,
+        "solution": "O",
+        "value": "",
+        "downEntryId": "7D",
+        "acrossEntryId": "23A"
+      },
+      {
+        "index": 67,
+        "row": 4,
+        "col": 7,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "downEntryId": "20D",
+        "acrossEntryId": "23A"
+      },
+      {
+        "index": 68,
+        "row": 4,
+        "col": 8,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 69,
+        "row": 4,
+        "col": 9,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 70,
+        "row": 4,
+        "col": 10,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "number": 24,
+        "acrossEntryId": "24A",
+        "downEntryId": "24D"
+      },
+      {
+        "index": 71,
+        "row": 4,
+        "col": 11,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "downEntryId": "10D",
+        "acrossEntryId": "24A"
+      },
+      {
+        "index": 72,
+        "row": 4,
+        "col": 12,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "11D",
+        "acrossEntryId": "24A"
+      },
+      {
+        "index": 73,
+        "row": 4,
+        "col": 13,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "12D",
+        "acrossEntryId": "24A"
+      },
+      {
+        "index": 74,
+        "row": 4,
+        "col": 14,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "13D",
+        "acrossEntryId": "24A"
+      },
+      {
+        "index": 75,
+        "row": 5,
+        "col": 0,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 76,
+        "row": 5,
+        "col": 1,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 77,
+        "row": 5,
+        "col": 2,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 78,
+        "row": 5,
+        "col": 3,
+        "isBlock": false,
+        "solution": "I",
+        "value": "",
+        "number": 25,
+        "acrossEntryId": "25A",
+        "downEntryId": "25D"
+      },
+      {
+        "index": 79,
+        "row": 5,
+        "col": 4,
+        "isBlock": false,
+        "solution": "M",
+        "value": "",
+        "downEntryId": "23D",
+        "acrossEntryId": "25A"
+      },
+      {
+        "index": 80,
+        "row": 5,
+        "col": 5,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "6D",
+        "acrossEntryId": "25A"
+      },
+      {
+        "index": 81,
+        "row": 5,
+        "col": 6,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 82,
+        "row": 5,
+        "col": 7,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "downEntryId": "20D",
+        "number": 26,
+        "acrossEntryId": "26A"
+      },
+      {
+        "index": 83,
+        "row": 5,
+        "col": 8,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "acrossEntryId": "26A",
+        "number": 27,
+        "downEntryId": "27D"
+      },
+      {
+        "index": 84,
+        "row": 5,
+        "col": 9,
+        "isBlock": false,
+        "solution": "H",
+        "value": "",
+        "acrossEntryId": "26A",
+        "number": 28,
+        "downEntryId": "28D"
+      },
+      {
+        "index": 85,
+        "row": 5,
+        "col": 10,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "downEntryId": "24D",
+        "acrossEntryId": "26A"
+      },
+      {
+        "index": 86,
+        "row": 5,
+        "col": 11,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 87,
+        "row": 5,
+        "col": 12,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 88,
+        "row": 5,
+        "col": 13,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 89,
+        "row": 5,
+        "col": 14,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 90,
+        "row": 6,
+        "col": 0,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "number": 29,
+        "acrossEntryId": "29A",
+        "downEntryId": "29D"
+      },
+      {
+        "index": 91,
+        "row": 6,
+        "col": 1,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "acrossEntryId": "29A",
+        "number": 30,
+        "downEntryId": "30D"
+      },
+      {
+        "index": 92,
+        "row": 6,
+        "col": 2,
+        "isBlock": false,
+        "solution": "I",
+        "value": "",
+        "acrossEntryId": "29A",
+        "number": 31,
+        "downEntryId": "31D"
+      },
+      {
+        "index": 93,
+        "row": 6,
+        "col": 3,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "downEntryId": "25D",
+        "acrossEntryId": "29A"
+      },
+      {
+        "index": 94,
+        "row": 6,
+        "col": 4,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "23D",
+        "acrossEntryId": "29A"
+      },
+      {
+        "index": 95,
+        "row": 6,
+        "col": 5,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 96,
+        "row": 6,
+        "col": 6,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "number": 32,
+        "acrossEntryId": "32A",
+        "downEntryId": "32D"
+      },
+      {
+        "index": 97,
+        "row": 6,
+        "col": 7,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "20D",
+        "acrossEntryId": "32A"
+      },
+      {
+        "index": 98,
+        "row": 6,
+        "col": 8,
+        "isBlock": false,
+        "solution": "B",
+        "value": "",
+        "downEntryId": "27D",
+        "acrossEntryId": "32A"
+      },
+      {
+        "index": 99,
+        "row": 6,
+        "col": 9,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "28D",
+        "acrossEntryId": "32A"
+      },
+      {
+        "index": 100,
+        "row": 6,
+        "col": 10,
+        "isBlock": false,
+        "solution": "T",
+        "value": "",
+        "downEntryId": "24D",
+        "acrossEntryId": "32A"
+      },
+      {
+        "index": 101,
+        "row": 6,
+        "col": 11,
+        "isBlock": false,
+        "solution": "T",
+        "value": "",
+        "acrossEntryId": "32A",
+        "number": 33,
+        "downEntryId": "33D"
+      },
+      {
+        "index": 102,
+        "row": 6,
+        "col": 12,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "acrossEntryId": "32A",
+        "number": 34,
+        "downEntryId": "34D"
+      },
+      {
+        "index": 103,
+        "row": 6,
+        "col": 13,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "acrossEntryId": "32A",
+        "number": 35,
+        "downEntryId": "35D"
+      },
+      {
+        "index": 104,
+        "row": 6,
+        "col": 14,
+        "isBlock": false,
+        "solution": "Y",
+        "value": "",
+        "acrossEntryId": "32A",
+        "number": 36,
+        "downEntryId": "36D"
+      },
+      {
+        "index": 105,
+        "row": 7,
+        "col": 0,
+        "isBlock": false,
+        "solution": "M",
+        "value": "",
+        "downEntryId": "29D",
+        "number": 37,
+        "acrossEntryId": "37A"
+      },
+      {
+        "index": 106,
+        "row": 7,
+        "col": 1,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "30D",
+        "acrossEntryId": "37A"
+      },
+      {
+        "index": 107,
+        "row": 7,
+        "col": 2,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "31D",
+        "acrossEntryId": "37A"
+      },
+      {
+        "index": 108,
+        "row": 7,
+        "col": 3,
+        "isBlock": false,
+        "solution": "T",
+        "value": "",
+        "downEntryId": "25D",
+        "acrossEntryId": "37A"
+      },
+      {
+        "index": 109,
+        "row": 7,
+        "col": 4,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "downEntryId": "23D",
+        "acrossEntryId": "37A"
+      },
+      {
+        "index": 110,
+        "row": 7,
+        "col": 5,
+        "isBlock": false,
+        "solution": "U",
+        "value": "",
+        "acrossEntryId": "37A",
+        "number": 38,
+        "downEntryId": "38D"
+      },
+      {
+        "index": 111,
+        "row": 7,
+        "col": 6,
+        "isBlock": false,
+        "solution": "B",
+        "value": "",
+        "downEntryId": "32D",
+        "acrossEntryId": "37A"
+      },
+      {
+        "index": 112,
+        "row": 7,
+        "col": 7,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 113,
+        "row": 7,
+        "col": 8,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "27D",
+        "number": 39,
+        "acrossEntryId": "39A"
+      },
+      {
+        "index": 114,
+        "row": 7,
+        "col": 9,
+        "isBlock": false,
+        "solution": "D",
+        "value": "",
+        "downEntryId": "28D",
+        "acrossEntryId": "39A"
+      },
+      {
+        "index": 115,
+        "row": 7,
+        "col": 10,
+        "isBlock": false,
+        "solution": "D",
+        "value": "",
+        "downEntryId": "24D",
+        "acrossEntryId": "39A"
+      },
+      {
+        "index": 116,
+        "row": 7,
+        "col": 11,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "33D",
+        "acrossEntryId": "39A"
+      },
+      {
+        "index": 117,
+        "row": 7,
+        "col": 12,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "downEntryId": "34D",
+        "acrossEntryId": "39A"
+      },
+      {
+        "index": 118,
+        "row": 7,
+        "col": 13,
+        "isBlock": false,
+        "solution": "D",
+        "value": "",
+        "downEntryId": "35D",
+        "acrossEntryId": "39A"
+      },
+      {
+        "index": 119,
+        "row": 7,
+        "col": 14,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "36D",
+        "acrossEntryId": "39A"
+      },
+      {
+        "index": 120,
+        "row": 8,
+        "col": 0,
+        "isBlock": false,
+        "solution": "C",
+        "value": "",
+        "downEntryId": "29D",
+        "number": 40,
+        "acrossEntryId": "40A"
+      },
+      {
+        "index": 121,
+        "row": 8,
+        "col": 1,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "30D",
+        "acrossEntryId": "40A"
+      },
+      {
+        "index": 122,
+        "row": 8,
+        "col": 2,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "downEntryId": "31D",
+        "acrossEntryId": "40A"
+      },
+      {
+        "index": 123,
+        "row": 8,
+        "col": 3,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "downEntryId": "25D",
+        "acrossEntryId": "40A"
+      },
+      {
+        "index": 124,
+        "row": 8,
+        "col": 4,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "23D",
+        "acrossEntryId": "40A"
+      },
+      {
+        "index": 125,
+        "row": 8,
+        "col": 5,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "38D",
+        "acrossEntryId": "40A"
+      },
+      {
+        "index": 126,
+        "row": 8,
+        "col": 6,
+        "isBlock": false,
+        "solution": "C",
+        "value": "",
+        "downEntryId": "32D",
+        "acrossEntryId": "40A"
+      },
+      {
+        "index": 127,
+        "row": 8,
+        "col": 7,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "acrossEntryId": "40A",
+        "number": 41,
+        "downEntryId": "41D"
+      },
+      {
+        "index": 128,
+        "row": 8,
+        "col": 8,
+        "isBlock": false,
+        "solution": "B",
+        "value": "",
+        "downEntryId": "27D",
+        "acrossEntryId": "40A"
+      },
+      {
+        "index": 129,
+        "row": 8,
+        "col": 9,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 130,
+        "row": 8,
+        "col": 10,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "24D",
+        "number": 42,
+        "acrossEntryId": "42A"
+      },
+      {
+        "index": 131,
+        "row": 8,
+        "col": 11,
+        "isBlock": false,
+        "solution": "C",
+        "value": "",
+        "downEntryId": "33D",
+        "acrossEntryId": "42A"
+      },
+      {
+        "index": 132,
+        "row": 8,
+        "col": 12,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "34D",
+        "acrossEntryId": "42A"
+      },
+      {
+        "index": 133,
+        "row": 8,
+        "col": 13,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "35D",
+        "acrossEntryId": "42A"
+      },
+      {
+        "index": 134,
+        "row": 8,
+        "col": 14,
+        "isBlock": false,
+        "solution": "H",
+        "value": "",
+        "downEntryId": "36D",
+        "acrossEntryId": "42A"
+      },
+      {
+        "index": 135,
+        "row": 9,
+        "col": 0,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 136,
+        "row": 9,
+        "col": 1,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 137,
+        "row": 9,
+        "col": 2,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 138,
+        "row": 9,
+        "col": 3,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 139,
+        "row": 9,
+        "col": 4,
+        "isBlock": false,
+        "solution": "O",
+        "value": "",
+        "downEntryId": "23D",
+        "number": 43,
+        "acrossEntryId": "43A"
+      },
+      {
+        "index": 140,
+        "row": 9,
+        "col": 5,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "38D",
+        "acrossEntryId": "43A"
+      },
+      {
+        "index": 141,
+        "row": 9,
+        "col": 6,
+        "isBlock": false,
+        "solution": "D",
+        "value": "",
+        "downEntryId": "32D",
+        "acrossEntryId": "43A"
+      },
+      {
+        "index": 142,
+        "row": 9,
+        "col": 7,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "41D",
+        "acrossEntryId": "43A"
+      },
+      {
+        "index": 143,
+        "row": 9,
+        "col": 8,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 144,
+        "row": 9,
+        "col": 9,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "number": 44,
+        "acrossEntryId": "44A",
+        "downEntryId": "44D"
+      },
+      {
+        "index": 145,
+        "row": 9,
+        "col": 10,
+        "isBlock": false,
+        "solution": "C",
+        "value": "",
+        "downEntryId": "24D",
+        "acrossEntryId": "44A"
+      },
+      {
+        "index": 146,
+        "row": 9,
+        "col": 11,
+        "isBlock": false,
+        "solution": "H",
+        "value": "",
+        "downEntryId": "33D",
+        "acrossEntryId": "44A"
+      },
+      {
+        "index": 147,
+        "row": 9,
+        "col": 12,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 148,
+        "row": 9,
+        "col": 13,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 149,
+        "row": 9,
+        "col": 14,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 150,
+        "row": 10,
+        "col": 0,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "number": 45,
+        "acrossEntryId": "45A",
+        "downEntryId": "45D"
+      },
+      {
+        "index": 151,
+        "row": 10,
+        "col": 1,
+        "isBlock": false,
+        "solution": "O",
+        "value": "",
+        "acrossEntryId": "45A",
+        "number": 46,
+        "downEntryId": "46D"
+      },
+      {
+        "index": 152,
+        "row": 10,
+        "col": 2,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "acrossEntryId": "45A",
+        "number": 47,
+        "downEntryId": "47D"
+      },
+      {
+        "index": 153,
+        "row": 10,
+        "col": 3,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "acrossEntryId": "45A",
+        "number": 48,
+        "downEntryId": "48D"
+      },
+      {
+        "index": 154,
+        "row": 10,
+        "col": 4,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "downEntryId": "23D",
+        "acrossEntryId": "45A"
+      },
+      {
+        "index": 155,
+        "row": 10,
+        "col": 5,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 156,
+        "row": 10,
+        "col": 6,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 157,
+        "row": 10,
+        "col": 7,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "41D",
+        "number": 49,
+        "acrossEntryId": "49A"
+      },
+      {
+        "index": 158,
+        "row": 10,
+        "col": 8,
+        "isBlock": false,
+        "solution": "B",
+        "value": "",
+        "acrossEntryId": "49A",
+        "number": 50,
+        "downEntryId": "50D"
+      },
+      {
+        "index": 159,
+        "row": 10,
+        "col": 9,
+        "isBlock": false,
+        "solution": "O",
+        "value": "",
+        "downEntryId": "44D",
+        "acrossEntryId": "49A"
+      },
+      {
+        "index": 160,
+        "row": 10,
+        "col": 10,
+        "isBlock": false,
+        "solution": "O",
+        "value": "",
+        "downEntryId": "24D",
+        "acrossEntryId": "49A"
+      },
+      {
+        "index": 161,
+        "row": 10,
+        "col": 11,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 162,
+        "row": 10,
+        "col": 12,
+        "isBlock": false,
+        "solution": "W",
+        "value": "",
+        "number": 51,
+        "acrossEntryId": "51A",
+        "downEntryId": "51D"
+      },
+      {
+        "index": 163,
+        "row": 10,
+        "col": 13,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "acrossEntryId": "51A",
+        "number": 52,
+        "downEntryId": "52D"
+      },
+      {
+        "index": 164,
+        "row": 10,
+        "col": 14,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "acrossEntryId": "51A",
+        "number": 53,
+        "downEntryId": "53D"
+      },
+      {
+        "index": 165,
+        "row": 11,
+        "col": 0,
+        "isBlock": false,
+        "solution": "G",
+        "value": "",
+        "downEntryId": "45D",
+        "number": 54,
+        "acrossEntryId": "54A"
+      },
+      {
+        "index": 166,
+        "row": 11,
+        "col": 1,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "downEntryId": "46D",
+        "acrossEntryId": "54A"
+      },
+      {
+        "index": 167,
+        "row": 11,
+        "col": 2,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "47D",
+        "acrossEntryId": "54A"
+      },
+      {
+        "index": 168,
+        "row": 11,
+        "col": 3,
+        "isBlock": false,
+        "solution": "F",
+        "value": "",
+        "downEntryId": "48D",
+        "acrossEntryId": "54A"
+      },
+      {
+        "index": 169,
+        "row": 11,
+        "col": 4,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 170,
+        "row": 11,
+        "col": 5,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "number": 55,
+        "acrossEntryId": "55A",
+        "downEntryId": "55D"
+      },
+      {
+        "index": 171,
+        "row": 11,
+        "col": 6,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "acrossEntryId": "55A",
+        "number": 56,
+        "downEntryId": "56D"
+      },
+      {
+        "index": 172,
+        "row": 11,
+        "col": 7,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "downEntryId": "41D",
+        "acrossEntryId": "55A"
+      },
+      {
+        "index": 173,
+        "row": 11,
+        "col": 8,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "50D",
+        "acrossEntryId": "55A"
+      },
+      {
+        "index": 174,
+        "row": 11,
+        "col": 9,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "downEntryId": "44D",
+        "acrossEntryId": "55A"
+      },
+      {
+        "index": 175,
+        "row": 11,
+        "col": 10,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 176,
+        "row": 11,
+        "col": 11,
+        "isBlock": false,
+        "solution": "G",
+        "value": "",
+        "number": 57,
+        "acrossEntryId": "57A",
+        "downEntryId": "57D"
+      },
+      {
+        "index": 177,
+        "row": 11,
+        "col": 12,
+        "isBlock": false,
+        "solution": "I",
+        "value": "",
+        "downEntryId": "51D",
+        "acrossEntryId": "57A"
+      },
+      {
+        "index": 178,
+        "row": 11,
+        "col": 13,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "downEntryId": "52D",
+        "acrossEntryId": "57A"
+      },
+      {
+        "index": 179,
+        "row": 11,
+        "col": 14,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "53D",
+        "acrossEntryId": "57A"
+      },
+      {
+        "index": 180,
+        "row": 12,
+        "col": 0,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "45D",
+        "number": 58,
+        "acrossEntryId": "58A"
+      },
+      {
+        "index": 181,
+        "row": 12,
+        "col": 1,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "46D",
+        "acrossEntryId": "58A"
+      },
+      {
+        "index": 182,
+        "row": 12,
+        "col": 2,
+        "isBlock": false,
+        "solution": "M",
+        "value": "",
+        "downEntryId": "47D",
+        "acrossEntryId": "58A"
+      },
+      {
+        "index": 183,
+        "row": 12,
+        "col": 3,
+        "isBlock": false,
+        "solution": "I",
+        "value": "",
+        "downEntryId": "48D",
+        "acrossEntryId": "58A"
+      },
+      {
+        "index": 184,
+        "row": 12,
+        "col": 4,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "acrossEntryId": "58A",
+        "number": 59,
+        "downEntryId": "59D"
+      },
+      {
+        "index": 185,
+        "row": 12,
+        "col": 5,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "downEntryId": "55D",
+        "acrossEntryId": "58A"
+      },
+      {
+        "index": 186,
+        "row": 12,
+        "col": 6,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "56D",
+        "acrossEntryId": "58A"
+      },
+      {
+        "index": 187,
+        "row": 12,
+        "col": 7,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 188,
+        "row": 12,
+        "col": 8,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "50D",
+        "number": 60,
+        "acrossEntryId": "60A"
+      },
+      {
+        "index": 189,
+        "row": 12,
+        "col": 9,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "44D",
+        "acrossEntryId": "60A"
+      },
+      {
+        "index": 190,
+        "row": 12,
+        "col": 10,
+        "isBlock": false,
+        "solution": "C",
+        "value": "",
+        "acrossEntryId": "60A",
+        "number": 61,
+        "downEntryId": "61D"
+      },
+      {
+        "index": 191,
+        "row": 12,
+        "col": 11,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "57D",
+        "acrossEntryId": "60A"
+      },
+      {
+        "index": 192,
+        "row": 12,
+        "col": 12,
+        "isBlock": false,
+        "solution": "D",
+        "value": "",
+        "downEntryId": "51D",
+        "acrossEntryId": "60A"
+      },
+      {
+        "index": 193,
+        "row": 12,
+        "col": 13,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "52D",
+        "acrossEntryId": "60A"
+      },
+      {
+        "index": 194,
+        "row": 12,
+        "col": 14,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "53D",
+        "acrossEntryId": "60A"
+      },
+      {
+        "index": 195,
+        "row": 13,
+        "col": 0,
+        "isBlock": false,
+        "solution": "I",
+        "value": "",
+        "downEntryId": "45D",
+        "number": 62,
+        "acrossEntryId": "62A"
+      },
+      {
+        "index": 196,
+        "row": 13,
+        "col": 1,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "downEntryId": "46D",
+        "acrossEntryId": "62A"
+      },
+      {
+        "index": 197,
+        "row": 13,
+        "col": 2,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "47D",
+        "acrossEntryId": "62A"
+      },
+      {
+        "index": 198,
+        "row": 13,
+        "col": 3,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "downEntryId": "48D",
+        "acrossEntryId": "62A"
+      },
+      {
+        "index": 199,
+        "row": 13,
+        "col": 4,
+        "isBlock": false,
+        "solution": "T",
+        "value": "",
+        "downEntryId": "59D",
+        "acrossEntryId": "62A"
+      },
+      {
+        "index": 200,
+        "row": 13,
+        "col": 5,
+        "isBlock": false,
+        "solution": "I",
+        "value": "",
+        "downEntryId": "55D",
+        "acrossEntryId": "62A"
+      },
+      {
+        "index": 201,
+        "row": 13,
+        "col": 6,
+        "isBlock": false,
+        "solution": "A",
+        "value": "",
+        "downEntryId": "56D",
+        "acrossEntryId": "62A"
+      },
+      {
+        "index": 202,
+        "row": 13,
+        "col": 7,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 203,
+        "row": 13,
+        "col": 8,
+        "isBlock": false,
+        "solution": "I",
+        "value": "",
+        "downEntryId": "50D",
+        "number": 63,
+        "acrossEntryId": "63A"
+      },
+      {
+        "index": 204,
+        "row": 13,
+        "col": 9,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "downEntryId": "44D",
+        "acrossEntryId": "63A"
+      },
+      {
+        "index": 205,
+        "row": 13,
+        "col": 10,
+        "isBlock": false,
+        "solution": "O",
+        "value": "",
+        "downEntryId": "61D",
+        "acrossEntryId": "63A"
+      },
+      {
+        "index": 206,
+        "row": 13,
+        "col": 11,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "downEntryId": "57D",
+        "acrossEntryId": "63A"
+      },
+      {
+        "index": 207,
+        "row": 13,
+        "col": 12,
+        "isBlock": false,
+        "solution": "O",
+        "value": "",
+        "downEntryId": "51D",
+        "acrossEntryId": "63A"
+      },
+      {
+        "index": 208,
+        "row": 13,
+        "col": 13,
+        "isBlock": false,
+        "solution": "N",
+        "value": "",
+        "downEntryId": "52D",
+        "acrossEntryId": "63A"
+      },
+      {
+        "index": 209,
+        "row": 13,
+        "col": 14,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "53D",
+        "acrossEntryId": "63A"
+      },
+      {
+        "index": 210,
+        "row": 14,
+        "col": 0,
+        "isBlock": false,
+        "solution": "O",
+        "value": "",
+        "downEntryId": "45D",
+        "number": 64,
+        "acrossEntryId": "64A"
+      },
+      {
+        "index": 211,
+        "row": 14,
+        "col": 1,
+        "isBlock": false,
+        "solution": "G",
+        "value": "",
+        "downEntryId": "46D",
+        "acrossEntryId": "64A"
+      },
+      {
+        "index": 212,
+        "row": 14,
+        "col": 2,
+        "isBlock": false,
+        "solution": "R",
+        "value": "",
+        "downEntryId": "47D",
+        "acrossEntryId": "64A"
+      },
+      {
+        "index": 213,
+        "row": 14,
+        "col": 3,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "48D",
+        "acrossEntryId": "64A"
+      },
+      {
+        "index": 214,
+        "row": 14,
+        "col": 4,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "59D",
+        "acrossEntryId": "64A"
+      },
+      {
+        "index": 215,
+        "row": 14,
+        "col": 5,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "55D",
+        "acrossEntryId": "64A"
+      },
+      {
+        "index": 216,
+        "row": 14,
+        "col": 6,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 217,
+        "row": 14,
+        "col": 7,
+        "isBlock": true,
+        "solution": "",
+        "value": ""
+      },
+      {
+        "index": 218,
+        "row": 14,
+        "col": 8,
+        "isBlock": false,
+        "solution": "C",
+        "value": "",
+        "downEntryId": "50D",
+        "number": 65,
+        "acrossEntryId": "65A"
+      },
+      {
+        "index": 219,
+        "row": 14,
+        "col": 9,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "44D",
+        "acrossEntryId": "65A"
+      },
+      {
+        "index": 220,
+        "row": 14,
+        "col": 10,
+        "isBlock": false,
+        "solution": "L",
+        "value": "",
+        "downEntryId": "61D",
+        "acrossEntryId": "65A"
+      },
+      {
+        "index": 221,
+        "row": 14,
+        "col": 11,
+        "isBlock": false,
+        "solution": "E",
+        "value": "",
+        "downEntryId": "57D",
+        "acrossEntryId": "65A"
+      },
+      {
+        "index": 222,
+        "row": 14,
+        "col": 12,
+        "isBlock": false,
+        "solution": "W",
+        "value": "",
+        "downEntryId": "51D",
+        "acrossEntryId": "65A"
+      },
+      {
+        "index": 223,
+        "row": 14,
+        "col": 13,
+        "isBlock": false,
+        "solution": "I",
+        "value": "",
+        "downEntryId": "52D",
+        "acrossEntryId": "65A"
+      },
+      {
+        "index": 224,
+        "row": 14,
+        "col": 14,
+        "isBlock": false,
+        "solution": "S",
+        "value": "",
+        "downEntryId": "53D",
+        "acrossEntryId": "65A"
+      }
+    ],
+    "entries": [
+      {
+        "id": "1A",
+        "number": 1,
+        "direction": "across",
+        "row": 0,
+        "col": 0,
+        "length": 7,
+        "answer": "ONATEAR",
+        "clue": "",
+        "cellIndices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      {
+        "id": "1D",
+        "number": 1,
+        "direction": "down",
+        "row": 0,
+        "col": 0,
+        "length": 5,
+        "answer": "OASES",
+        "clue": "",
+        "cellIndices": [
+          0,
+          15,
+          30,
+          45,
+          60
+        ]
+      },
+      {
+        "id": "2D",
+        "number": 2,
+        "direction": "down",
+        "row": 0,
+        "col": 1,
+        "length": 5,
+        "answer": "NLERS",
+        "clue": "",
+        "cellIndices": [
+          1,
+          16,
+          31,
+          46,
+          61
+        ]
+      },
+      {
+        "id": "3D",
+        "number": 3,
+        "direction": "down",
+        "row": 0,
+        "col": 2,
+        "length": 5,
+        "answer": "AFARS",
+        "clue": "",
+        "cellIndices": [
+          2,
+          17,
+          32,
+          47,
+          62
+        ]
+      },
+      {
+        "id": "4D",
+        "number": 4,
+        "direction": "down",
+        "row": 0,
+        "col": 3,
+        "length": 4,
+        "answer": "TAPS",
+        "clue": "",
+        "cellIndices": [
+          3,
+          18,
+          33,
+          48
+        ]
+      },
+      {
+        "id": "5D",
+        "number": 5,
+        "direction": "down",
+        "row": 0,
+        "col": 4,
+        "length": 3,
+        "answer": "ELO",
+        "clue": "",
+        "cellIndices": [
+          4,
+          19,
+          34
+        ]
+      },
+      {
+        "id": "6D",
+        "number": 6,
+        "direction": "down",
+        "row": 0,
+        "col": 5,
+        "length": 6,
+        "answer": "AFRICA",
+        "clue": "",
+        "cellIndices": [
+          5,
+          20,
+          35,
+          50,
+          65,
+          80
+        ]
+      },
+      {
+        "id": "7D",
+        "number": 7,
+        "direction": "down",
+        "row": 0,
+        "col": 6,
+        "length": 5,
+        "answer": "RATSO",
+        "clue": "",
+        "cellIndices": [
+          6,
+          21,
+          36,
+          51,
+          66
+        ]
+      },
+      {
+        "id": "8A",
+        "number": 8,
+        "direction": "across",
+        "row": 0,
+        "col": 9,
+        "length": 6,
+        "answer": "ARLENE",
+        "clue": "",
+        "cellIndices": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "id": "8D",
+        "number": 8,
+        "direction": "down",
+        "row": 0,
+        "col": 9,
+        "length": 4,
+        "answer": "ACDC",
+        "clue": "",
+        "cellIndices": [
+          9,
+          24,
+          39,
+          54
+        ]
+      },
+      {
+        "id": "9D",
+        "number": 9,
+        "direction": "down",
+        "row": 0,
+        "col": 10,
+        "length": 3,
+        "answer": "RCA",
+        "clue": "",
+        "cellIndices": [
+          10,
+          25,
+          40
+        ]
+      },
+      {
+        "id": "10D",
+        "number": 10,
+        "direction": "down",
+        "row": 0,
+        "col": 11,
+        "length": 5,
+        "answer": "LEGAL",
+        "clue": "",
+        "cellIndices": [
+          11,
+          26,
+          41,
+          56,
+          71
+        ]
+      },
+      {
+        "id": "11D",
+        "number": 11,
+        "direction": "down",
+        "row": 0,
+        "col": 12,
+        "length": 5,
+        "answer": "EDINA",
+        "clue": "",
+        "cellIndices": [
+          12,
+          27,
+          42,
+          57,
+          72
+        ]
+      },
+      {
+        "id": "12D",
+        "number": 12,
+        "direction": "down",
+        "row": 0,
+        "col": 13,
+        "length": 5,
+        "answer": "NEONS",
+        "clue": "",
+        "cellIndices": [
+          13,
+          28,
+          43,
+          58,
+          73
+        ]
+      },
+      {
+        "id": "13D",
+        "number": 13,
+        "direction": "down",
+        "row": 0,
+        "col": 14,
+        "length": 5,
+        "answer": "ESSES",
+        "clue": "",
+        "cellIndices": [
+          14,
+          29,
+          44,
+          59,
+          74
+        ]
+      },
+      {
+        "id": "14A",
+        "number": 14,
+        "direction": "across",
+        "row": 1,
+        "col": 0,
+        "length": 7,
+        "answer": "ALFALFA",
+        "clue": "",
+        "cellIndices": [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ]
+      },
+      {
+        "id": "15A",
+        "number": 15,
+        "direction": "across",
+        "row": 1,
+        "col": 8,
+        "length": 7,
+        "answer": "ACCEDES",
+        "clue": "",
+        "cellIndices": [
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ]
+      },
+      {
+        "id": "15D",
+        "number": 15,
+        "direction": "down",
+        "row": 1,
+        "col": 8,
+        "length": 3,
+        "answer": "AAA",
+        "clue": "",
+        "cellIndices": [
+          23,
+          38,
+          53
+        ]
+      },
+      {
+        "id": "16A",
+        "number": 16,
+        "direction": "across",
+        "row": 2,
+        "col": 0,
+        "length": 7,
+        "answer": "SEAPORT",
+        "clue": "",
+        "cellIndices": [
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36
+        ]
+      },
+      {
+        "id": "17A",
+        "number": 17,
+        "direction": "across",
+        "row": 2,
+        "col": 8,
+        "length": 7,
+        "answer": "ADAGIOS",
+        "clue": "",
+        "cellIndices": [
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ]
+      },
+      {
+        "id": "18A",
+        "number": 18,
+        "direction": "across",
+        "row": 3,
+        "col": 0,
+        "length": 4,
+        "answer": "ERRS",
+        "clue": "",
+        "cellIndices": [
+          45,
+          46,
+          47,
+          48
+        ]
+      },
+      {
+        "id": "19A",
+        "number": 19,
+        "direction": "across",
+        "row": 3,
+        "col": 5,
+        "length": 5,
+        "answer": "ISAAC",
+        "clue": "",
+        "cellIndices": [
+          50,
+          51,
+          52,
+          53,
+          54
+        ]
+      },
+      {
+        "id": "20D",
+        "number": 20,
+        "direction": "down",
+        "row": 3,
+        "col": 7,
+        "length": 4,
+        "answer": "ALLA",
+        "clue": "",
+        "cellIndices": [
+          52,
+          67,
+          82,
+          97
+        ]
+      },
+      {
+        "id": "21A",
+        "number": 21,
+        "direction": "across",
+        "row": 3,
+        "col": 11,
+        "length": 4,
+        "answer": "ANNE",
+        "clue": "",
+        "cellIndices": [
+          56,
+          57,
+          58,
+          59
+        ]
+      },
+      {
+        "id": "22A",
+        "number": 22,
+        "direction": "across",
+        "row": 4,
+        "col": 0,
+        "length": 3,
+        "answer": "SSS",
+        "clue": "",
+        "cellIndices": [
+          60,
+          61,
+          62
+        ]
+      },
+      {
+        "id": "23A",
+        "number": 23,
+        "direction": "across",
+        "row": 4,
+        "col": 4,
+        "length": 4,
+        "answer": "ECOL",
+        "clue": "",
+        "cellIndices": [
+          64,
+          65,
+          66,
+          67
+        ]
+      },
+      {
+        "id": "23D",
+        "number": 23,
+        "direction": "down",
+        "row": 4,
+        "col": 4,
+        "length": 7,
+        "answer": "EMERSON",
+        "clue": "",
+        "cellIndices": [
+          64,
+          79,
+          94,
+          109,
+          124,
+          139,
+          154
+        ]
+      },
+      {
+        "id": "24A",
+        "number": 24,
+        "direction": "across",
+        "row": 4,
+        "col": 10,
+        "length": 5,
+        "answer": "ALASS",
+        "clue": "",
+        "cellIndices": [
+          70,
+          71,
+          72,
+          73,
+          74
+        ]
+      },
+      {
+        "id": "24D",
+        "number": 24,
+        "direction": "down",
+        "row": 4,
+        "col": 10,
+        "length": 7,
+        "answer": "ARTDECO",
+        "clue": "",
+        "cellIndices": [
+          70,
+          85,
+          100,
+          115,
+          130,
+          145,
+          160
+        ]
+      },
+      {
+        "id": "25A",
+        "number": 25,
+        "direction": "across",
+        "row": 5,
+        "col": 3,
+        "length": 3,
+        "answer": "IMA",
+        "clue": "",
+        "cellIndices": [
+          78,
+          79,
+          80
+        ]
+      },
+      {
+        "id": "25D",
+        "number": 25,
+        "direction": "down",
+        "row": 5,
+        "col": 3,
+        "length": 4,
+        "answer": "INTL",
+        "clue": "",
+        "cellIndices": [
+          78,
+          93,
+          108,
+          123
+        ]
+      },
+      {
+        "id": "26A",
+        "number": 26,
+        "direction": "across",
+        "row": 5,
+        "col": 7,
+        "length": 4,
+        "answer": "LAHR",
+        "clue": "",
+        "cellIndices": [
+          82,
+          83,
+          84,
+          85
+        ]
+      },
+      {
+        "id": "27D",
+        "number": 27,
+        "direction": "down",
+        "row": 5,
+        "col": 8,
+        "length": 4,
+        "answer": "ABAB",
+        "clue": "",
+        "cellIndices": [
+          83,
+          98,
+          113,
+          128
+        ]
+      },
+      {
+        "id": "28D",
+        "number": 28,
+        "direction": "down",
+        "row": 5,
+        "col": 9,
+        "length": 3,
+        "answer": "HAD",
+        "clue": "",
+        "cellIndices": [
+          84,
+          99,
+          114
+        ]
+      },
+      {
+        "id": "29A",
+        "number": 29,
+        "direction": "across",
+        "row": 6,
+        "col": 0,
+        "length": 5,
+        "answer": "ALINE",
+        "clue": "",
+        "cellIndices": [
+          90,
+          91,
+          92,
+          93,
+          94
+        ]
+      },
+      {
+        "id": "29D",
+        "number": 29,
+        "direction": "down",
+        "row": 6,
+        "col": 0,
+        "length": 3,
+        "answer": "AMC",
+        "clue": "",
+        "cellIndices": [
+          90,
+          105,
+          120
+        ]
+      },
+      {
+        "id": "30D",
+        "number": 30,
+        "direction": "down",
+        "row": 6,
+        "col": 1,
+        "length": 3,
+        "answer": "LEA",
+        "clue": "",
+        "cellIndices": [
+          91,
+          106,
+          121
+        ]
+      },
+      {
+        "id": "31D",
+        "number": 31,
+        "direction": "down",
+        "row": 6,
+        "col": 2,
+        "length": 3,
+        "answer": "IAL",
+        "clue": "",
+        "cellIndices": [
+          92,
+          107,
+          122
+        ]
+      },
+      {
+        "id": "32A",
+        "number": 32,
+        "direction": "across",
+        "row": 6,
+        "col": 6,
+        "length": 9,
+        "answer": "AABATTERY",
+        "clue": "",
+        "cellIndices": [
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104
+        ]
+      },
+      {
+        "id": "32D",
+        "number": 32,
+        "direction": "down",
+        "row": 6,
+        "col": 6,
+        "length": 4,
+        "answer": "ABCD",
+        "clue": "",
+        "cellIndices": [
+          96,
+          111,
+          126,
+          141
+        ]
+      },
+      {
+        "id": "33D",
+        "number": 33,
+        "direction": "down",
+        "row": 6,
+        "col": 11,
+        "length": 4,
+        "answer": "TECH",
+        "clue": "",
+        "cellIndices": [
+          101,
+          116,
+          131,
+          146
+        ]
+      },
+      {
+        "id": "34D",
+        "number": 34,
+        "direction": "down",
+        "row": 6,
+        "col": 12,
+        "length": 3,
+        "answer": "ENA",
+        "clue": "",
+        "cellIndices": [
+          102,
+          117,
+          132
+        ]
+      },
+      {
+        "id": "35D",
+        "number": 35,
+        "direction": "down",
+        "row": 6,
+        "col": 13,
+        "length": 3,
+        "answer": "RDS",
+        "clue": "",
+        "cellIndices": [
+          103,
+          118,
+          133
+        ]
+      },
+      {
+        "id": "36D",
+        "number": 36,
+        "direction": "down",
+        "row": 6,
+        "col": 14,
+        "length": 3,
+        "answer": "YAH",
+        "clue": "",
+        "cellIndices": [
+          104,
+          119,
+          134
+        ]
+      },
+      {
+        "id": "37A",
+        "number": 37,
+        "direction": "across",
+        "row": 7,
+        "col": 0,
+        "length": 7,
+        "answer": "MEATRUB",
+        "clue": "",
+        "cellIndices": [
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111
+        ]
+      },
+      {
+        "id": "38D",
+        "number": 38,
+        "direction": "down",
+        "row": 7,
+        "col": 5,
+        "length": 3,
+        "answer": "UAE",
+        "clue": "",
+        "cellIndices": [
+          110,
+          125,
+          140
+        ]
+      },
+      {
+        "id": "39A",
+        "number": 39,
+        "direction": "across",
+        "row": 7,
+        "col": 8,
+        "length": 7,
+        "answer": "ADDENDA",
+        "clue": "",
+        "cellIndices": [
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119
+        ]
+      },
+      {
+        "id": "40A",
+        "number": 40,
+        "direction": "across",
+        "row": 8,
+        "col": 0,
+        "length": 9,
+        "answer": "CALLSACAB",
+        "clue": "",
+        "cellIndices": [
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128
+        ]
+      },
+      {
+        "id": "41D",
+        "number": 41,
+        "direction": "down",
+        "row": 8,
+        "col": 7,
+        "length": 4,
+        "answer": "ASAN",
+        "clue": "",
+        "cellIndices": [
+          127,
+          142,
+          157,
+          172
+        ]
+      },
+      {
+        "id": "42A",
+        "number": 42,
+        "direction": "across",
+        "row": 8,
+        "col": 10,
+        "length": 5,
+        "answer": "ECASH",
+        "clue": "",
+        "cellIndices": [
+          130,
+          131,
+          132,
+          133,
+          134
+        ]
+      },
+      {
+        "id": "43A",
+        "number": 43,
+        "direction": "across",
+        "row": 9,
+        "col": 4,
+        "length": 4,
+        "answer": "OEDS",
+        "clue": "",
+        "cellIndices": [
+          139,
+          140,
+          141,
+          142
+        ]
+      },
+      {
+        "id": "44A",
+        "number": 44,
+        "direction": "across",
+        "row": 9,
+        "col": 9,
+        "length": 3,
+        "answer": "ACH",
+        "clue": "",
+        "cellIndices": [
+          144,
+          145,
+          146
+        ]
+      },
+      {
+        "id": "44D",
+        "number": 44,
+        "direction": "down",
+        "row": 9,
+        "col": 9,
+        "length": 6,
+        "answer": "AOLERS",
+        "clue": "",
+        "cellIndices": [
+          144,
+          159,
+          174,
+          189,
+          204,
+          219
+        ]
+      },
+      {
+        "id": "45A",
+        "number": 45,
+        "direction": "across",
+        "row": 10,
+        "col": 0,
+        "length": 5,
+        "answer": "NOLAN",
+        "clue": "",
+        "cellIndices": [
+          150,
+          151,
+          152,
+          153,
+          154
+        ]
+      },
+      {
+        "id": "45D",
+        "number": 45,
+        "direction": "down",
+        "row": 10,
+        "col": 0,
+        "length": 5,
+        "answer": "NGAIO",
+        "clue": "",
+        "cellIndices": [
+          150,
+          165,
+          180,
+          195,
+          210
+        ]
+      },
+      {
+        "id": "46D",
+        "number": 46,
+        "direction": "down",
+        "row": 10,
+        "col": 1,
+        "length": 5,
+        "answer": "ORANG",
+        "clue": "",
+        "cellIndices": [
+          151,
+          166,
+          181,
+          196,
+          211
+        ]
+      },
+      {
+        "id": "47D",
+        "number": 47,
+        "direction": "down",
+        "row": 10,
+        "col": 2,
+        "length": 5,
+        "answer": "LAMER",
+        "clue": "",
+        "cellIndices": [
+          152,
+          167,
+          182,
+          197,
+          212
+        ]
+      },
+      {
+        "id": "48D",
+        "number": 48,
+        "direction": "down",
+        "row": 10,
+        "col": 3,
+        "length": 5,
+        "answer": "AFIRE",
+        "clue": "",
+        "cellIndices": [
+          153,
+          168,
+          183,
+          198,
+          213
+        ]
+      },
+      {
+        "id": "49A",
+        "number": 49,
+        "direction": "across",
+        "row": 10,
+        "col": 7,
+        "length": 4,
+        "answer": "ABOO",
+        "clue": "",
+        "cellIndices": [
+          157,
+          158,
+          159,
+          160
+        ]
+      },
+      {
+        "id": "50D",
+        "number": 50,
+        "direction": "down",
+        "row": 10,
+        "col": 8,
+        "length": 5,
+        "answer": "BASIC",
+        "clue": "",
+        "cellIndices": [
+          158,
+          173,
+          188,
+          203,
+          218
+        ]
+      },
+      {
+        "id": "51A",
+        "number": 51,
+        "direction": "across",
+        "row": 10,
+        "col": 12,
+        "length": 3,
+        "answer": "WES",
+        "clue": "",
+        "cellIndices": [
+          162,
+          163,
+          164
+        ]
+      },
+      {
+        "id": "51D",
+        "number": 51,
+        "direction": "down",
+        "row": 10,
+        "col": 12,
+        "length": 5,
+        "answer": "WIDOW",
+        "clue": "",
+        "cellIndices": [
+          162,
+          177,
+          192,
+          207,
+          222
+        ]
+      },
+      {
+        "id": "52D",
+        "number": 52,
+        "direction": "down",
+        "row": 10,
+        "col": 13,
+        "length": 5,
+        "answer": "ELENI",
+        "clue": "",
+        "cellIndices": [
+          163,
+          178,
+          193,
+          208,
+          223
+        ]
+      },
+      {
+        "id": "53D",
+        "number": 53,
+        "direction": "down",
+        "row": 10,
+        "col": 14,
+        "length": 5,
+        "answer": "SSSSS",
+        "clue": "",
+        "cellIndices": [
+          164,
+          179,
+          194,
+          209,
+          224
+        ]
+      },
+      {
+        "id": "54A",
+        "number": 54,
+        "direction": "across",
+        "row": 11,
+        "col": 0,
+        "length": 4,
+        "answer": "GRAF",
+        "clue": "",
+        "cellIndices": [
+          165,
+          166,
+          167,
+          168
+        ]
+      },
+      {
+        "id": "55A",
+        "number": 55,
+        "direction": "across",
+        "row": 11,
+        "col": 5,
+        "length": 5,
+        "answer": "ANNAL",
+        "clue": "",
+        "cellIndices": [
+          170,
+          171,
+          172,
+          173,
+          174
+        ]
+      },
+      {
+        "id": "55D",
+        "number": 55,
+        "direction": "down",
+        "row": 11,
+        "col": 5,
+        "length": 4,
+        "answer": "ANIS",
+        "clue": "",
+        "cellIndices": [
+          170,
+          185,
+          200,
+          215
+        ]
+      },
+      {
+        "id": "56D",
+        "number": 56,
+        "direction": "down",
+        "row": 11,
+        "col": 6,
+        "length": 3,
+        "answer": "NEA",
+        "clue": "",
+        "cellIndices": [
+          171,
+          186,
+          201
+        ]
+      },
+      {
+        "id": "57A",
+        "number": 57,
+        "direction": "across",
+        "row": 11,
+        "col": 11,
+        "length": 4,
+        "answer": "GILS",
+        "clue": "",
+        "cellIndices": [
+          176,
+          177,
+          178,
+          179
+        ]
+      },
+      {
+        "id": "57D",
+        "number": 57,
+        "direction": "down",
+        "row": 11,
+        "col": 11,
+        "length": 4,
+        "answer": "GENE",
+        "clue": "",
+        "cellIndices": [
+          176,
+          191,
+          206,
+          221
+        ]
+      },
+      {
+        "id": "58A",
+        "number": 58,
+        "direction": "across",
+        "row": 12,
+        "col": 0,
+        "length": 7,
+        "answer": "AAMILNE",
+        "clue": "",
+        "cellIndices": [
+          180,
+          181,
+          182,
+          183,
+          184,
+          185,
+          186
+        ]
+      },
+      {
+        "id": "59D",
+        "number": 59,
+        "direction": "down",
+        "row": 12,
+        "col": 4,
+        "length": 3,
+        "answer": "LTS",
+        "clue": "",
+        "cellIndices": [
+          184,
+          199,
+          214
+        ]
+      },
+      {
+        "id": "60A",
+        "number": 60,
+        "direction": "across",
+        "row": 12,
+        "col": 8,
+        "length": 7,
+        "answer": "SECEDES",
+        "clue": "",
+        "cellIndices": [
+          188,
+          189,
+          190,
+          191,
+          192,
+          193,
+          194
+        ]
+      },
+      {
+        "id": "61D",
+        "number": 61,
+        "direction": "down",
+        "row": 12,
+        "col": 10,
+        "length": 3,
+        "answer": "COL",
+        "clue": "",
+        "cellIndices": [
+          190,
+          205,
+          220
+        ]
+      },
+      {
+        "id": "62A",
+        "number": 62,
+        "direction": "across",
+        "row": 13,
+        "col": 0,
+        "length": 7,
+        "answer": "INERTIA",
+        "clue": "",
+        "cellIndices": [
+          195,
+          196,
+          197,
+          198,
+          199,
+          200,
+          201
+        ]
+      },
+      {
+        "id": "63A",
+        "number": 63,
+        "direction": "across",
+        "row": 13,
+        "col": 8,
+        "length": 7,
+        "answer": "IRONONS",
+        "clue": "",
+        "cellIndices": [
+          203,
+          204,
+          205,
+          206,
+          207,
+          208,
+          209
+        ]
+      },
+      {
+        "id": "64A",
+        "number": 64,
+        "direction": "across",
+        "row": 14,
+        "col": 0,
+        "length": 6,
+        "answer": "OGRESS",
+        "clue": "",
+        "cellIndices": [
+          210,
+          211,
+          212,
+          213,
+          214,
+          215
+        ]
+      },
+      {
+        "id": "65A",
+        "number": 65,
+        "direction": "across",
+        "row": 14,
+        "col": 8,
+        "length": 7,
+        "answer": "CSLEWIS",
+        "clue": "",
+        "cellIndices": [
+          218,
+          219,
+          220,
+          221,
+          222,
+          223,
+          224
+        ]
+      }
+    ]
+  },
+  "solver": {
+    "nodesVisited": 766,
+    "backtracks": 2019,
+    "maxTierUsed": "preferred",
+    "candidateWindow": 80,
+    "durationMs": 2810
+  }
+}

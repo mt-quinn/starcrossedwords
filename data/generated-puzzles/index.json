@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-03-19T01:07:36.032Z",
+  "puzzles": [
+    {
+      "number": 1,
+      "fileName": "puzzle-01.json",
+      "templateId": "generated-online-01",
+      "sourcePuzzleId": "NY Times - 20100104.puz"
+    },
+    {
+      "number": 2,
+      "fileName": "puzzle-02.json",
+      "templateId": "generated-online-02",
+      "sourcePuzzleId": "NY Times - 20100107.puz"
+    },
+    {
+      "number": 3,
+      "fileName": "puzzle-03.json",
+      "templateId": "generated-online-03",
+      "sourcePuzzleId": "NY Times - 20100112.puz"
+    },
+    {
+      "number": 4,
+      "fileName": "puzzle-04.json",
+      "templateId": "generated-online-04",
+      "sourcePuzzleId": "NY Times - 20100118.puz"
+    },
+    {
+      "number": 5,
+      "fileName": "puzzle-05.json",
+      "templateId": "generated-online-05",
+      "sourcePuzzleId": "NY Times - 20100120.puz"
+    }
+  ]
+}

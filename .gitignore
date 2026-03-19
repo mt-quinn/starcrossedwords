@@ -45,6 +45,7 @@ Thumbs.db
 
 # local assets / generated artifacts
 tmp/
+Generated Puzzle Database/
 
 # nested sample workspace
 redis sample repo/node_modules/

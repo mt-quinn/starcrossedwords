@@ -739,6 +739,17 @@ button {
   text-transform: none;
 }
 
+.menu-field select {
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
 .menu-error {
   color: var(--accent-strong);
   font-size: 0.84rem;
@@ -749,6 +760,111 @@ button {
   color: var(--muted-strong);
   font-size: 0.84rem;
   text-decoration: none;
+}
+
+.generator-shell {
+  min-height: 100dvh;
+  padding: 20px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+}
+
+.generator-sidebar,
+.generator-preview {
+  align-self: start;
+}
+
+.generator-file-list {
+  display: grid;
+  gap: 8px;
+}
+
+.generator-file-link {
+  display: block;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--panel);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.generator-file-link.is-active {
+  border-color: color-mix(in srgb, var(--entry-stroke) 40%, var(--line));
+  background: color-mix(in srgb, var(--accent-soft) 55%, white);
+}
+
+.generator-meta {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.generator-meta-line {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.generated-grid {
+  width: min(100%, 720px);
+  display: grid;
+  gap: 0;
+  background: var(--board-gap);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 36px rgb(46 28 15 / 0.12);
+}
+
+.generated-cell {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--cell);
+  border: 1px solid var(--board-gap);
+}
+
+.generated-cell.is-block {
+  background: var(--block);
+}
+
+.generated-cell-number {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  font-size: 0.42rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.generated-cell-letter {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(0.68rem, 1.3vw, 1.05rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.generator-entry-columns {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.generator-entry-column {
+  display: grid;
+  gap: 6px;
+}
+
+.generator-entry-line {
+  margin: 0;
+  color: var(--muted-strong);
+  font-size: 0.82rem;
+  line-height: 1.35;
 }
 
 .floating-status-chip,
@@ -952,6 +1068,15 @@ button {
 }
 
 @media (max-width: 720px) {
+  .generator-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .generator-meta,
+  .generator-entry-columns {
+    grid-template-columns: 1fr;
+  }
+
   .turn-state-banner {
     top: 82px;
     width: calc(100vw - 24px);

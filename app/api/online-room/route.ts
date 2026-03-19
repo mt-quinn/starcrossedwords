@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { createSharedGame } from "@/lib/game-factory";
+import { createSharedGameFromSelection } from "@/lib/game-factory";
 import { createOnlineRoom } from "@/lib/online-room-store";
 import { generateRoomCode } from "@/lib/room-code";
 
@@ -10,12 +10,12 @@ export const runtime = "nodejs";
 export async function POST(request: Request) {
   const requestId = crypto.randomUUID();
   const body = (await request.json().catch(() => ({}))) as {
-    puzzleId?: string;
+    puzzleSelection?: string;
   };
 
   for (let attempt = 0; attempt < MAX_ROOM_CREATION_ATTEMPTS; attempt += 1) {
     const roomCode = generateRoomCode();
-    const initialState = await createSharedGame(body.puzzleId);
+    const initialState = await createSharedGameFromSelection(body.puzzleSelection);
 
     try {
       const room = await createOnlineRoom(roomCode, initialState, { requestId });
