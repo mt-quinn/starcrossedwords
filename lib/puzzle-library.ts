@@ -20,12 +20,25 @@ async function isFifteenByFifteen(filePath: string): Promise<boolean> {
 
 async function listPuzzleIds(): Promise<string[]> {
   if (!cachedPuzzleIds) {
-    cachedPuzzleIds = readdir(PUZZLE_DATABASE_DIR).then((names) =>
-      names.filter((name) => name.endsWith(".puz")).sort(),
-    );
+    cachedPuzzleIds = readdir(PUZZLE_DATABASE_DIR)
+      .then((names) => names.filter((name) => name.endsWith(".puz")).sort())
+      .catch(() => []);
   }
 
   return cachedPuzzleIds;
+}
+
+export async function listStandardPuzzleIds(): Promise<string[]> {
+  const puzzleIds = await listPuzzleIds();
+  const standardPuzzleIds: string[] = [];
+
+  for (const puzzleId of puzzleIds) {
+    if (await isStandardPuzzleId(puzzleId)) {
+      standardPuzzleIds.push(puzzleId);
+    }
+  }
+
+  return standardPuzzleIds;
 }
 
 async function isStandardPuzzleId(puzzleId: string): Promise<boolean> {

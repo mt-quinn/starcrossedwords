@@ -1,13 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-import { getRandomPuzzleId } from "@/lib/puzzle-library";
+import { getRandomCuratedGeneratedPuzzleSelection } from "@/lib/crossword/curated-puzzles";
 
-export async function GET(request: NextRequest) {
-  const currentPuzzleId = request.nextUrl.searchParams.get("current") ?? undefined;
-  const nextPuzzleId = await getRandomPuzzleId(currentPuzzleId);
+export async function GET(request: Request) {
+  const selection = await getRandomCuratedGeneratedPuzzleSelection();
   const redirectUrl = new URL("/local", request.url);
 
-  redirectUrl.searchParams.set("puzzle", nextPuzzleId);
+  redirectUrl.searchParams.set("puzzle", selection);
 
   return NextResponse.redirect(redirectUrl);
 }

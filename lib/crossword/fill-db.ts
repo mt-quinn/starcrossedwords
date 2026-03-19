@@ -9,6 +9,7 @@ const FILL_DB_SUMMARY_PATH = path.join(process.cwd(), "data", "crossword-fill", 
 
 let fillDbPromise: Promise<FillDb> | null = null;
 let fillDbSummaryPromise: Promise<FillDbSummary> | null = null;
+let fillDbEntryIndexPromise: Promise<Map<string, FillDbEntry>> | null = null;
 
 function normalizePattern(pattern: string): string {
   return pattern
@@ -48,6 +49,31 @@ export async function loadFillDbSummary(): Promise<FillDbSummary> {
   }
 
   return fillDbSummaryPromise;
+}
+
+export async function loadFillEntryIndex(): Promise<Map<string, FillDbEntry>> {
+  if (!fillDbEntryIndexPromise) {
+    fillDbEntryIndexPromise = loadFillDb().then((fillDb) => {
+      const index = new Map<string, FillDbEntry>();
+
+      for (const buckets of Object.values(fillDb.byLength)) {
+        for (const entries of Object.values(buckets)) {
+          for (const entry of entries) {
+            index.set(entry.normalized, entry);
+          }
+        }
+      }
+
+      return index;
+    });
+  }
+
+  return fillDbEntryIndexPromise;
+}
+
+export async function getFillEntryByNormalized(normalized: string): Promise<FillDbEntry | null> {
+  const safeKey = normalized.trim().toUpperCase();
+  return (await loadFillEntryIndex()).get(safeKey) ?? null;
 }
 
 export function expandFillTiers(maxTier: FillTier): FillTier[] {

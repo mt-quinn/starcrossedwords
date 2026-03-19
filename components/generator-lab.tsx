@@ -114,6 +114,14 @@ export function GeneratorLab({
                   {selectedPuzzle.solver.maxTierUsed} tier, {selectedPuzzle.solver.durationMs} ms
                 </p>
               </div>
+              <div>
+                <p className="menu-eyebrow">Diversity</p>
+                <p className="generator-meta-line">
+                  {selectedPuzzle.analytics
+                    ? `${Math.round(selectedPuzzle.analytics.diversity.duplicateEntryRate * 100)}% reused`
+                    : "No analytics"}
+                </p>
+              </div>
             </div>
 
             <div
@@ -146,6 +154,14 @@ export function GeneratorLab({
                 <p className="menu-eyebrow">Search</p>
                 <p className="generator-meta-line">
                   {selectedPuzzle.solver.nodesVisited} nodes, {selectedPuzzle.solver.backtracks} backtracks
+                </p>
+              </div>
+              <div>
+                <p className="menu-eyebrow">Quality</p>
+                <p className="generator-meta-line">
+                  {selectedPuzzle.analytics
+                    ? `avg ${selectedPuzzle.analytics.quality.averageScore.toFixed(1)} · ${selectedPuzzle.analytics.quality.tierCounts.preferred} pref · ${selectedPuzzle.analytics.quality.tierCounts.strong} strong`
+                    : "No analytics"}
                 </p>
               </div>
             </div>

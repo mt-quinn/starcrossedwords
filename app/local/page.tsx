@@ -7,8 +7,8 @@ export default async function LocalPage({
   searchParams: Promise<{ puzzle?: string | string[] }>;
 }) {
   const params = await searchParams;
-  const puzzleId = typeof params.puzzle === "string" ? params.puzzle : params.puzzle?.[0];
-  const state = await createSharedGame(puzzleId);
+  const puzzleSelection = typeof params.puzzle === "string" ? params.puzzle : params.puzzle?.[0];
+  const state = await createSharedGame(puzzleSelection);
 
   return <LocalGameClient initialState={state} />;
 }

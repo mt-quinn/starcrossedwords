@@ -130,13 +130,12 @@ export function OnlineLobby({ curatedPuzzleNumbers }: { curatedPuzzleNumbers: nu
         <label className="menu-field">
           <span>Online Puzzle</span>
           <select onChange={(event) => setPuzzleSelection(event.target.value)} value={puzzleSelection}>
-            <option value="random">Random puzzle (1-5)</option>
+            <option value="random">Random puzzle</option>
             {curatedPuzzleNumbers.map((number) => (
               <option key={number} value={String(number)}>
                 Puzzle {number}
               </option>
             ))}
-            <option value="legacy">Legacy</option>
           </select>
         </label>
 

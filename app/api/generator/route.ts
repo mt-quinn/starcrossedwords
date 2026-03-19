@@ -22,6 +22,7 @@ export async function POST(request: Request) {
       generatedAt: generatedPuzzle.generatedAt,
       templateId: generatedPuzzle.templateId,
       solver: generatedPuzzle.solver,
+      analytics: generatedPuzzle.analytics,
     });
   } catch (error) {
     return NextResponse.json(

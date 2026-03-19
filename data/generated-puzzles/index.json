@@ -1,35 +1,1931 @@
 {
-  "generatedAt": "2026-03-19T01:07:36.032Z",
+  "generatedAt": "2026-03-19T16:44:47.193Z",
+  "puzzleCount": 385,
   "puzzles": [
     {
       "number": 1,
-      "fileName": "puzzle-01.json",
-      "templateId": "generated-online-01",
-      "sourcePuzzleId": "NY Times - 20100104.puz"
+      "fileName": "puzzle-001.json",
+      "templateId": "source-sweep-template-0002"
     },
     {
       "number": 2,
-      "fileName": "puzzle-02.json",
-      "templateId": "generated-online-02",
-      "sourcePuzzleId": "NY Times - 20100107.puz"
+      "fileName": "puzzle-002.json",
+      "templateId": "source-sweep-template-0010"
     },
     {
       "number": 3,
-      "fileName": "puzzle-03.json",
-      "templateId": "generated-online-03",
-      "sourcePuzzleId": "NY Times - 20100112.puz"
+      "fileName": "puzzle-003.json",
+      "templateId": "source-sweep-template-0011"
     },
     {
       "number": 4,
-      "fileName": "puzzle-04.json",
-      "templateId": "generated-online-04",
-      "sourcePuzzleId": "NY Times - 20100118.puz"
+      "fileName": "puzzle-004.json",
+      "templateId": "source-sweep-template-0013"
     },
     {
       "number": 5,
-      "fileName": "puzzle-05.json",
-      "templateId": "generated-online-05",
-      "sourcePuzzleId": "NY Times - 20100120.puz"
+      "fileName": "puzzle-005.json",
+      "templateId": "source-sweep-template-0017"
+    },
+    {
+      "number": 6,
+      "fileName": "puzzle-006.json",
+      "templateId": "source-sweep-template-0023"
+    },
+    {
+      "number": 7,
+      "fileName": "puzzle-007.json",
+      "templateId": "source-sweep-template-0005"
+    },
+    {
+      "number": 8,
+      "fileName": "puzzle-008.json",
+      "templateId": "source-sweep-template-0006"
+    },
+    {
+      "number": 9,
+      "fileName": "puzzle-009.json",
+      "templateId": "source-sweep-template-0007"
+    },
+    {
+      "number": 10,
+      "fileName": "puzzle-010.json",
+      "templateId": "source-sweep-template-0010"
+    },
+    {
+      "number": 11,
+      "fileName": "puzzle-011.json",
+      "templateId": "source-sweep-template-0011"
+    },
+    {
+      "number": 12,
+      "fileName": "puzzle-012.json",
+      "templateId": "source-sweep-template-0014"
+    },
+    {
+      "number": 13,
+      "fileName": "puzzle-013.json",
+      "templateId": "source-sweep-template-0016"
+    },
+    {
+      "number": 14,
+      "fileName": "puzzle-014.json",
+      "templateId": "source-sweep-template-0018"
+    },
+    {
+      "number": 15,
+      "fileName": "puzzle-015.json",
+      "templateId": "source-sweep-template-0021"
+    },
+    {
+      "number": 16,
+      "fileName": "puzzle-016.json",
+      "templateId": "source-sweep-template-0023"
+    },
+    {
+      "number": 17,
+      "fileName": "puzzle-017.json",
+      "templateId": "source-sweep-template-0025"
+    },
+    {
+      "number": 18,
+      "fileName": "puzzle-018.json",
+      "templateId": "source-sweep-template-0030"
+    },
+    {
+      "number": 19,
+      "fileName": "puzzle-019.json",
+      "templateId": "source-sweep-template-0031"
+    },
+    {
+      "number": 20,
+      "fileName": "puzzle-020.json",
+      "templateId": "source-sweep-template-0033"
+    },
+    {
+      "number": 21,
+      "fileName": "puzzle-021.json",
+      "templateId": "source-sweep-template-0034"
+    },
+    {
+      "number": 22,
+      "fileName": "puzzle-022.json",
+      "templateId": "source-sweep-template-0038"
+    },
+    {
+      "number": 23,
+      "fileName": "puzzle-023.json",
+      "templateId": "source-sweep-template-0041"
+    },
+    {
+      "number": 24,
+      "fileName": "puzzle-024.json",
+      "templateId": "source-sweep-template-0042"
+    },
+    {
+      "number": 25,
+      "fileName": "puzzle-025.json",
+      "templateId": "source-sweep-template-0044"
+    },
+    {
+      "number": 26,
+      "fileName": "puzzle-026.json",
+      "templateId": "source-sweep-template-0045"
+    },
+    {
+      "number": 27,
+      "fileName": "puzzle-027.json",
+      "templateId": "source-sweep-template-0046"
+    },
+    {
+      "number": 28,
+      "fileName": "puzzle-028.json",
+      "templateId": "source-sweep-template-0047"
+    },
+    {
+      "number": 29,
+      "fileName": "puzzle-029.json",
+      "templateId": "source-sweep-template-0048"
+    },
+    {
+      "number": 30,
+      "fileName": "puzzle-030.json",
+      "templateId": "source-sweep-template-0049"
+    },
+    {
+      "number": 31,
+      "fileName": "puzzle-031.json",
+      "templateId": "source-sweep-template-0051"
+    },
+    {
+      "number": 32,
+      "fileName": "puzzle-032.json",
+      "templateId": "source-sweep-template-0055"
+    },
+    {
+      "number": 33,
+      "fileName": "puzzle-033.json",
+      "templateId": "source-sweep-template-0057"
+    },
+    {
+      "number": 34,
+      "fileName": "puzzle-034.json",
+      "templateId": "source-sweep-template-0058"
+    },
+    {
+      "number": 35,
+      "fileName": "puzzle-035.json",
+      "templateId": "source-sweep-template-0060"
+    },
+    {
+      "number": 36,
+      "fileName": "puzzle-036.json",
+      "templateId": "source-sweep-template-0063"
+    },
+    {
+      "number": 37,
+      "fileName": "puzzle-037.json",
+      "templateId": "source-sweep-template-0064"
+    },
+    {
+      "number": 38,
+      "fileName": "puzzle-038.json",
+      "templateId": "source-sweep-template-0065"
+    },
+    {
+      "number": 39,
+      "fileName": "puzzle-039.json",
+      "templateId": "source-sweep-template-0067"
+    },
+    {
+      "number": 40,
+      "fileName": "puzzle-040.json",
+      "templateId": "source-sweep-template-0068"
+    },
+    {
+      "number": 41,
+      "fileName": "puzzle-041.json",
+      "templateId": "source-sweep-template-0073"
+    },
+    {
+      "number": 42,
+      "fileName": "puzzle-042.json",
+      "templateId": "source-sweep-template-0074"
+    },
+    {
+      "number": 43,
+      "fileName": "puzzle-043.json",
+      "templateId": "source-sweep-template-0075"
+    },
+    {
+      "number": 44,
+      "fileName": "puzzle-044.json",
+      "templateId": "source-sweep-template-0078"
+    },
+    {
+      "number": 45,
+      "fileName": "puzzle-045.json",
+      "templateId": "source-sweep-template-0081"
+    },
+    {
+      "number": 46,
+      "fileName": "puzzle-046.json",
+      "templateId": "source-sweep-template-0084"
+    },
+    {
+      "number": 47,
+      "fileName": "puzzle-047.json",
+      "templateId": "source-sweep-template-0090"
+    },
+    {
+      "number": 48,
+      "fileName": "puzzle-048.json",
+      "templateId": "source-sweep-template-0095"
+    },
+    {
+      "number": 49,
+      "fileName": "puzzle-049.json",
+      "templateId": "source-sweep-template-0100"
+    },
+    {
+      "number": 50,
+      "fileName": "puzzle-050.json",
+      "templateId": "source-sweep-template-0103"
+    },
+    {
+      "number": 51,
+      "fileName": "puzzle-051.json",
+      "templateId": "source-sweep-template-0104"
+    },
+    {
+      "number": 52,
+      "fileName": "puzzle-052.json",
+      "templateId": "source-sweep-template-0106"
+    },
+    {
+      "number": 53,
+      "fileName": "puzzle-053.json",
+      "templateId": "source-sweep-template-0108"
+    },
+    {
+      "number": 54,
+      "fileName": "puzzle-054.json",
+      "templateId": "source-sweep-template-0109"
+    },
+    {
+      "number": 55,
+      "fileName": "puzzle-055.json",
+      "templateId": "source-sweep-template-0110"
+    },
+    {
+      "number": 56,
+      "fileName": "puzzle-056.json",
+      "templateId": "source-sweep-template-0115"
+    },
+    {
+      "number": 57,
+      "fileName": "puzzle-057.json",
+      "templateId": "source-sweep-template-0116"
+    },
+    {
+      "number": 58,
+      "fileName": "puzzle-058.json",
+      "templateId": "source-sweep-template-0117"
+    },
+    {
+      "number": 59,
+      "fileName": "puzzle-059.json",
+      "templateId": "source-sweep-template-0120"
+    },
+    {
+      "number": 60,
+      "fileName": "puzzle-060.json",
+      "templateId": "source-sweep-template-0121"
+    },
+    {
+      "number": 61,
+      "fileName": "puzzle-061.json",
+      "templateId": "source-sweep-template-0124"
+    },
+    {
+      "number": 62,
+      "fileName": "puzzle-062.json",
+      "templateId": "source-sweep-template-0126"
+    },
+    {
+      "number": 63,
+      "fileName": "puzzle-063.json",
+      "templateId": "source-sweep-template-0131"
+    },
+    {
+      "number": 64,
+      "fileName": "puzzle-064.json",
+      "templateId": "source-sweep-template-0134"
+    },
+    {
+      "number": 65,
+      "fileName": "puzzle-065.json",
+      "templateId": "source-sweep-template-0139"
+    },
+    {
+      "number": 66,
+      "fileName": "puzzle-066.json",
+      "templateId": "source-sweep-template-0144"
+    },
+    {
+      "number": 67,
+      "fileName": "puzzle-067.json",
+      "templateId": "source-sweep-template-0145"
+    },
+    {
+      "number": 68,
+      "fileName": "puzzle-068.json",
+      "templateId": "source-sweep-template-0146"
+    },
+    {
+      "number": 69,
+      "fileName": "puzzle-069.json",
+      "templateId": "source-sweep-template-0148"
+    },
+    {
+      "number": 70,
+      "fileName": "puzzle-070.json",
+      "templateId": "source-sweep-template-0151"
+    },
+    {
+      "number": 71,
+      "fileName": "puzzle-071.json",
+      "templateId": "source-sweep-template-0154"
+    },
+    {
+      "number": 72,
+      "fileName": "puzzle-072.json",
+      "templateId": "source-sweep-template-0155"
+    },
+    {
+      "number": 73,
+      "fileName": "puzzle-073.json",
+      "templateId": "source-sweep-template-0160"
+    },
+    {
+      "number": 74,
+      "fileName": "puzzle-074.json",
+      "templateId": "source-sweep-template-0162"
+    },
+    {
+      "number": 75,
+      "fileName": "puzzle-075.json",
+      "templateId": "source-sweep-template-0163"
+    },
+    {
+      "number": 76,
+      "fileName": "puzzle-076.json",
+      "templateId": "source-sweep-template-0164"
+    },
+    {
+      "number": 77,
+      "fileName": "puzzle-077.json",
+      "templateId": "source-sweep-template-0165"
+    },
+    {
+      "number": 78,
+      "fileName": "puzzle-078.json",
+      "templateId": "source-sweep-template-0167"
+    },
+    {
+      "number": 79,
+      "fileName": "puzzle-079.json",
+      "templateId": "source-sweep-template-0169"
+    },
+    {
+      "number": 80,
+      "fileName": "puzzle-080.json",
+      "templateId": "source-sweep-template-0170"
+    },
+    {
+      "number": 81,
+      "fileName": "puzzle-081.json",
+      "templateId": "source-sweep-template-0174"
+    },
+    {
+      "number": 82,
+      "fileName": "puzzle-082.json",
+      "templateId": "source-sweep-template-0177"
+    },
+    {
+      "number": 83,
+      "fileName": "puzzle-083.json",
+      "templateId": "source-sweep-template-0178"
+    },
+    {
+      "number": 84,
+      "fileName": "puzzle-084.json",
+      "templateId": "source-sweep-template-0179"
+    },
+    {
+      "number": 85,
+      "fileName": "puzzle-085.json",
+      "templateId": "source-sweep-template-0180"
+    },
+    {
+      "number": 86,
+      "fileName": "puzzle-086.json",
+      "templateId": "source-sweep-template-0184"
+    },
+    {
+      "number": 87,
+      "fileName": "puzzle-087.json",
+      "templateId": "source-sweep-template-0185"
+    },
+    {
+      "number": 88,
+      "fileName": "puzzle-088.json",
+      "templateId": "source-sweep-template-0188"
+    },
+    {
+      "number": 89,
+      "fileName": "puzzle-089.json",
+      "templateId": "source-sweep-template-0189"
+    },
+    {
+      "number": 90,
+      "fileName": "puzzle-090.json",
+      "templateId": "source-sweep-template-0191"
+    },
+    {
+      "number": 91,
+      "fileName": "puzzle-091.json",
+      "templateId": "source-sweep-template-0194"
+    },
+    {
+      "number": 92,
+      "fileName": "puzzle-092.json",
+      "templateId": "source-sweep-template-0197"
+    },
+    {
+      "number": 93,
+      "fileName": "puzzle-093.json",
+      "templateId": "source-sweep-template-0200"
+    },
+    {
+      "number": 94,
+      "fileName": "puzzle-094.json",
+      "templateId": "source-sweep-template-0201"
+    },
+    {
+      "number": 95,
+      "fileName": "puzzle-095.json",
+      "templateId": "source-sweep-template-0203"
+    },
+    {
+      "number": 96,
+      "fileName": "puzzle-096.json",
+      "templateId": "source-sweep-template-0204"
+    },
+    {
+      "number": 97,
+      "fileName": "puzzle-097.json",
+      "templateId": "source-sweep-template-0207"
+    },
+    {
+      "number": 98,
+      "fileName": "puzzle-098.json",
+      "templateId": "source-sweep-template-0223"
+    },
+    {
+      "number": 99,
+      "fileName": "puzzle-099.json",
+      "templateId": "source-sweep-template-0241"
+    },
+    {
+      "number": 100,
+      "fileName": "puzzle-100.json",
+      "templateId": "source-sweep-template-0243"
+    },
+    {
+      "number": 101,
+      "fileName": "puzzle-101.json",
+      "templateId": "source-sweep-template-0244"
+    },
+    {
+      "number": 102,
+      "fileName": "puzzle-102.json",
+      "templateId": "source-sweep-template-0245"
+    },
+    {
+      "number": 103,
+      "fileName": "puzzle-103.json",
+      "templateId": "source-sweep-template-0246"
+    },
+    {
+      "number": 104,
+      "fileName": "puzzle-104.json",
+      "templateId": "source-sweep-template-0247"
+    },
+    {
+      "number": 105,
+      "fileName": "puzzle-105.json",
+      "templateId": "source-sweep-template-0252"
+    },
+    {
+      "number": 106,
+      "fileName": "puzzle-106.json",
+      "templateId": "source-sweep-template-0253"
+    },
+    {
+      "number": 107,
+      "fileName": "puzzle-107.json",
+      "templateId": "source-sweep-template-0256"
+    },
+    {
+      "number": 108,
+      "fileName": "puzzle-108.json",
+      "templateId": "source-sweep-template-0258"
+    },
+    {
+      "number": 109,
+      "fileName": "puzzle-109.json",
+      "templateId": "source-sweep-template-0262"
+    },
+    {
+      "number": 110,
+      "fileName": "puzzle-110.json",
+      "templateId": "source-sweep-template-0264"
+    },
+    {
+      "number": 111,
+      "fileName": "puzzle-111.json",
+      "templateId": "source-sweep-template-0266"
+    },
+    {
+      "number": 112,
+      "fileName": "puzzle-112.json",
+      "templateId": "source-sweep-template-0268"
+    },
+    {
+      "number": 113,
+      "fileName": "puzzle-113.json",
+      "templateId": "source-sweep-template-0271"
+    },
+    {
+      "number": 114,
+      "fileName": "puzzle-114.json",
+      "templateId": "source-sweep-template-0276"
+    },
+    {
+      "number": 115,
+      "fileName": "puzzle-115.json",
+      "templateId": "source-sweep-template-0280"
+    },
+    {
+      "number": 116,
+      "fileName": "puzzle-116.json",
+      "templateId": "source-sweep-template-0282"
+    },
+    {
+      "number": 117,
+      "fileName": "puzzle-117.json",
+      "templateId": "source-sweep-template-0287"
+    },
+    {
+      "number": 118,
+      "fileName": "puzzle-118.json",
+      "templateId": "source-sweep-template-0290"
+    },
+    {
+      "number": 119,
+      "fileName": "puzzle-119.json",
+      "templateId": "source-sweep-template-0291"
+    },
+    {
+      "number": 120,
+      "fileName": "puzzle-120.json",
+      "templateId": "source-sweep-template-0295"
+    },
+    {
+      "number": 121,
+      "fileName": "puzzle-121.json",
+      "templateId": "source-sweep-template-0300"
+    },
+    {
+      "number": 122,
+      "fileName": "puzzle-122.json",
+      "templateId": "source-sweep-template-0303"
+    },
+    {
+      "number": 123,
+      "fileName": "puzzle-123.json",
+      "templateId": "source-sweep-template-0304"
+    },
+    {
+      "number": 124,
+      "fileName": "puzzle-124.json",
+      "templateId": "source-sweep-template-0305"
+    },
+    {
+      "number": 125,
+      "fileName": "puzzle-125.json",
+      "templateId": "source-sweep-template-0308"
+    },
+    {
+      "number": 126,
+      "fileName": "puzzle-126.json",
+      "templateId": "source-sweep-template-0311"
+    },
+    {
+      "number": 127,
+      "fileName": "puzzle-127.json",
+      "templateId": "source-sweep-template-0313"
+    },
+    {
+      "number": 128,
+      "fileName": "puzzle-128.json",
+      "templateId": "source-sweep-template-0314"
+    },
+    {
+      "number": 129,
+      "fileName": "puzzle-129.json",
+      "templateId": "source-sweep-template-0316"
+    },
+    {
+      "number": 130,
+      "fileName": "puzzle-130.json",
+      "templateId": "source-sweep-template-0324"
+    },
+    {
+      "number": 131,
+      "fileName": "puzzle-131.json",
+      "templateId": "source-sweep-template-0327"
+    },
+    {
+      "number": 132,
+      "fileName": "puzzle-132.json",
+      "templateId": "source-sweep-template-0329"
+    },
+    {
+      "number": 133,
+      "fileName": "puzzle-133.json",
+      "templateId": "source-sweep-template-0333"
+    },
+    {
+      "number": 134,
+      "fileName": "puzzle-134.json",
+      "templateId": "source-sweep-template-0335"
+    },
+    {
+      "number": 135,
+      "fileName": "puzzle-135.json",
+      "templateId": "source-sweep-template-0342"
+    },
+    {
+      "number": 136,
+      "fileName": "puzzle-136.json",
+      "templateId": "source-sweep-template-0354"
+    },
+    {
+      "number": 137,
+      "fileName": "puzzle-137.json",
+      "templateId": "source-sweep-template-0359"
+    },
+    {
+      "number": 138,
+      "fileName": "puzzle-138.json",
+      "templateId": "source-sweep-template-0360"
+    },
+    {
+      "number": 139,
+      "fileName": "puzzle-139.json",
+      "templateId": "source-sweep-template-0361"
+    },
+    {
+      "number": 140,
+      "fileName": "puzzle-140.json",
+      "templateId": "source-sweep-template-0367"
+    },
+    {
+      "number": 141,
+      "fileName": "puzzle-141.json",
+      "templateId": "source-sweep-template-0370"
+    },
+    {
+      "number": 142,
+      "fileName": "puzzle-142.json",
+      "templateId": "source-sweep-template-0376"
+    },
+    {
+      "number": 143,
+      "fileName": "puzzle-143.json",
+      "templateId": "source-sweep-template-0379"
+    },
+    {
+      "number": 144,
+      "fileName": "puzzle-144.json",
+      "templateId": "source-sweep-template-0380"
+    },
+    {
+      "number": 145,
+      "fileName": "puzzle-145.json",
+      "templateId": "source-sweep-template-0384"
+    },
+    {
+      "number": 146,
+      "fileName": "puzzle-146.json",
+      "templateId": "source-sweep-template-0386"
+    },
+    {
+      "number": 147,
+      "fileName": "puzzle-147.json",
+      "templateId": "source-sweep-template-0388"
+    },
+    {
+      "number": 148,
+      "fileName": "puzzle-148.json",
+      "templateId": "source-sweep-template-0389"
+    },
+    {
+      "number": 149,
+      "fileName": "puzzle-149.json",
+      "templateId": "source-sweep-template-0391"
+    },
+    {
+      "number": 150,
+      "fileName": "puzzle-150.json",
+      "templateId": "source-sweep-template-0398"
+    },
+    {
+      "number": 151,
+      "fileName": "puzzle-151.json",
+      "templateId": "source-sweep-template-0400"
+    },
+    {
+      "number": 152,
+      "fileName": "puzzle-152.json",
+      "templateId": "source-sweep-template-0401"
+    },
+    {
+      "number": 153,
+      "fileName": "puzzle-153.json",
+      "templateId": "source-sweep-template-0402"
+    },
+    {
+      "number": 154,
+      "fileName": "puzzle-154.json",
+      "templateId": "source-sweep-template-0405"
+    },
+    {
+      "number": 155,
+      "fileName": "puzzle-155.json",
+      "templateId": "source-sweep-template-0409"
+    },
+    {
+      "number": 156,
+      "fileName": "puzzle-156.json",
+      "templateId": "source-sweep-template-0415"
+    },
+    {
+      "number": 157,
+      "fileName": "puzzle-157.json",
+      "templateId": "source-sweep-template-0416"
+    },
+    {
+      "number": 158,
+      "fileName": "puzzle-158.json",
+      "templateId": "source-sweep-template-0421"
+    },
+    {
+      "number": 159,
+      "fileName": "puzzle-159.json",
+      "templateId": "source-sweep-template-0423"
+    },
+    {
+      "number": 160,
+      "fileName": "puzzle-160.json",
+      "templateId": "source-sweep-template-0428"
+    },
+    {
+      "number": 161,
+      "fileName": "puzzle-161.json",
+      "templateId": "source-sweep-template-0433"
+    },
+    {
+      "number": 162,
+      "fileName": "puzzle-162.json",
+      "templateId": "source-sweep-template-0435"
+    },
+    {
+      "number": 163,
+      "fileName": "puzzle-163.json",
+      "templateId": "source-sweep-template-0438"
+    },
+    {
+      "number": 164,
+      "fileName": "puzzle-164.json",
+      "templateId": "source-sweep-template-0441"
+    },
+    {
+      "number": 165,
+      "fileName": "puzzle-165.json",
+      "templateId": "source-sweep-template-0444"
+    },
+    {
+      "number": 166,
+      "fileName": "puzzle-166.json",
+      "templateId": "source-sweep-template-0446"
+    },
+    {
+      "number": 167,
+      "fileName": "puzzle-167.json",
+      "templateId": "source-sweep-template-0448"
+    },
+    {
+      "number": 168,
+      "fileName": "puzzle-168.json",
+      "templateId": "source-sweep-template-0450"
+    },
+    {
+      "number": 169,
+      "fileName": "puzzle-169.json",
+      "templateId": "source-sweep-template-0455"
+    },
+    {
+      "number": 170,
+      "fileName": "puzzle-170.json",
+      "templateId": "source-sweep-template-0457"
+    },
+    {
+      "number": 171,
+      "fileName": "puzzle-171.json",
+      "templateId": "source-sweep-template-0459"
+    },
+    {
+      "number": 172,
+      "fileName": "puzzle-172.json",
+      "templateId": "source-sweep-template-0460"
+    },
+    {
+      "number": 173,
+      "fileName": "puzzle-173.json",
+      "templateId": "source-sweep-template-0464"
+    },
+    {
+      "number": 174,
+      "fileName": "puzzle-174.json",
+      "templateId": "source-sweep-template-0468"
+    },
+    {
+      "number": 175,
+      "fileName": "puzzle-175.json",
+      "templateId": "source-sweep-template-0471"
+    },
+    {
+      "number": 176,
+      "fileName": "puzzle-176.json",
+      "templateId": "source-sweep-template-0473"
+    },
+    {
+      "number": 177,
+      "fileName": "puzzle-177.json",
+      "templateId": "source-sweep-template-0474"
+    },
+    {
+      "number": 178,
+      "fileName": "puzzle-178.json",
+      "templateId": "source-sweep-template-0476"
+    },
+    {
+      "number": 179,
+      "fileName": "puzzle-179.json",
+      "templateId": "source-sweep-template-0477"
+    },
+    {
+      "number": 180,
+      "fileName": "puzzle-180.json",
+      "templateId": "source-sweep-template-0483"
+    },
+    {
+      "number": 181,
+      "fileName": "puzzle-181.json",
+      "templateId": "source-sweep-template-0490"
+    },
+    {
+      "number": 182,
+      "fileName": "puzzle-182.json",
+      "templateId": "source-sweep-template-0495"
+    },
+    {
+      "number": 183,
+      "fileName": "puzzle-183.json",
+      "templateId": "source-sweep-template-0496"
+    },
+    {
+      "number": 184,
+      "fileName": "puzzle-184.json",
+      "templateId": "source-sweep-template-0497"
+    },
+    {
+      "number": 185,
+      "fileName": "puzzle-185.json",
+      "templateId": "source-sweep-template-0500"
+    },
+    {
+      "number": 186,
+      "fileName": "puzzle-186.json",
+      "templateId": "source-sweep-template-0502"
+    },
+    {
+      "number": 187,
+      "fileName": "puzzle-187.json",
+      "templateId": "source-sweep-template-0505"
+    },
+    {
+      "number": 188,
+      "fileName": "puzzle-188.json",
+      "templateId": "source-sweep-template-0507"
+    },
+    {
+      "number": 189,
+      "fileName": "puzzle-189.json",
+      "templateId": "source-sweep-template-0509"
+    },
+    {
+      "number": 190,
+      "fileName": "puzzle-190.json",
+      "templateId": "source-sweep-template-0511"
+    },
+    {
+      "number": 191,
+      "fileName": "puzzle-191.json",
+      "templateId": "source-sweep-template-0514"
+    },
+    {
+      "number": 192,
+      "fileName": "puzzle-192.json",
+      "templateId": "source-sweep-template-0516"
+    },
+    {
+      "number": 193,
+      "fileName": "puzzle-193.json",
+      "templateId": "source-sweep-template-0518"
+    },
+    {
+      "number": 194,
+      "fileName": "puzzle-194.json",
+      "templateId": "source-sweep-template-0526"
+    },
+    {
+      "number": 195,
+      "fileName": "puzzle-195.json",
+      "templateId": "source-sweep-template-0528"
+    },
+    {
+      "number": 196,
+      "fileName": "puzzle-196.json",
+      "templateId": "source-sweep-template-0530"
+    },
+    {
+      "number": 197,
+      "fileName": "puzzle-197.json",
+      "templateId": "source-sweep-template-0533"
+    },
+    {
+      "number": 198,
+      "fileName": "puzzle-198.json",
+      "templateId": "source-sweep-template-0536"
+    },
+    {
+      "number": 199,
+      "fileName": "puzzle-199.json",
+      "templateId": "source-sweep-template-0538"
+    },
+    {
+      "number": 200,
+      "fileName": "puzzle-200.json",
+      "templateId": "source-sweep-template-0542"
+    },
+    {
+      "number": 201,
+      "fileName": "puzzle-201.json",
+      "templateId": "source-sweep-template-0543"
+    },
+    {
+      "number": 202,
+      "fileName": "puzzle-202.json",
+      "templateId": "source-sweep-template-0544"
+    },
+    {
+      "number": 203,
+      "fileName": "puzzle-203.json",
+      "templateId": "source-sweep-template-0547"
+    },
+    {
+      "number": 204,
+      "fileName": "puzzle-204.json",
+      "templateId": "source-sweep-template-0551"
+    },
+    {
+      "number": 205,
+      "fileName": "puzzle-205.json",
+      "templateId": "source-sweep-template-0555"
+    },
+    {
+      "number": 206,
+      "fileName": "puzzle-206.json",
+      "templateId": "source-sweep-template-0559"
+    },
+    {
+      "number": 207,
+      "fileName": "puzzle-207.json",
+      "templateId": "source-sweep-template-0560"
+    },
+    {
+      "number": 208,
+      "fileName": "puzzle-208.json",
+      "templateId": "source-sweep-template-0561"
+    },
+    {
+      "number": 209,
+      "fileName": "puzzle-209.json",
+      "templateId": "source-sweep-template-0562"
+    },
+    {
+      "number": 210,
+      "fileName": "puzzle-210.json",
+      "templateId": "source-sweep-template-0563"
+    },
+    {
+      "number": 211,
+      "fileName": "puzzle-211.json",
+      "templateId": "source-sweep-template-0564"
+    },
+    {
+      "number": 212,
+      "fileName": "puzzle-212.json",
+      "templateId": "source-sweep-template-0565"
+    },
+    {
+      "number": 213,
+      "fileName": "puzzle-213.json",
+      "templateId": "source-sweep-template-0572"
+    },
+    {
+      "number": 214,
+      "fileName": "puzzle-214.json",
+      "templateId": "source-sweep-template-0574"
+    },
+    {
+      "number": 215,
+      "fileName": "puzzle-215.json",
+      "templateId": "source-sweep-template-0576"
+    },
+    {
+      "number": 216,
+      "fileName": "puzzle-216.json",
+      "templateId": "source-sweep-template-0579"
+    },
+    {
+      "number": 217,
+      "fileName": "puzzle-217.json",
+      "templateId": "source-sweep-template-0589"
+    },
+    {
+      "number": 218,
+      "fileName": "puzzle-218.json",
+      "templateId": "source-sweep-template-0611"
+    },
+    {
+      "number": 219,
+      "fileName": "puzzle-219.json",
+      "templateId": "source-sweep-template-0612"
+    },
+    {
+      "number": 220,
+      "fileName": "puzzle-220.json",
+      "templateId": "source-sweep-template-0634"
+    },
+    {
+      "number": 221,
+      "fileName": "puzzle-221.json",
+      "templateId": "source-sweep-template-0677"
+    },
+    {
+      "number": 222,
+      "fileName": "puzzle-222.json",
+      "templateId": "source-sweep-template-0684"
+    },
+    {
+      "number": 223,
+      "fileName": "puzzle-223.json",
+      "templateId": "source-sweep-template-0707"
+    },
+    {
+      "number": 224,
+      "fileName": "puzzle-224.json",
+      "templateId": "source-sweep-template-0717"
+    },
+    {
+      "number": 225,
+      "fileName": "puzzle-225.json",
+      "templateId": "source-sweep-template-0721"
+    },
+    {
+      "number": 226,
+      "fileName": "puzzle-226.json",
+      "templateId": "source-sweep-template-0726"
+    },
+    {
+      "number": 227,
+      "fileName": "puzzle-227.json",
+      "templateId": "source-sweep-template-0727"
+    },
+    {
+      "number": 228,
+      "fileName": "puzzle-228.json",
+      "templateId": "source-sweep-template-0743"
+    },
+    {
+      "number": 229,
+      "fileName": "puzzle-229.json",
+      "templateId": "source-sweep-template-0752"
+    },
+    {
+      "number": 230,
+      "fileName": "puzzle-230.json",
+      "templateId": "source-sweep-template-0756"
+    },
+    {
+      "number": 231,
+      "fileName": "puzzle-231.json",
+      "templateId": "source-sweep-template-0767"
+    },
+    {
+      "number": 232,
+      "fileName": "puzzle-232.json",
+      "templateId": "source-sweep-template-0797"
+    },
+    {
+      "number": 233,
+      "fileName": "puzzle-233.json",
+      "templateId": "source-sweep-template-0798"
+    },
+    {
+      "number": 234,
+      "fileName": "puzzle-234.json",
+      "templateId": "source-sweep-template-0802"
+    },
+    {
+      "number": 235,
+      "fileName": "puzzle-235.json",
+      "templateId": "source-sweep-template-0808"
+    },
+    {
+      "number": 236,
+      "fileName": "puzzle-236.json",
+      "templateId": "source-sweep-template-0826"
+    },
+    {
+      "number": 237,
+      "fileName": "puzzle-237.json",
+      "templateId": "source-sweep-template-0827"
+    },
+    {
+      "number": 238,
+      "fileName": "puzzle-238.json",
+      "templateId": "source-sweep-template-0851"
+    },
+    {
+      "number": 239,
+      "fileName": "puzzle-239.json",
+      "templateId": "source-sweep-template-0855"
+    },
+    {
+      "number": 240,
+      "fileName": "puzzle-240.json",
+      "templateId": "source-sweep-template-0860"
+    },
+    {
+      "number": 241,
+      "fileName": "puzzle-241.json",
+      "templateId": "source-sweep-template-0878"
+    },
+    {
+      "number": 242,
+      "fileName": "puzzle-242.json",
+      "templateId": "source-sweep-template-0890"
+    },
+    {
+      "number": 243,
+      "fileName": "puzzle-243.json",
+      "templateId": "source-sweep-template-0896"
+    },
+    {
+      "number": 244,
+      "fileName": "puzzle-244.json",
+      "templateId": "source-sweep-template-0907"
+    },
+    {
+      "number": 245,
+      "fileName": "puzzle-245.json",
+      "templateId": "source-sweep-template-0923"
+    },
+    {
+      "number": 246,
+      "fileName": "puzzle-246.json",
+      "templateId": "source-sweep-template-0950"
+    },
+    {
+      "number": 247,
+      "fileName": "puzzle-247.json",
+      "templateId": "source-sweep-template-0957"
+    },
+    {
+      "number": 248,
+      "fileName": "puzzle-248.json",
+      "templateId": "source-sweep-template-0958"
+    },
+    {
+      "number": 249,
+      "fileName": "puzzle-249.json",
+      "templateId": "source-sweep-template-0960"
+    },
+    {
+      "number": 250,
+      "fileName": "puzzle-250.json",
+      "templateId": "source-sweep-template-0979"
+    },
+    {
+      "number": 251,
+      "fileName": "puzzle-251.json",
+      "templateId": "source-sweep-template-0983"
+    },
+    {
+      "number": 252,
+      "fileName": "puzzle-252.json",
+      "templateId": "source-sweep-template-1024"
+    },
+    {
+      "number": 253,
+      "fileName": "puzzle-253.json",
+      "templateId": "source-sweep-template-1033"
+    },
+    {
+      "number": 254,
+      "fileName": "puzzle-254.json",
+      "templateId": "source-sweep-template-1036"
+    },
+    {
+      "number": 255,
+      "fileName": "puzzle-255.json",
+      "templateId": "source-sweep-template-1040"
+    },
+    {
+      "number": 256,
+      "fileName": "puzzle-256.json",
+      "templateId": "source-sweep-template-1042"
+    },
+    {
+      "number": 257,
+      "fileName": "puzzle-257.json",
+      "templateId": "source-sweep-template-1053"
+    },
+    {
+      "number": 258,
+      "fileName": "puzzle-258.json",
+      "templateId": "source-sweep-template-1058"
+    },
+    {
+      "number": 259,
+      "fileName": "puzzle-259.json",
+      "templateId": "source-sweep-template-1078"
+    },
+    {
+      "number": 260,
+      "fileName": "puzzle-260.json",
+      "templateId": "source-sweep-template-1082"
+    },
+    {
+      "number": 261,
+      "fileName": "puzzle-261.json",
+      "templateId": "source-sweep-template-1102"
+    },
+    {
+      "number": 262,
+      "fileName": "puzzle-262.json",
+      "templateId": "source-sweep-template-1117"
+    },
+    {
+      "number": 263,
+      "fileName": "puzzle-263.json",
+      "templateId": "source-sweep-template-1134"
+    },
+    {
+      "number": 264,
+      "fileName": "puzzle-264.json",
+      "templateId": "source-sweep-template-1146"
+    },
+    {
+      "number": 265,
+      "fileName": "puzzle-265.json",
+      "templateId": "source-sweep-template-1166"
+    },
+    {
+      "number": 266,
+      "fileName": "puzzle-266.json",
+      "templateId": "source-sweep-template-1182"
+    },
+    {
+      "number": 267,
+      "fileName": "puzzle-267.json",
+      "templateId": "source-sweep-template-1189"
+    },
+    {
+      "number": 268,
+      "fileName": "puzzle-268.json",
+      "templateId": "source-sweep-template-1192"
+    },
+    {
+      "number": 269,
+      "fileName": "puzzle-269.json",
+      "templateId": "source-sweep-template-1197"
+    },
+    {
+      "number": 270,
+      "fileName": "puzzle-270.json",
+      "templateId": "source-sweep-template-1235"
+    },
+    {
+      "number": 271,
+      "fileName": "puzzle-271.json",
+      "templateId": "source-sweep-template-1262"
+    },
+    {
+      "number": 272,
+      "fileName": "puzzle-272.json",
+      "templateId": "source-sweep-template-1291"
+    },
+    {
+      "number": 273,
+      "fileName": "puzzle-273.json",
+      "templateId": "source-sweep-template-1295"
+    },
+    {
+      "number": 274,
+      "fileName": "puzzle-274.json",
+      "templateId": "source-sweep-template-1296"
+    },
+    {
+      "number": 275,
+      "fileName": "puzzle-275.json",
+      "templateId": "source-sweep-template-1299"
+    },
+    {
+      "number": 276,
+      "fileName": "puzzle-276.json",
+      "templateId": "source-sweep-template-1309"
+    },
+    {
+      "number": 277,
+      "fileName": "puzzle-277.json",
+      "templateId": "source-sweep-template-1328"
+    },
+    {
+      "number": 278,
+      "fileName": "puzzle-278.json",
+      "templateId": "source-sweep-template-1331"
+    },
+    {
+      "number": 279,
+      "fileName": "puzzle-279.json",
+      "templateId": "source-sweep-template-1332"
+    },
+    {
+      "number": 280,
+      "fileName": "puzzle-280.json",
+      "templateId": "source-sweep-template-1335"
+    },
+    {
+      "number": 281,
+      "fileName": "puzzle-281.json",
+      "templateId": "source-sweep-template-1355"
+    },
+    {
+      "number": 282,
+      "fileName": "puzzle-282.json",
+      "templateId": "source-sweep-template-1380"
+    },
+    {
+      "number": 283,
+      "fileName": "puzzle-283.json",
+      "templateId": "source-sweep-template-1384"
+    },
+    {
+      "number": 284,
+      "fileName": "puzzle-284.json",
+      "templateId": "source-sweep-template-1391"
+    },
+    {
+      "number": 285,
+      "fileName": "puzzle-285.json",
+      "templateId": "source-sweep-template-1400"
+    },
+    {
+      "number": 286,
+      "fileName": "puzzle-286.json",
+      "templateId": "source-sweep-template-1409"
+    },
+    {
+      "number": 287,
+      "fileName": "puzzle-287.json",
+      "templateId": "source-sweep-template-1410"
+    },
+    {
+      "number": 288,
+      "fileName": "puzzle-288.json",
+      "templateId": "source-sweep-template-1416"
+    },
+    {
+      "number": 289,
+      "fileName": "puzzle-289.json",
+      "templateId": "source-sweep-template-1459"
+    },
+    {
+      "number": 290,
+      "fileName": "puzzle-290.json",
+      "templateId": "source-sweep-template-1475"
+    },
+    {
+      "number": 291,
+      "fileName": "puzzle-291.json",
+      "templateId": "source-sweep-template-1478"
+    },
+    {
+      "number": 292,
+      "fileName": "puzzle-292.json",
+      "templateId": "source-sweep-template-1494"
+    },
+    {
+      "number": 293,
+      "fileName": "puzzle-293.json",
+      "templateId": "source-sweep-template-1501"
+    },
+    {
+      "number": 294,
+      "fileName": "puzzle-294.json",
+      "templateId": "source-sweep-template-1504"
+    },
+    {
+      "number": 295,
+      "fileName": "puzzle-295.json",
+      "templateId": "source-sweep-template-1577"
+    },
+    {
+      "number": 296,
+      "fileName": "puzzle-296.json",
+      "templateId": "source-sweep-template-1583"
+    },
+    {
+      "number": 297,
+      "fileName": "puzzle-297.json",
+      "templateId": "source-sweep-template-1588"
+    },
+    {
+      "number": 298,
+      "fileName": "puzzle-298.json",
+      "templateId": "source-sweep-template-1619"
+    },
+    {
+      "number": 299,
+      "fileName": "puzzle-299.json",
+      "templateId": "source-sweep-template-1621"
+    },
+    {
+      "number": 300,
+      "fileName": "puzzle-300.json",
+      "templateId": "source-sweep-template-1629"
+    },
+    {
+      "number": 301,
+      "fileName": "puzzle-301.json",
+      "templateId": "source-sweep-template-1638"
+    },
+    {
+      "number": 302,
+      "fileName": "puzzle-302.json",
+      "templateId": "source-sweep-template-1643"
+    },
+    {
+      "number": 303,
+      "fileName": "puzzle-303.json",
+      "templateId": "source-sweep-template-1669"
+    },
+    {
+      "number": 304,
+      "fileName": "puzzle-304.json",
+      "templateId": "source-sweep-template-1673"
+    },
+    {
+      "number": 305,
+      "fileName": "puzzle-305.json",
+      "templateId": "source-sweep-template-1756"
+    },
+    {
+      "number": 306,
+      "fileName": "puzzle-306.json",
+      "templateId": "source-sweep-template-1764"
+    },
+    {
+      "number": 307,
+      "fileName": "puzzle-307.json",
+      "templateId": "source-sweep-template-1773"
+    },
+    {
+      "number": 308,
+      "fileName": "puzzle-308.json",
+      "templateId": "source-sweep-template-1775"
+    },
+    {
+      "number": 309,
+      "fileName": "puzzle-309.json",
+      "templateId": "source-sweep-template-1788"
+    },
+    {
+      "number": 310,
+      "fileName": "puzzle-310.json",
+      "templateId": "source-sweep-template-1831"
+    },
+    {
+      "number": 311,
+      "fileName": "puzzle-311.json",
+      "templateId": "source-sweep-template-1832"
+    },
+    {
+      "number": 312,
+      "fileName": "puzzle-312.json",
+      "templateId": "source-sweep-template-1833"
+    },
+    {
+      "number": 313,
+      "fileName": "puzzle-313.json",
+      "templateId": "source-sweep-template-1839"
+    },
+    {
+      "number": 314,
+      "fileName": "puzzle-314.json",
+      "templateId": "source-sweep-template-1847"
+    },
+    {
+      "number": 315,
+      "fileName": "puzzle-315.json",
+      "templateId": "source-sweep-template-1850"
+    },
+    {
+      "number": 316,
+      "fileName": "puzzle-316.json",
+      "templateId": "source-sweep-template-1873"
+    },
+    {
+      "number": 317,
+      "fileName": "puzzle-317.json",
+      "templateId": "source-sweep-template-1877"
+    },
+    {
+      "number": 318,
+      "fileName": "puzzle-318.json",
+      "templateId": "source-sweep-template-1893"
+    },
+    {
+      "number": 319,
+      "fileName": "puzzle-319.json",
+      "templateId": "source-sweep-template-1901"
+    },
+    {
+      "number": 320,
+      "fileName": "puzzle-320.json",
+      "templateId": "source-sweep-template-1952"
+    },
+    {
+      "number": 321,
+      "fileName": "puzzle-321.json",
+      "templateId": "source-sweep-template-1969"
+    },
+    {
+      "number": 322,
+      "fileName": "puzzle-322.json",
+      "templateId": "source-sweep-template-2034"
+    },
+    {
+      "number": 323,
+      "fileName": "puzzle-323.json",
+      "templateId": "source-sweep-template-2046"
+    },
+    {
+      "number": 324,
+      "fileName": "puzzle-324.json",
+      "templateId": "source-sweep-template-2049"
+    },
+    {
+      "number": 325,
+      "fileName": "puzzle-325.json",
+      "templateId": "source-sweep-template-2081"
+    },
+    {
+      "number": 326,
+      "fileName": "puzzle-326.json",
+      "templateId": "source-sweep-template-2105"
+    },
+    {
+      "number": 327,
+      "fileName": "puzzle-327.json",
+      "templateId": "source-sweep-template-2110"
+    },
+    {
+      "number": 328,
+      "fileName": "puzzle-328.json",
+      "templateId": "source-sweep-template-2127"
+    },
+    {
+      "number": 329,
+      "fileName": "puzzle-329.json",
+      "templateId": "source-sweep-template-2141"
+    },
+    {
+      "number": 330,
+      "fileName": "puzzle-330.json",
+      "templateId": "source-sweep-template-2142"
+    },
+    {
+      "number": 331,
+      "fileName": "puzzle-331.json",
+      "templateId": "source-sweep-template-2155"
+    },
+    {
+      "number": 332,
+      "fileName": "puzzle-332.json",
+      "templateId": "source-sweep-template-2161"
+    },
+    {
+      "number": 333,
+      "fileName": "puzzle-333.json",
+      "templateId": "source-sweep-template-2191"
+    },
+    {
+      "number": 334,
+      "fileName": "puzzle-334.json",
+      "templateId": "source-sweep-template-2206"
+    },
+    {
+      "number": 335,
+      "fileName": "puzzle-335.json",
+      "templateId": "source-sweep-template-2215"
+    },
+    {
+      "number": 336,
+      "fileName": "puzzle-336.json",
+      "templateId": "source-sweep-template-2218"
+    },
+    {
+      "number": 337,
+      "fileName": "puzzle-337.json",
+      "templateId": "source-sweep-template-2249"
+    },
+    {
+      "number": 338,
+      "fileName": "puzzle-338.json",
+      "templateId": "source-sweep-template-2268"
+    },
+    {
+      "number": 339,
+      "fileName": "puzzle-339.json",
+      "templateId": "source-sweep-template-2282"
+    },
+    {
+      "number": 340,
+      "fileName": "puzzle-340.json",
+      "templateId": "source-sweep-template-2297"
+    },
+    {
+      "number": 341,
+      "fileName": "puzzle-341.json",
+      "templateId": "source-sweep-template-2298"
+    },
+    {
+      "number": 342,
+      "fileName": "puzzle-342.json",
+      "templateId": "source-sweep-template-2305"
+    },
+    {
+      "number": 343,
+      "fileName": "puzzle-343.json",
+      "templateId": "source-sweep-template-2319"
+    },
+    {
+      "number": 344,
+      "fileName": "puzzle-344.json",
+      "templateId": "source-sweep-template-2320"
+    },
+    {
+      "number": 345,
+      "fileName": "puzzle-345.json",
+      "templateId": "source-sweep-template-2333"
+    },
+    {
+      "number": 346,
+      "fileName": "puzzle-346.json",
+      "templateId": "source-sweep-template-2334"
+    },
+    {
+      "number": 347,
+      "fileName": "puzzle-347.json",
+      "templateId": "source-sweep-template-2338"
+    },
+    {
+      "number": 348,
+      "fileName": "puzzle-348.json",
+      "templateId": "source-sweep-template-2359"
+    },
+    {
+      "number": 349,
+      "fileName": "puzzle-349.json",
+      "templateId": "source-sweep-template-2364"
+    },
+    {
+      "number": 350,
+      "fileName": "puzzle-350.json",
+      "templateId": "source-sweep-template-2376"
+    },
+    {
+      "number": 351,
+      "fileName": "puzzle-351.json",
+      "templateId": "source-sweep-template-2409"
+    },
+    {
+      "number": 352,
+      "fileName": "puzzle-352.json",
+      "templateId": "source-sweep-template-2410"
+    },
+    {
+      "number": 353,
+      "fileName": "puzzle-353.json",
+      "templateId": "source-sweep-template-2412"
+    },
+    {
+      "number": 354,
+      "fileName": "puzzle-354.json",
+      "templateId": "source-sweep-template-2414"
+    },
+    {
+      "number": 355,
+      "fileName": "puzzle-355.json",
+      "templateId": "source-sweep-template-2428"
+    },
+    {
+      "number": 356,
+      "fileName": "puzzle-356.json",
+      "templateId": "source-sweep-template-2450"
+    },
+    {
+      "number": 357,
+      "fileName": "puzzle-357.json",
+      "templateId": "source-sweep-template-2471"
+    },
+    {
+      "number": 358,
+      "fileName": "puzzle-358.json",
+      "templateId": "source-sweep-template-2496"
+    },
+    {
+      "number": 359,
+      "fileName": "puzzle-359.json",
+      "templateId": "source-sweep-template-2500"
+    },
+    {
+      "number": 360,
+      "fileName": "puzzle-360.json",
+      "templateId": "source-sweep-template-2512"
+    },
+    {
+      "number": 361,
+      "fileName": "puzzle-361.json",
+      "templateId": "source-sweep-template-2518"
+    },
+    {
+      "number": 362,
+      "fileName": "puzzle-362.json",
+      "templateId": "source-sweep-template-2550"
+    },
+    {
+      "number": 363,
+      "fileName": "puzzle-363.json",
+      "templateId": "source-sweep-template-2571"
+    },
+    {
+      "number": 364,
+      "fileName": "puzzle-364.json",
+      "templateId": "source-sweep-template-2579"
+    },
+    {
+      "number": 365,
+      "fileName": "puzzle-365.json",
+      "templateId": "source-sweep-template-2604"
+    },
+    {
+      "number": 366,
+      "fileName": "puzzle-366.json",
+      "templateId": "source-sweep-template-2634"
+    },
+    {
+      "number": 367,
+      "fileName": "puzzle-367.json",
+      "templateId": "source-sweep-template-2662"
+    },
+    {
+      "number": 368,
+      "fileName": "puzzle-368.json",
+      "templateId": "source-sweep-template-2668"
+    },
+    {
+      "number": 369,
+      "fileName": "puzzle-369.json",
+      "templateId": "source-sweep-template-2694"
+    },
+    {
+      "number": 370,
+      "fileName": "puzzle-370.json",
+      "templateId": "source-sweep-template-2710"
+    },
+    {
+      "number": 371,
+      "fileName": "puzzle-371.json",
+      "templateId": "source-sweep-template-2737"
+    },
+    {
+      "number": 372,
+      "fileName": "puzzle-372.json",
+      "templateId": "source-sweep-template-2746"
+    },
+    {
+      "number": 373,
+      "fileName": "puzzle-373.json",
+      "templateId": "source-sweep-template-2747"
+    },
+    {
+      "number": 374,
+      "fileName": "puzzle-374.json",
+      "templateId": "source-sweep-template-2767"
+    },
+    {
+      "number": 375,
+      "fileName": "puzzle-375.json",
+      "templateId": "source-sweep-template-2776"
+    },
+    {
+      "number": 376,
+      "fileName": "puzzle-376.json",
+      "templateId": "source-sweep-template-2784"
+    },
+    {
+      "number": 377,
+      "fileName": "puzzle-377.json",
+      "templateId": "source-sweep-template-2806"
+    },
+    {
+      "number": 378,
+      "fileName": "puzzle-378.json",
+      "templateId": "source-sweep-template-2810"
+    },
+    {
+      "number": 379,
+      "fileName": "puzzle-379.json",
+      "templateId": "source-sweep-template-2839"
+    },
+    {
+      "number": 380,
+      "fileName": "puzzle-380.json",
+      "templateId": "source-sweep-template-2847"
+    },
+    {
+      "number": 381,
+      "fileName": "puzzle-381.json",
+      "templateId": "source-sweep-template-2848"
+    },
+    {
+      "number": 382,
+      "fileName": "puzzle-382.json",
+      "templateId": "source-sweep-template-2862"
+    },
+    {
+      "number": 383,
+      "fileName": "puzzle-383.json",
+      "templateId": "source-sweep-template-2864"
+    },
+    {
+      "number": 384,
+      "fileName": "puzzle-384.json",
+      "templateId": "source-sweep-template-2873"
+    },
+    {
+      "number": 385,
+      "fileName": "puzzle-385.json",
+      "templateId": "source-sweep-template-2881"
     }
   ]
 }

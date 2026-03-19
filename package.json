@@ -5,6 +5,8 @@
   "scripts": {
     "build:curated-set": "tsx scripts/build_curated_set.ts",
     "build:fill-db": "node scripts/build_fill_db.mjs",
+    "generate:batch": "tsx scripts/generate_varied_batch.ts",
+    "puzzle:studio": "tsx scripts/puzzle_studio_server.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"

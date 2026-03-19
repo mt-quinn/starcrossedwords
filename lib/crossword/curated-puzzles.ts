@@ -11,7 +11,6 @@ export interface CuratedGeneratedPuzzleIndexEntry {
   number: number;
   fileName: string;
   templateId: string;
-  sourcePuzzleId?: string;
 }
 
 export interface CuratedGeneratedPuzzleIndex {

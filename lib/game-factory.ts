@@ -1,5 +1,3 @@
-import { readFile } from "node:fs/promises";
-
 import {
   getRandomCuratedGeneratedPuzzleSelection,
   loadCuratedGeneratedPuzzleBySelection,
@@ -7,8 +5,6 @@ import {
 import { chooseOpeningEntry, createEmptyBoard, splitKnownEntryIds } from "@/lib/game-model";
 import type { SharedGameState } from "@/lib/game-types";
 import type { ParsedPuzzle } from "@/lib/puz";
-import { getPuzzlePathFromId, getRandomPuzzleId } from "@/lib/puzzle-library";
-import { parsePuz } from "@/lib/puz";
 
 async function buildSharedGameState(puzzle: ParsedPuzzle, puzzleId: string): Promise<SharedGameState> {
   const knownEntryIdsByPlayer = splitKnownEntryIds(puzzle);
@@ -41,11 +37,10 @@ async function buildSharedGameState(puzzle: ParsedPuzzle, puzzleId: string): Pro
   };
 }
 
-export async function createSharedGame(puzzleId?: string): Promise<SharedGameState> {
-  const resolvedPuzzleId = puzzleId || (await getRandomPuzzleId());
-  const buffer = await readFile(getPuzzlePathFromId(resolvedPuzzleId));
-  const puzzle = parsePuz(buffer);
-  return await buildSharedGameState(puzzle, resolvedPuzzleId);
+export async function createSharedGame(puzzleSelection?: string): Promise<SharedGameState> {
+  const selection = puzzleSelection || (await getRandomCuratedGeneratedPuzzleSelection());
+  const puzzle = await loadCuratedGeneratedPuzzleBySelection(selection);
+  return await buildSharedGameState(puzzle, `generated:${selection}`);
 }
 
 export async function createSharedGameFromSelection(selection?: string): Promise<SharedGameState> {
@@ -53,10 +48,6 @@ export async function createSharedGameFromSelection(selection?: string): Promise
     const generatedSelection = await getRandomCuratedGeneratedPuzzleSelection();
     const puzzle = await loadCuratedGeneratedPuzzleBySelection(generatedSelection);
     return await buildSharedGameState(puzzle, `generated:${generatedSelection}`);
-  }
-
-  if (selection === "legacy") {
-    return await createSharedGame();
   }
 
   const puzzle = await loadCuratedGeneratedPuzzleBySelection(selection);

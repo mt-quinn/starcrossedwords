@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Puzzle Studio</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0f1218;
+        --panel: #181d26;
+        --panel-strong: #202734;
+        --line: #313a4b;
+        --muted: #9aa5bb;
+        --text: #edf2ff;
+        --accent: #9fd0ff;
+        --accent-strong: #d5e8ff;
+        --good: #9ae6b4;
+        --warn: #fbd38d;
+        --bad: #feb2b2;
+        --cell: #f5f1e8;
+        --block: #1b2030;
+        --letter: #10131a;
+        --number: #5d6577;
+      }
+
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
+      body {
+        background: radial-gradient(circle at top, #1b2030 0%, var(--bg) 55%);
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .app {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 360px minmax(0, 1fr);
+      }
+
+      .sidebar,
+      .main {
+        padding: 20px;
+      }
+
+      .sidebar {
+        border-right: 1px solid rgb(255 255 255 / 0.08);
+        background: rgb(10 12 18 / 0.42);
+        display: grid;
+        gap: 16px;
+        align-content: start;
+      }
+
+      .panel {
+        background: rgb(255 255 255 / 0.04);
+        border: 1px solid rgb(255 255 255 / 0.08);
+        border-radius: 18px;
+        padding: 16px;
+      }
+
+      h1, h2, p { margin: 0; }
+      h1 { font-size: 1.4rem; }
+      h2 { font-size: 0.92rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+      .copy { color: var(--muted); line-height: 1.45; margin-top: 8px; }
+
+      .field-grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: 14px;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      input,
+      select,
+      button {
+        font: inherit;
+      }
+
+      input,
+      select {
+        width: 100%;
+        border: 1px solid rgb(255 255 255 / 0.12);
+        background: rgb(255 255 255 / 0.06);
+        color: var(--text);
+        border-radius: 12px;
+        padding: 10px 12px;
+      }
+
+      button {
+        border: 0;
+        border-radius: 999px;
+        padding: 10px 14px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .primary {
+        background: var(--accent-strong);
+        color: #10131a;
+      }
+
+      .ghost {
+        background: rgb(255 255 255 / 0.08);
+        color: var(--text);
+        border: 1px solid rgb(255 255 255 / 0.08);
+      }
+
+      .button-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+
+      progress {
+        width: 100%;
+        height: 14px;
+        margin-top: 12px;
+      }
+
+      .status-line {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .main {
+        display: grid;
+        gap: 16px;
+        grid-template-rows: auto auto minmax(0, 1fr);
+      }
+
+      .top-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+      }
+
+      .file-toolbar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 12px;
+      }
+
+      .file-list {
+        margin-top: 12px;
+        display: grid;
+        gap: 8px;
+        max-height: 360px;
+        overflow: auto;
+      }
+
+      .file-item {
+        display: grid;
+        gap: 4px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgb(255 255 255 / 0.04);
+        border: 1px solid transparent;
+        cursor: pointer;
+      }
+
+      .file-item:hover,
+      .file-item.is-active {
+        border-color: rgb(159 208 255 / 0.45);
+        background: rgb(159 208 255 / 0.12);
+      }
+
+      .file-meta {
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+
+      .preview {
+        display: grid;
+        gap: 14px;
+        align-content: start;
+      }
+
+      .stats-grid {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        margin-top: 12px;
+      }
+
+      .stat {
+        background: rgb(255 255 255 / 0.04);
+        border: 1px solid rgb(255 255 255 / 0.08);
+        border-radius: 12px;
+        padding: 10px 12px;
+      }
+
+      .stat-label {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .stat-value {
+        margin-top: 4px;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
+      .board-shell {
+        width: min(100%, 820px);
+        aspect-ratio: 1;
+      }
+
+      .board {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        background: #0c0f15;
+        border: 1px solid var(--line);
+      }
+
+      .cell {
+        position: relative;
+        aspect-ratio: 1;
+        background: var(--cell);
+        border: 1px solid var(--line);
+      }
+
+      .cell.is-block { background: var(--block); }
+
+      .cell-number {
+        position: absolute;
+        top: 4px;
+        left: 5px;
+        color: var(--number);
+        font-size: clamp(0.38rem, 0.55vw, 0.56rem);
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .cell-letter {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: var(--letter);
+        font-size: clamp(0.7rem, 1.5vw, 1.2rem);
+        font-weight: 800;
+      }
+
+      .console {
+        min-height: 240px;
+        max-height: 320px;
+        overflow: auto;
+        white-space: pre-wrap;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.84rem;
+        line-height: 1.45;
+        background: #0b0d13;
+      }
+
+      .tag-good { color: var(--good); }
+      .tag-warn { color: var(--warn); }
+      .tag-bad { color: var(--bad); }
+      .tag-muted { color: var(--muted); opacity: 0.7; }
+
+      @media (max-width: 1100px) {
+        .app { grid-template-columns: 1fr; }
+        .sidebar { border-right: 0; border-bottom: 1px solid rgb(255 255 255 / 0.08); }
+        .top-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <aside class="sidebar">
+        <section class="panel">
+          <h1>Puzzle Studio</h1>
+          <p class="copy">Standalone local tool for generating crossword JSON files, browsing a folder, and previewing boards.</p>
+          <div class="button-row">
+            <button class="primary" id="pick-folder-button" type="button">Choose Folder</button>
+            <button class="ghost" id="refresh-folder-button" type="button">Refresh Files</button>
+          </div>
+          <p class="status-line" id="folder-status">No folder selected yet.</p>
+        </section>
+
+        <section class="panel">
+          <h2>Generate Batch</h2>
+          <div class="field-grid">
+            <label>
+              Mode
+              <select id="mode-select">
+                <option value="template-batch">Fixed template batch</option>
+                <option value="source-sweep">Unique source sweep until stall</option>
+              </select>
+            </label>
+            <label>
+              Template
+              <select id="template-select"></select>
+            </label>
+            <label>
+              <span id="count-label">Count</span>
+              <input id="count-input" min="0" step="1" type="number" value="10" />
+            </label>
+            <label>
+              Time Limit (ms)
+              <input id="time-limit-input" min="1000" step="500" type="number" value="8000" />
+            </label>
+            <label>
+              Max Attempts
+              <input id="max-attempts-input" min="1" step="1" type="number" value="40" />
+            </label>
+            <label>
+              Stall Limit
+              <input id="stall-limit-input" min="1" step="1" type="number" value="20" />
+            </label>
+          </div>
+          <div class="button-row">
+            <button class="primary" id="generate-button" type="button">Generate</button>
+            <button class="ghost" id="stop-button" type="button">Stop</button>
+            <button class="ghost" id="save-pending-button" type="button" hidden>Save buffered</button>
+          </div>
+          <progress id="progress-bar" max="1" value="0"></progress>
+          <p class="status-line" id="run-status">Idle.</p>
+          <p class="status-line" id="mode-status"></p>
+        </section>
+      </aside>
+
+      <section class="main">
+        <div class="top-grid">
+          <section class="panel">
+            <h2>Folder Files</h2>
+            <div class="file-toolbar">
+              <label style="flex: 1">
+                Sort
+                <select id="sort-select">
+                  <option value="name-asc">Name A-Z</option>
+                  <option value="name-desc">Name Z-A</option>
+                  <option value="date-desc">Newest first</option>
+                  <option value="date-asc">Oldest first</option>
+                  <option value="size-desc">Largest first</option>
+                  <option value="size-asc">Smallest first</option>
+                </select>
+              </label>
+            </div>
+            <div class="file-list" id="file-list"></div>
+          </section>
+
+          <section class="panel preview">
+            <div>
+              <h2>Preview</h2>
+              <p class="copy" id="preview-title">Pick a folder and select a puzzle file.</p>
+            </div>
+            <div class="stats-grid" id="stats-grid"></div>
+            <div class="board-shell" id="board-shell"></div>
+          </section>
+        </div>
+
+        <section class="panel console" id="console-output"></section>
+      </section>
+    </main>
+
+    <script>
+      const templateSelect = document.getElementById("template-select");
+      const modeSelect = document.getElementById("mode-select");
+      const countLabel = document.getElementById("count-label");
+      const countInput = document.getElementById("count-input");
+      const timeLimitInput = document.getElementById("time-limit-input");
+      const maxAttemptsInput = document.getElementById("max-attempts-input");
+      const stallLimitInput = document.getElementById("stall-limit-input");
+      const pickFolderButton = document.getElementById("pick-folder-button");
+      const refreshFolderButton = document.getElementById("refresh-folder-button");
+      const generateButton = document.getElementById("generate-button");
+      const stopButton = document.getElementById("stop-button");
+      const savePendingButton = document.getElementById("save-pending-button");
+      const progressBar = document.getElementById("progress-bar");
+      const runStatus = document.getElementById("run-status");
+      const modeStatus = document.getElementById("mode-status");
+      const folderStatus = document.getElementById("folder-status");
+      const sortSelect = document.getElementById("sort-select");
+      const fileList = document.getElementById("file-list");
+      const previewTitle = document.getElementById("preview-title");
+      const statsGrid = document.getElementById("stats-grid");
+      const boardShell = document.getElementById("board-shell");
+      const consoleOutput = document.getElementById("console-output");
+
+      let folderHandle = null;
+      let fileEntries = [];
+      let selectedFileName = null;
+      let currentAbortController = null;
+      let sourceTemplateCount = 0;
+
+      async function loadTemplates() {
+        const response = await fetch("/api/templates");
+        const payload = await response.json();
+        sourceTemplateCount = payload.sourceTemplateCount ?? 0;
+        templateSelect.innerHTML = "";
+
+        for (const templateId of payload.templateIds ?? []) {
+          const option = document.createElement("option");
+          option.value = templateId;
+          option.textContent = templateId;
+          templateSelect.appendChild(option);
+        }
+
+        updateModeUi();
+      }
+
+      function logLine(message, className = "") {
+        const line = document.createElement("div");
+        if (className) {
+          line.className = className;
+        }
+        const stamp = new Date().toLocaleTimeString();
+        line.textContent = `[${stamp}] ${message}`;
+        consoleOutput.appendChild(line);
+        consoleOutput.scrollTop = consoleOutput.scrollHeight;
+      }
+
+      function readLatinString(bytes) {
+        return new TextDecoder("latin1").decode(bytes);
+      }
+
+      function readPuzStrings(bytes, start, count) {
+        const values = [];
+        let cursor = start;
+        while (cursor < bytes.length && values.length < count) {
+          let terminator = cursor;
+          while (terminator < bytes.length && bytes[terminator] !== 0) {
+            terminator += 1;
+          }
+          values.push(readLatinString(bytes.slice(cursor, terminator)));
+          cursor = terminator + 1;
+        }
+        return values;
+      }
+
+      function parsePuz(arrayBuffer) {
+        const bytes = new Uint8Array(arrayBuffer);
+        const width = bytes[0x2c];
+        const height = bytes[0x2d];
+        const clueCount = bytes[0x2e] | (bytes[0x2f] << 8);
+        const headerOffset = 0x34;
+        const cellCount = width * height;
+        const solution = readLatinString(bytes.slice(headerOffset, headerOffset + cellCount));
+        const fill = readLatinString(bytes.slice(headerOffset + cellCount, headerOffset + cellCount * 2));
+        const strings = readPuzStrings(bytes, headerOffset + cellCount * 2, 3 + clueCount);
+        const [title = "Untitled", author = "", copyright = ""] = strings;
+
+        const cells = Array.from({ length: cellCount }, (_, index) => ({
+          index,
+          row: Math.floor(index / width),
+          col: index % width,
+          isBlock: solution[index] === ".",
+          solution: solution[index] === "." ? "" : solution[index],
+          value: fill[index] === "-" || fill[index] === "." ? "" : fill[index],
+          number: undefined,
+        }));
+
+        let cellNumber = 1;
+        for (let row = 0; row < height; row += 1) {
+          for (let col = 0; col < width; col += 1) {
+            const index = row * width + col;
+            const cell = cells[index];
+            if (cell.isBlock) continue;
+            const startsAcross = col === 0 || cells[index - 1].isBlock;
+            const startsDown = row === 0 || cells[index - width].isBlock;
+            if (startsAcross || startsDown) {
+              cell.number = cellNumber;
+              cellNumber += 1;
+            }
+          }
+        }
+
+        return { title, author, copyright, width, height, cells };
+      }
+
+      function normalizePuzzleJson(value) {
+        if (value && typeof value === "object" && value.puzzle && value.puzzle.cells) {
+          return {
+            puzzle: value.puzzle,
+            analytics: value.analytics ?? null,
+            solver: value.solver ?? null,
+            fileName: value.fileName ?? null,
+          };
+        }
+
+        if (value && typeof value === "object" && value.cells && value.width && value.height) {
+          return { puzzle: value, analytics: null, solver: null, fileName: null };
+        }
+
+        throw new Error("Unsupported JSON puzzle format.");
+      }
+
+      function renderStats(stats) {
+        statsGrid.innerHTML = "";
+        for (const [label, value] of stats) {
+          const node = document.createElement("div");
+          node.className = "stat";
+          node.innerHTML = `<div class="stat-label">${label}</div><div class="stat-value">${value}</div>`;
+          statsGrid.appendChild(node);
+        }
+      }
+
+      function renderBoard(puzzle) {
+        boardShell.innerHTML = "";
+        const board = document.createElement("div");
+        board.className = "board";
+        board.style.gridTemplateColumns = `repeat(${puzzle.width}, minmax(0, 1fr))`;
+        board.style.gridTemplateRows = `repeat(${puzzle.height}, minmax(0, 1fr))`;
+
+        for (const cell of puzzle.cells) {
+          const cellNode = document.createElement("div");
+          cellNode.className = `cell${cell.isBlock ? " is-block" : ""}`;
+
+          if (!cell.isBlock) {
+            if (cell.number) {
+              const number = document.createElement("span");
+              number.className = "cell-number";
+              number.textContent = String(cell.number);
+              cellNode.appendChild(number);
+            }
+
+            const letter = document.createElement("span");
+            letter.className = "cell-letter";
+            letter.textContent = cell.solution || cell.value || "";
+            cellNode.appendChild(letter);
+          }
+
+          board.appendChild(cellNode);
+        }
+
+        boardShell.appendChild(board);
+      }
+
+      async function readEntryFile(entry) {
+        const file = await entry.handle.getFile();
+        if (entry.kind === "puz") {
+          return { puzzle: parsePuz(await file.arrayBuffer()), analytics: null, solver: null };
+        }
+
+        return normalizePuzzleJson(JSON.parse(await file.text()));
+      }
+
+      function sortedFileEntries() {
+        const value = sortSelect.value;
+        const copy = fileEntries.slice();
+        const comparators = {
+          "name-asc": (a, b) => a.name.localeCompare(b.name),
+          "name-desc": (a, b) => b.name.localeCompare(a.name),
+          "date-desc": (a, b) => b.lastModified - a.lastModified,
+          "date-asc": (a, b) => a.lastModified - b.lastModified,
+          "size-desc": (a, b) => b.size - a.size,
+          "size-asc": (a, b) => a.size - b.size,
+        };
+        return copy.sort(comparators[value] ?? comparators["name-asc"]);
+      }
+
+      async function renderFileList() {
+        fileList.innerHTML = "";
+
+        for (const entry of sortedFileEntries()) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = `file-item${entry.name === selectedFileName ? " is-active" : ""}`;
+          button.innerHTML = `<strong>${entry.name}</strong><div class="file-meta">${entry.kind.toUpperCase()} · ${new Date(entry.lastModified).toLocaleString()} · ${entry.size.toLocaleString()} bytes</div>`;
+          button.addEventListener("click", async () => {
+            selectedFileName = entry.name;
+            await previewEntry(entry);
+            renderFileList();
+          });
+          fileList.appendChild(button);
+        }
+      }
+
+      async function previewEntry(entry) {
+        const payload = await readEntryFile(entry);
+        const puzzle = payload.puzzle;
+        previewTitle.textContent = entry.name;
+
+        const stats = [
+          ["Grid", `${puzzle.width} x ${puzzle.height}`],
+          ["Filled cells", String(puzzle.cells.filter((cell) => !cell.isBlock).length)],
+        ];
+
+        if (payload.solver) {
+          stats.push(["Last solve", `${payload.solver.durationMs} ms`]);
+          stats.push(["Nodes", `${payload.solver.nodesVisited}`]);
+        }
+
+        if (payload.analytics) {
+          stats.push(["Reused entries", `${Math.round(payload.analytics.diversity.duplicateEntryRate * 100)}%`]);
+          stats.push(["Avg score", payload.analytics.quality.averageScore.toFixed(1)]);
+        }
+
+        renderStats(stats);
+        renderBoard(puzzle);
+      }
+
+      async function refreshFolder() {
+        if (!folderHandle) {
+          return;
+        }
+
+        const nextEntries = [];
+        for await (const entry of folderHandle.values()) {
+          if (entry.kind !== "file") continue;
+          const lowerName = entry.name.toLowerCase();
+          if (!lowerName.endsWith(".json") && !lowerName.endsWith(".puz")) continue;
+          const file = await entry.getFile();
+          nextEntries.push({
+            name: entry.name,
+            handle: entry,
+            size: file.size,
+            lastModified: file.lastModified,
+            kind: lowerName.endsWith(".puz") ? "puz" : "json",
+          });
+        }
+
+        fileEntries = nextEntries;
+        folderStatus.textContent = `${fileEntries.length} puzzle files loaded.`;
+        await renderFileList();
+
+        if (!selectedFileName && fileEntries.length) {
+          selectedFileName = sortedFileEntries()[0].name;
+        }
+
+        const selected = fileEntries.find((entry) => entry.name === selectedFileName);
+        if (selected) {
+          await previewEntry(selected);
+        }
+      }
+
+      const pendingWrites = [];
+
+      async function writeGeneratedFile(record) {
+        try {
+          const fileHandle = await folderHandle.getFileHandle(record.fileName, { create: true });
+          const writable = await fileHandle.createWritable();
+          await writable.write(`${JSON.stringify(record, null, 2)}\n`);
+          await writable.close();
+        } catch {
+          pendingWrites.push(record);
+          savePendingButton.hidden = false;
+          savePendingButton.textContent = `Save ${pendingWrites.length} buffered`;
+          logLine(`Buffered ${record.fileName} (will save when you click "Save buffered")`, "tag-warn");
+        }
+      }
+
+      async function flushPendingWrites() {
+        if (!folderHandle || !pendingWrites.length) return;
+        const batch = pendingWrites.splice(0);
+        let saved = 0;
+        for (const record of batch) {
+          try {
+            const fileHandle = await folderHandle.getFileHandle(record.fileName, { create: true });
+            const writable = await fileHandle.createWritable();
+            await writable.write(`${JSON.stringify(record, null, 2)}\n`);
+            await writable.close();
+            saved += 1;
+          } catch {
+            pendingWrites.push(record);
+          }
+        }
+        logLine(`Flushed ${saved} buffered files to disk.`, "tag-good");
+        if (pendingWrites.length) {
+          savePendingButton.textContent = `Save ${pendingWrites.length} buffered`;
+        } else {
+          savePendingButton.hidden = true;
+        }
+        await refreshFolder();
+      }
+
+      async function chooseFolder() {
+        if (!window.showDirectoryPicker) {
+          alert("This tool needs a browser with the File System Access API, such as Chrome or Edge.");
+          return;
+        }
+
+        folderHandle = await window.showDirectoryPicker();
+        folderStatus.textContent = `Folder: ${folderHandle.name}`;
+        await refreshFolder();
+      }
+
+      async function generateBatch() {
+        if (!folderHandle) {
+          alert("Choose an output folder first.");
+          return;
+        }
+
+        const perm = await folderHandle.requestPermission({ mode: "readwrite" });
+        if (perm !== "granted") {
+          alert("Write permission denied. Re-pick the folder and try again.");
+          return;
+        }
+
+        if (currentAbortController) {
+          currentAbortController.abort();
+        }
+
+        currentAbortController = new AbortController();
+        const mode = modeSelect.value;
+        const count = Math.max(0, Number.parseInt(countInput.value, 10) || 0);
+        const maxAttempts = Math.max(count, Number.parseInt(maxAttemptsInput.value, 10) || count * 4);
+        const timeLimitMs = Math.max(1000, Number.parseInt(timeLimitInput.value, 10) || 8000);
+        const stallLimit = Math.max(1, Number.parseInt(stallLimitInput.value, 10) || 20);
+        progressBar.max = mode === "source-sweep" ? Math.max(1, sourceTemplateCount) : Math.max(1, count);
+        progressBar.value = 0;
+        runStatus.textContent = "Starting batch...";
+        modeStatus.textContent =
+          mode === "source-sweep"
+            ? `Sweeping unique source templates until ${stallLimit} consecutive failures or the pool ends.`
+            : "Generating repeated variants on the selected template.";
+        consoleOutput.innerHTML = "";
+
+        logLine(
+          mode === "source-sweep"
+            ? `Starting unique source sweep across ${sourceTemplateCount} templates`
+            : `Starting batch for ${count} puzzles on ${templateSelect.value}`,
+        );
+
+        const response = await fetch("/api/generate-stream", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            mode,
+            templateId: templateSelect.value,
+            count,
+            maxAttempts,
+            timeLimitMs,
+            seedBase: Date.now(),
+            stallLimit,
+          }),
+          signal: currentAbortController.signal,
+        });
+
+        if (!response.ok || !response.body) {
+          throw new Error("Generation stream failed to start.");
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        while (true) {
+          const { value, done } = await reader.read();
+          buffer += decoder.decode(value || new Uint8Array(), { stream: !done });
+
+          let newlineIndex = buffer.indexOf("\n");
+          while (newlineIndex !== -1) {
+            const line = buffer.slice(0, newlineIndex).trim();
+            buffer = buffer.slice(newlineIndex + 1);
+
+            if (line) {
+              const event = JSON.parse(line);
+              await handleEvent(event);
+            }
+
+            newlineIndex = buffer.indexOf("\n");
+          }
+
+          if (done) {
+            break;
+          }
+        }
+      }
+
+      async function handleEvent(event) {
+        if (event.type === "run-start") {
+          if (event.mode === "source-sweep") {
+            progressBar.max = Math.max(1, event.sourceTemplateCount || sourceTemplateCount || 1);
+            modeStatus.textContent = `Unique source sweep across ${event.sourceTemplateCount} 15x15 source puzzles; stall limit ${event.stallLimit}.`;
+          } else {
+            progressBar.max = Math.max(1, event.targetCount || 1);
+          }
+          return;
+        }
+
+        if (event.type === "validation-skip") {
+          progressBar.value = event.mode === "source-sweep" ? event.attempt : event.acceptedCount;
+          logLine(
+            event.sourceOrdinal
+              ? `Source ${event.sourceOrdinal}/${event.sourceTemplateCount} invalid template — ${event.error}`
+              : `Template invalid — ${event.error}`,
+            "tag-muted",
+          );
+          return;
+        }
+
+        if (event.type === "attempt-start") {
+          progressBar.value = event.mode === "source-sweep" ? event.attempt - 1 : event.acceptedCount;
+          const slotInfo = event.templateSlotCount
+            ? ` · ${event.templateSlotCount} slots (${event.templateSlotRange} letters)`
+            : "";
+          runStatus.textContent =
+            event.mode === "source-sweep"
+              ? `Source ${event.sourceOrdinal}/${event.sourceTemplateCount} · accepted ${event.acceptedCount} · stall ${event.consecutiveFailures}${slotInfo}`
+              : `Attempt ${event.attempt} · accepted ${event.acceptedCount}/${event.targetCount}`;
+          logLine(
+            event.mode === "source-sweep"
+              ? `Solving source ${event.sourceOrdinal}/${event.sourceTemplateCount}${slotInfo}`
+              : `Attempt ${event.attempt} started`,
+          );
+          return;
+        }
+
+        if (event.type === "generated") {
+          await writeGeneratedFile(event.record);
+          progressBar.value = event.mode === "source-sweep" ? event.attempt : event.acceptedCount;
+          runStatus.textContent =
+            event.mode === "source-sweep"
+              ? `Accepted ${event.acceptedCount} so far · source ${event.attempt}/${progressBar.max} · last board ${event.elapsedMs} ms`
+              : `Accepted ${event.acceptedCount}/${event.targetCount} · last board ${event.elapsedMs} ms`;
+          logLine(
+            `Accepted ${event.fileName} in ${event.elapsedMs}ms · reused ${Math.round((event.analytics?.diversity?.duplicateEntryRate ?? 0) * 100)}% · avg score ${(event.analytics?.quality?.averageScore ?? 0).toFixed(1)}`,
+            "tag-good",
+          );
+          selectedFileName = event.fileName;
+          await refreshFolder();
+          return;
+        }
+
+        if (event.type === "skipped") {
+          progressBar.value = event.mode === "source-sweep" ? event.attempt : event.acceptedCount;
+          const slotDetail = event.templateSlotCount
+            ? ` · ${event.templateSlotCount} slots (${event.templateSlotRange})`
+            : "";
+          runStatus.textContent =
+            event.mode === "source-sweep"
+              ? `Source ${event.sourceOrdinal}/${event.sourceTemplateCount} timed out (${event.elapsedMs} ms) · stall ${event.consecutiveFailures}${slotDetail}`
+              : `Attempt ${event.attempt} timed out (${event.elapsedMs} ms)`;
+          logLine(
+            event.mode === "source-sweep"
+              ? `Solver timeout on source ${event.sourceOrdinal}/${event.sourceTemplateCount} after ${event.elapsedMs} ms${slotDetail}`
+              : `Solver timeout on attempt ${event.attempt} after ${event.elapsedMs} ms`,
+            "tag-bad",
+          );
+          return;
+        }
+
+        if (event.type === "run-complete") {
+          progressBar.value = event.mode === "source-sweep" ? progressBar.max : event.acceptedCount;
+          runStatus.textContent =
+            event.mode === "source-sweep"
+              ? `Sweep finished with ${event.acceptedCount} accepted in ${event.elapsedMs} ms · ${event.stopReason}`
+              : `Finished with ${event.acceptedCount}/${event.targetCount} accepted in ${event.elapsedMs} ms`;
+          logLine(
+            `Run complete · short duplicate rate ${(event.corpusStats.shortDuplicateRate * 100).toFixed(1)}% · unique answers ${event.corpusStats.uniqueAnswerCount}`,
+            "tag-good",
+          );
+          if (event.mode === "source-sweep") {
+            logLine(
+              `Stop reason: ${event.stopReason} · consecutive failures ${event.consecutiveFailures} · source pool ${event.sourceTemplateCount}`,
+              "tag-warn",
+            );
+          }
+          if (event.repeatedAnswers?.length) {
+            logLine(
+              `Most repeated short answers: ${event.repeatedAnswers.map((entry) => `${entry.answer}x${entry.count}`).join(", ")}`,
+              "tag-warn",
+            );
+          }
+          currentAbortController = null;
+        }
+      }
+
+      pickFolderButton.addEventListener("click", chooseFolder);
+      refreshFolderButton.addEventListener("click", refreshFolder);
+      sortSelect.addEventListener("change", renderFileList);
+      modeSelect.addEventListener("change", updateModeUi);
+      generateButton.addEventListener("click", async () => {
+        try {
+          await generateBatch();
+        } catch (error) {
+          logLine(error instanceof Error ? error.message : "Generation failed.", "tag-bad");
+          runStatus.textContent = "Generation failed.";
+          currentAbortController = null;
+        }
+      });
+      stopButton.addEventListener("click", () => {
+        if (currentAbortController) {
+          currentAbortController.abort();
+          currentAbortController = null;
+          runStatus.textContent = "Generation stopped.";
+          logLine("Generation aborted by user.", "tag-bad");
+        }
+      });
+      savePendingButton.addEventListener("click", flushPendingWrites);
+
+      loadTemplates().catch((error) => {
+        logLine(error instanceof Error ? error.message : "Could not load templates.", "tag-bad");
+      });
+
+      function updateModeUi() {
+        const isSourceSweep = modeSelect.value === "source-sweep";
+        templateSelect.disabled = isSourceSweep;
+        countLabel.textContent = isSourceSweep ? "Accepted cap (0 = no cap)" : "Count";
+        countInput.value = isSourceSweep && Number.parseInt(countInput.value || "0", 10) === 10 ? "0" : countInput.value;
+        modeStatus.textContent = isSourceSweep
+          ? `Unique source sweep available across ${sourceTemplateCount} source puzzles.`
+          : "Generate repeated variants from one selected template.";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Puzzle Viewer</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #11131a;
+        --panel: #181b24;
+        --grid: #0c0f15;
+        --line: #2d3444;
+        --cell: #f5f1e8;
+        --block: #1b2030;
+        --letter: #11131a;
+        --number: #5d6577;
+        --drop: rgb(152 198 255 / 0.14);
+        --drop-border: #98c6ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        background: radial-gradient(circle at top, #1b2030 0%, var(--bg) 52%);
+        color: #eef2ff;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      .viewer {
+        min-height: 100%;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .board-shell {
+        width: min(92vmin, 980px);
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+      }
+
+      .board-root {
+        width: 100%;
+        height: 100%;
+      }
+
+      .board-shell.is-empty {
+        border: 2px dashed rgb(255 255 255 / 0.16);
+        border-radius: 28px;
+        background: rgb(255 255 255 / 0.03);
+        padding: 28px;
+      }
+
+      .board-shell.is-dragging {
+        border-color: var(--drop-border);
+        background: var(--drop);
+      }
+
+      .empty-state {
+        max-width: 480px;
+        text-align: center;
+        line-height: 1.45;
+      }
+
+      .empty-state h1 {
+        margin: 0 0 10px;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+      }
+
+      .empty-state p {
+        margin: 0;
+        color: rgb(238 242 255 / 0.76);
+      }
+
+      .empty-state .helper {
+        margin-top: 12px;
+        font-size: 0.95rem;
+      }
+
+      .empty-state button {
+        margin-top: 18px;
+        padding: 12px 16px;
+        border: 0;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: #11131a;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .empty-state .secondary-button {
+        margin-left: 10px;
+        background: rgb(255 255 255 / 0.08);
+        color: #eef2ff;
+        border: 1px solid rgb(255 255 255 / 0.12);
+      }
+
+      .board {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        gap: 0;
+        background: var(--grid);
+        border: 1px solid var(--line);
+        box-shadow: 0 30px 60px rgb(0 0 0 / 0.35);
+      }
+
+      .cell {
+        position: relative;
+        aspect-ratio: 1;
+        background: var(--cell);
+        border: 1px solid var(--line);
+      }
+
+      .cell.is-block {
+        background: var(--block);
+      }
+
+      .cell-number {
+        position: absolute;
+        top: 4px;
+        left: 5px;
+        color: var(--number);
+        font-size: clamp(0.38rem, 0.55vw, 0.56rem);
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .cell-letter {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: var(--letter);
+        font-size: clamp(0.7rem, 1.8vw, 1.4rem);
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .floating-open {
+        position: fixed;
+        top: 14px;
+        right: 14px;
+        padding: 10px 14px;
+        border: 1px solid rgb(255 255 255 / 0.12);
+        border-radius: 999px;
+        background: rgb(17 19 26 / 0.88);
+        color: #eef2ff;
+        font: inherit;
+        cursor: pointer;
+        backdrop-filter: blur(12px);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="viewer">
+      <div class="board-shell is-empty" id="board-shell">
+        <section class="empty-state" id="empty-state">
+          <h1>Drop a crossword file here.</h1>
+          <p>This is the board-only viewer. Supports generated puzzle JSON and standard `.puz` files.</p>
+          <p class="helper">For generation, folder browsing, sorting, progress, and live logs, open Puzzle Studio at <strong>http://127.0.0.1:4312/studio.html</strong>.</p>
+          <button id="open-button" type="button">Open file</button>
+          <button class="secondary-button" id="open-studio-button" type="button">Open Puzzle Studio</button>
+        </section>
+        <div class="board-root" id="board-root" hidden></div>
+      </div>
+    </main>
+
+    <button class="floating-open" id="floating-open" type="button" hidden>Open another file</button>
+    <input id="file-input" type="file" accept=".json,.puz,application/json" hidden />
+
+    <script>
+      const boardShell = document.getElementById("board-shell");
+      const emptyState = document.getElementById("empty-state");
+      const boardRoot = document.getElementById("board-root");
+      const fileInput = document.getElementById("file-input");
+      const openButton = document.getElementById("open-button");
+      const openStudioButton = document.getElementById("open-studio-button");
+      const floatingOpen = document.getElementById("floating-open");
+
+      openButton.addEventListener("click", () => fileInput.click());
+      openStudioButton.addEventListener("click", () => {
+        window.open("http://127.0.0.1:4312/studio.html", "_blank");
+      });
+      floatingOpen.addEventListener("click", () => fileInput.click());
+      fileInput.addEventListener("change", (event) => {
+        const [file] = event.target.files ?? [];
+        if (file) {
+          loadFile(file);
+        }
+        fileInput.value = "";
+      });
+
+      ["dragenter", "dragover"].forEach((eventName) => {
+        window.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          boardShell.classList.add("is-dragging");
+        });
+      });
+
+      ["dragleave", "dragend"].forEach((eventName) => {
+        window.addEventListener(eventName, () => {
+          boardShell.classList.remove("is-dragging");
+        });
+      });
+
+      window.addEventListener("drop", async (event) => {
+        event.preventDefault();
+        boardShell.classList.remove("is-dragging");
+        const [file] = event.dataTransfer?.files ?? [];
+        if (file) {
+          await loadFile(file);
+        }
+      });
+
+      function readLatinString(bytes) {
+        return new TextDecoder("latin1").decode(bytes);
+      }
+
+      function readPuzStrings(bytes, start, count) {
+        const values = [];
+        let cursor = start;
+
+        while (cursor < bytes.length && values.length < count) {
+          let terminator = cursor;
+          while (terminator < bytes.length && bytes[terminator] !== 0) {
+            terminator += 1;
+          }
+
+          values.push(readLatinString(bytes.slice(cursor, terminator)));
+          cursor = terminator + 1;
+        }
+
+        return values;
+      }
+
+      function parsePuz(arrayBuffer) {
+        const bytes = new Uint8Array(arrayBuffer);
+        const width = bytes[0x2c];
+        const height = bytes[0x2d];
+        const clueCount = bytes[0x2e] | (bytes[0x2f] << 8);
+        const headerOffset = 0x34;
+        const cellCount = width * height;
+        const solution = readLatinString(bytes.slice(headerOffset, headerOffset + cellCount));
+        const strings = readPuzStrings(bytes, headerOffset + cellCount * 2, 3 + clueCount);
+        const [title = "Untitled", author = "", copyright = ""] = strings;
+
+        const cells = Array.from({ length: cellCount }, (_, index) => {
+          const solutionValue = solution[index] === "." ? "" : solution[index];
+          return {
+            index,
+            row: Math.floor(index / width),
+            col: index % width,
+            isBlock: solution[index] === ".",
+            solution: solutionValue,
+            number: undefined,
+          };
+        });
+
+        let cellNumber = 1;
+        for (let row = 0; row < height; row += 1) {
+          for (let col = 0; col < width; col += 1) {
+            const index = row * width + col;
+            const cell = cells[index];
+            if (cell.isBlock) {
+              continue;
+            }
+
+            const startsAcross = col === 0 || cells[index - 1].isBlock;
+            const startsDown = row === 0 || cells[index - width].isBlock;
+
+            if (startsAcross || startsDown) {
+              cell.number = cellNumber;
+              cellNumber += 1;
+            }
+          }
+        }
+
+        return { title, author, copyright, width, height, cells };
+      }
+
+      function normalizePuzzleJson(value) {
+        if (value && typeof value === "object" && value.puzzle && value.puzzle.cells) {
+          return value.puzzle;
+        }
+
+        if (value && typeof value === "object" && value.cells && value.width && value.height) {
+          return value;
+        }
+
+        throw new Error("Unsupported JSON puzzle format.");
+      }
+
+      function renderPuzzle(puzzle) {
+        boardRoot.innerHTML = "";
+        boardRoot.hidden = false;
+        emptyState.hidden = true;
+        floatingOpen.hidden = false;
+        boardShell.classList.remove("is-empty");
+
+        const board = document.createElement("div");
+        board.className = "board";
+        board.style.gridTemplateColumns = `repeat(${puzzle.width}, minmax(0, 1fr))`;
+        board.style.gridTemplateRows = `repeat(${puzzle.height}, minmax(0, 1fr))`;
+
+        for (const cell of puzzle.cells) {
+          const cellNode = document.createElement("div");
+          cellNode.className = `cell${cell.isBlock ? " is-block" : ""}`;
+
+          if (!cell.isBlock) {
+            if (cell.number) {
+              const number = document.createElement("span");
+              number.className = "cell-number";
+              number.textContent = String(cell.number);
+              cellNode.appendChild(number);
+            }
+
+            const letter = document.createElement("span");
+            letter.className = "cell-letter";
+            letter.textContent = cell.solution || cell.value || "";
+            cellNode.appendChild(letter);
+          }
+
+          board.appendChild(cellNode);
+        }
+
+        boardRoot.appendChild(board);
+      }
+
+      async function loadFile(file) {
+        try {
+          const lowerName = file.name.toLowerCase();
+          if (lowerName.endsWith(".puz")) {
+            renderPuzzle(parsePuz(await file.arrayBuffer()));
+            return;
+          }
+
+          const rawJson = JSON.parse(await file.text());
+          renderPuzzle(normalizePuzzleJson(rawJson));
+        } catch (error) {
+          console.error(error);
+          alert("Could not read that file. Drop a generated puzzle JSON or a standard .puz file.");
+        }
+      }
+    </script>
+  </body>
+</html>

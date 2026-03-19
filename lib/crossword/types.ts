@@ -91,6 +91,33 @@ export interface SolverStats {
   durationMs: number;
 }
 
+export interface GenerationDiversityPolicy {
+  maxSharedEntryLength: number;
+  maxShortDuplicateRate: number;
+}
+
+export interface GenerationDiversityStats {
+  totalEntries: number;
+  uniqueEntries: number;
+  duplicateEntries: number;
+  duplicateEntryRate: number;
+  shortDuplicateEntries: number;
+  shortDuplicateRate: number;
+  longDuplicateEntries: number;
+}
+
+export interface GenerationQualityStats {
+  averageScore: number;
+  minScore: number;
+  maxScore: number;
+  tierCounts: Record<FillTier, number>;
+}
+
+export interface GeneratedPuzzleAnalytics {
+  diversity: GenerationDiversityStats;
+  quality: GenerationQualityStats;
+}
+
 export interface GeneratedPuzzleRecord {
   id: string;
   fileName: string;
@@ -98,4 +125,5 @@ export interface GeneratedPuzzleRecord {
   generatedAt: string;
   puzzle: ParsedPuzzle;
   solver: SolverStats;
+  analytics?: GeneratedPuzzleAnalytics;
 }

@@ -67,7 +67,6 @@ async function buildTemplateFromSource(sourcePuzzleId: string, number: number): 
     title: `Generated Online Template ${number}`,
     width: puzzle.width,
     height: puzzle.height,
-    sourcePuzzleId,
     rows: Array.from({ length: puzzle.height }, (_, rowIndex) =>
       Array.from({ length: puzzle.width }, (_, colIndex) => {
         const cell = puzzle.cells[rowIndex * puzzle.width + colIndex];
@@ -97,7 +96,11 @@ export async function buildCuratedGeneratedPuzzleSet(
   await rm(CURATED_GENERATED_PUZZLE_DIR, { recursive: true, force: true });
   await mkdir(CURATED_GENERATED_PUZZLE_DIR, { recursive: true });
 
-  const excludeNormalized = new Set<string>();
+  const usageByAnswer = new Map<string, number>();
+  const corpusStats = {
+    totalEntries: 0,
+    shortDuplicateEntries: 0,
+  };
   const curatedTemplates: GridTemplate[] = [];
   const generatedRecords: GeneratedPuzzleRecord[] = [];
   const indexEntries: CuratedGeneratedPuzzleIndex["puzzles"] = [];
@@ -118,34 +121,41 @@ export async function buildCuratedGeneratedPuzzleSet(
     const startedAt = Date.now();
 
     logger(
-      `Trying puzzle ${number} from ${sourcePuzzleId} with ${excludeNormalized.size} excluded answers`,
+      `Trying puzzle ${number} from ${sourcePuzzleId} with ${usageByAnswer.size} prior answers`,
     );
 
     try {
       const generatedRecord = await generateCrossword({
         templateId: template.id,
         model,
-        excludeNormalized,
         fileName: buildPuzzleFileName(number),
         timeLimitMs,
+        usageByAnswer,
+        corpusStats,
       });
 
       indexEntries.push({
         number,
         fileName: generatedRecord.fileName,
         templateId: template.id,
-        sourcePuzzleId,
       });
 
       for (const entry of generatedRecord.puzzle.entries) {
-        excludeNormalized.add(entry.answer);
+        const usageCount = usageByAnswer.get(entry.answer) ?? 0;
+
+        if (usageCount > 0 && entry.answer.length <= 6) {
+          corpusStats.shortDuplicateEntries += 1;
+        }
+
+        usageByAnswer.set(entry.answer, usageCount + 1);
+        corpusStats.totalEntries += 1;
       }
 
       curatedTemplates.push(template);
       generatedRecords.push(generatedRecord);
       generatedCount += 1;
       logger(
-        `Accepted puzzle ${number} from ${sourcePuzzleId} in ${Date.now() - startedAt}ms using ${generatedRecord.solver.maxTierUsed}`,
+        `Accepted puzzle ${number} from ${sourcePuzzleId} in ${Date.now() - startedAt}ms using ${generatedRecord.solver.maxTierUsed}; shortDupes=${generatedRecord.analytics?.diversity.shortDuplicateEntries ?? 0}, avgScore=${generatedRecord.analytics?.quality.averageScore.toFixed(1) ?? "0.0"}`,
       );
     } catch (error) {
       logger(
